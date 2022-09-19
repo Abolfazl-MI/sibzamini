@@ -1,10 +1,164 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:sibzamini/controller/regestration/regestration_controller.dart';
+import 'package:sibzamini/gen/assets.gen.dart';
+import 'package:sibzamini/views/screens/registration/regestration_inputs_widget.dart';
+
+import '../../global/colors/solid_colors.dart';
 
 class VerifyCodeScreen extends StatelessWidget {
-  const VerifyCodeScreen({Key? key}) : super(key: key);
-
+  VerifyCodeScreen({Key? key}) : super(key: key);
+  final TextEditingController phoneNumberController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return Scaffold(
+      backgroundColor: SolidColors.backGroundColor,
+      body: GetBuilder<RegistrationController>(builder: (controller) {
+        if (controller.isLoading) {
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+            Get.defaultDialog(
+                title: '',
+                content: Center(
+                  child: CircularProgressIndicator(),
+                ));
+          });
+        }
+        return Center(
+          child: SizedBox(
+            width: width,
+            height: height / 1.7,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  side: const BorderSide(color: SolidColors.borderColor),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(Assets.icons.logos),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        RichText(
+                          text: const TextSpan(
+                              text: 'ورود ',
+                              style: TextStyle(
+                                  color: SolidColors.textColor4, fontSize: 14),
+                              children: [
+                                TextSpan(
+                                    text: '|',
+                                    style: TextStyle(
+                                        color: SolidColors.borderColor)),
+                                TextSpan(
+                                    text: ' ثبت‌نام',
+                                    style: TextStyle(
+                                        color: SolidColors.textColor4,
+                                        fontSize: 14)),
+                              ]),
+                        ),
+                        const SizedBox(
+                          height: 80,
+                        ),
+                        const Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            'کد‌تایید',
+                            style: TextStyle(
+                                color: SolidColors.textColor4, fontSize: 22),
+                          ),
+                        ),
+                        RegistrationInput(
+                            controller: phoneNumberController,
+                            onchange: (value) {
+                              print(value);
+                              controller.validPenCode(value);
+                            },
+                            validator: (value) =>
+                                controller.validatePhoneNumber(value)
+                            // key: formKey,
+                            ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        GetBuilder<RegistrationController>(
+                            builder: (controller) => controller.timeLaps > 0
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        controller.timeLaps.toString(),
+                                        style: TextStyle(
+                                            color: SolidColors.textColor4),
+                                      ),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(
+                                        'مانده‌تا‌ارسال‌کد‌مجدد',
+                                        style: TextStyle(
+                                            color: SolidColors.textColor4),
+                                      ),
+                                    ],
+                                  )
+                                : Container(
+                                    // padding: EdgeInsets.all(8),
+                                    child: TextButton(
+                                      onPressed: () {},
+                                      child: Text('ارسال‌مجدد‌کد'),
+                                    ),
+                                  )),
+                        const SizedBox(
+                          height: 34,
+                        ),
+                        GetBuilder<RegistrationController>(
+                          builder: (controller) => InkWell(
+                            onTap: () {
+                              if (formKey.currentState!.validate()) {
+                                controller.sendVerfiyCode();
+                              }
+                            },
+                            child: Container(
+                              width: width,
+                              height: 48,
+                              decoration: BoxDecoration(
+                                  color: controller.isEnable
+                                      ? SolidColors.primaryBlue
+                                      : SolidColors.textColor2,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                      color: SolidColors.borderColor)),
+                              child: const Center(
+                                  child: Text(
+                                'تایید‌ و‌ ادامه',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      }),
+    );
   }
 }

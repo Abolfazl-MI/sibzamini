@@ -9,11 +9,16 @@ import '../../global/colors/colors.dart';
 class RegistrationInput extends StatelessWidget {
   final TextEditingController controller;
   final Function(String)? onchange;
-  final String?errorMessage;
+  final String? hintText;
+
   String? Function(String?)? validator;
 
   RegistrationInput(
-      {Key? key, required this.controller, this.onchange, this.validator, this.errorMessage})
+      {Key? key,
+      required this.controller,
+      this.onchange,
+      this.validator,
+      this.hintText})
       : super(key: key);
 
   @override
@@ -22,9 +27,12 @@ class RegistrationInput extends StatelessWidget {
       keyboardType: TextInputType.number,
       validator: validator,
       controller: controller,
+      onChanged: onchange,
+      
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(horizontal: 25),
         filled: true,
-        errorText:errorMessage ,
+        hintText: hintText,
         fillColor: SolidColors.darkGrey,
         prefixIcon: Container(
           // margin:,
