@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:sibzamini/gen/fonts.gen.dart';
 import 'package:sibzamini/views/views.dart';
 
 void main() {
@@ -15,9 +17,18 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: FontFamily.yekanBakh,
       ),
-      getPages: AppPages.pages,  
+      localizationsDelegates: const [
+        GlobalCupertinoLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale("fa", "IR"),
+      ],
+      locale: Locale("fa", "IR"),
+      getPages: AppPages.pages,
     );
   }
 }
-

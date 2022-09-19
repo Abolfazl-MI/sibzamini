@@ -9,6 +9,13 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsFontsGen {
+  const $AssetsFontsGen();
+
+  /// File path: assets/fonts/YekanBakh-Regular.ttf
+  String get yekanBakhRegular => 'assets/fonts/YekanBakh-Regular.ttf';
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -16,15 +23,16 @@ class $AssetsIconsGen {
   String get iPad => 'assets/icons/iPad.svg';
 
   /// File path: assets/icons/logo.png
-  AssetGenImage get logoPng => const AssetGenImage('assets/icons/logo.png');
+  AssetGenImage get logo => const AssetGenImage('assets/icons/logo.png');
 
-  /// File path: assets/icons/logo.svg
-  String get logoSvg => 'assets/icons/logo.svg';
+  /// File path: assets/icons/logos.svg
+  String get logos => 'assets/icons/logos.svg';
 }
 
 class Assets {
   Assets._();
 
+  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
 }
 
