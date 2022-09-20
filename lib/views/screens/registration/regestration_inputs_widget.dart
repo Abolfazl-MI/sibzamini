@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
+import 'package:sibzamini/views/global/constants/persian_number_extension.dart';
 
 import '../../global/colors/colors.dart';
 
@@ -28,7 +29,12 @@ class RegistrationInput extends StatelessWidget {
       validator: validator,
       controller: controller,
       onChanged: onchange,
-      
+      inputFormatters: [
+        TextInputFormatter.withFunction((oldValue, newValue) {
+          return newValue.copyWith(
+              text: newValue.text.replaceMap(enToFaNumberMap));
+        })
+      ],
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(horizontal: 25),
         filled: true,
