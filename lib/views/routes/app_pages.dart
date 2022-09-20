@@ -1,14 +1,13 @@
 import 'package:get/route_manager.dart';
-import 'package:sibzamini/controller/controller.dart';
-import 'package:sibzamini/views/screens/splash/splash_screen.dart';
 
+import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/views/views.dart';
 
 class AppPages {
   static List<GetPage> pages = [
     GetPage(
       name: AppRoutesName.splashScreen,
-      page: () => SplashScreen(),
+      page: () => const  SplashScreen(),
     ),
     GetPage(
         name: AppRoutesName.registrationScreen,
@@ -17,6 +16,10 @@ class AppPages {
     GetPage(
         name: AppRoutesName.verifyCodeScreen,
         page: () => VerifyCodeScreen(),
-        binding: RegistrationBinding())
+        binding: RegistrationBinding()),
+    GetPage(
+      name: AppRoutesName.homeScreen,
+      page: () => const HomeScreen(),
+    )
   ];
 }

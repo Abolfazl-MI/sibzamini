@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
+import 'package:sibzamini/views/global/constants/genral_input_decoration.dart';
 import 'package:sibzamini/views/global/constants/persian_number_extension.dart';
 
 import '../../global/colors/colors.dart';
@@ -47,31 +48,16 @@ class RegistrationInput extends StatelessWidget {
           child: Transform.scale(
               scale: 0.8, child: SvgPicture.asset(Assets.icons.iPad)),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-            color: SolidColors.borderColor,
-          ),
+        enabledBorder: genralInputDecoration,
+        
+        disabledBorder: genralInputDecoration,
+        
+        focusedBorder: genralInputDecoration,
+        
+        
+        border: genralInputDecoration
         ),
-        disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-            color: SolidColors.borderColor,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-            color: SolidColors.borderColor,
-          ),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-            color: SolidColors.borderColor,
-          ),
-        ),
-      ),
+      
     );
   }
 }

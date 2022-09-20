@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigateToHome() async {
     await Future.delayed(Duration(seconds: 3));
     Navigator.of(context)
-        .pushReplacementNamed(AppRoutesName.registrationScreen);
+        .pushReplacementNamed(AppRoutesName.homeScreen);
   }
 
   @override
