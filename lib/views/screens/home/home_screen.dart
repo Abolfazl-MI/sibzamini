@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/views/screens/home/carsol_widget.dart';
@@ -38,7 +40,7 @@ class HomeScreen extends StatelessWidget {
             height: height,
             context: context,
           ),
-          _selectLocationSection(width),
+          _selectLocationSection(width, context),
           // body rest items
           _bodySection(width)
         ],
@@ -91,87 +93,87 @@ class HomeScreen extends StatelessWidget {
     ));
   }
 
-  Container _addSection(double width) {
+  _addSection(double width) {
     return Container(
-                width: width,
-                height: 275,
+        width: width,
+        height: 275,
 
-                // color: Colors.amber,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(
-                      Assets.images.cardbg.path,
-                    ),
-                    fit: BoxFit.fill,
+        // color: Colors.amber,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              Assets.images.cardbg.path,
+            ),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: width / 3.5,
+              height: 275,
+              // color: Colors.amber,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        'سالن‌های',
+                        style:
+                            AppTextTheme.header.copyWith(color: Colors.white),
+                      ),
+                      Text(
+                        'تخفیف‌دار',
+                        style:
+                            AppTextTheme.header.copyWith(color: Colors.white),
+                      ),
+                    ],
                   ),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: width / 3.5,
-                      height: 275,
-                      // color: Colors.amber,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                'سالن‌های',
-                                style: AppTextTheme.header
-                                    .copyWith(color: Colors.white),
-                              ),
-                              Text(
-                                'تخفیف‌دار',
-                                style: AppTextTheme.header
-                                    .copyWith(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'نمایش‌همه',
-                                style: AppTextTheme.caption
-                                    .copyWith(color: Colors.white),
-                              ),
-                              SvgPicture.asset(
-                                Assets.icons.arrowBackThinBlue,
-                                color: Colors.white,
-                              )
-                            ],
-                          )
-                        ],
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'نمایش‌همه',
+                        style:
+                            AppTextTheme.caption.copyWith(color: Colors.white),
                       ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: ((context, index) {
-                          return Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Container(
-                              width: 180,
-                              height: 175,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      Assets.images.slaon.path,
-                                    ),
-                                    fit: BoxFit.cover),
-                              ),
-                              // color: Colors.amber,
+                      SvgPicture.asset(
+                        Assets.icons.arrowBackThinBlue,
+                        color: Colors.white,
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: ((context, index) {
+                  return Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Container(
+                      width: 180,
+                      height: 175,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        image: DecorationImage(
+                            image: AssetImage(
+                              Assets.images.slaon.path,
                             ),
-                          );
-                        }),
-                        itemCount: 5,
+                            fit: BoxFit.cover),
                       ),
-                    )
-                  ],
-                ));
+                      // color: Colors.amber,
+                    ),
+                  );
+                }),
+                itemCount: 5,
+              ),
+            )
+          ],
+        ));
   }
 
   Padding _carsol_section(double width) {
@@ -194,43 +196,182 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Container _selectLocationSection(double width) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: SolidColors.borderColor,
+/* Container(
+                  width: width,
+                  height: MediaQuery.of(context).size.height / 1.2,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20))),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          child: InkWell(
+                            onTap: () {
+                              // TODO IMPL THE AUTOMATIC LOCATION
+                            },
+                            child: Container(
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(Assets.icons.locationSearch),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    'مکان‌یا‌بی‌خودکار',
+                                    style: AppTextTheme.caption.copyWith(
+                                        color: SolidColors.primaryBlue),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: 20,
+                            physics: BouncingScrollPhysics(),
+                            itemBuilder: ((context, index) => Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: SolidColors.textColor4))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 8, horizontal: 12),
+                                    child: Text(
+                                      'نام‌شهر',
+                                      style: AppTextTheme.caption.copyWith(
+                                          color: SolidColors.textColor4),
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ) */
+  _selectLocationSection(double width, BuildContext context) {
+    return InkWell(
+      onTap: () {
+        print('sh');
+        _showCityLocationBottomSheet(context, width);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              color: SolidColors.borderColor,
+            ),
           ),
         ),
-      ),
-      width: width,
-      height: 36,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: null,
-                icon: SvgPicture.asset(Assets.icons.location),
-              ),
-              Text(
-                'انتخاب‌محله',
-                style: TextStyle(color: SolidColors.textColor4),
-              ),
-            ],
-          ),
-          IconButton(
-            onPressed: null,
-            icon: SvgPicture.asset(
-              Assets.icons.arrowBackFiiled,
-              color: SolidColors.textColor4,
+        width: width,
+        height: 36,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: null,
+                  icon: SvgPicture.asset(Assets.icons.location),
+                ),
+                Text(
+                  'انتخاب‌محله',
+                  style: TextStyle(color: SolidColors.textColor4),
+                ),
+              ],
             ),
-          )
-        ],
+            IconButton(
+              onPressed: null,
+              icon: SvgPicture.asset(
+                Assets.icons.arrowBackFiiled,
+                color: SolidColors.textColor4,
+              ),
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  Future<dynamic> _showCityLocationBottomSheet(BuildContext context, double width) {
+    return showModalBottomSheet(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20))),
+          isScrollControlled: true,
+          context: context,
+          builder: (context) => Container(
+                width: width,
+                height: MediaQuery.of(context).size.height / 1.3,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                )),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: InkWell(
+                          onTap: () {
+                            // TODO IMPL THE AUTOMATIC LOCATION
+                          },
+                          child: Container(
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(Assets.icons.locationSearch),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Text(
+                                  'مکان‌یا‌بی‌خودکار',
+                                  style: AppTextTheme.caption.copyWith(
+                                      color: SolidColors.primaryBlue),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: 20,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: ((context, index) => Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: SolidColors.textColor4))),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 12),
+                                  child: Text(
+                                    'نام‌شهر',
+                                    style: AppTextTheme.caption.copyWith(
+                                        color: SolidColors.textColor4),
+                                  ),
+                                ),
+                              )),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ));
   }
 
   _searchBar(

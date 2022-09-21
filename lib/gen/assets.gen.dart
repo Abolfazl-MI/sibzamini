@@ -40,6 +40,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/location.svg
   String get location => 'assets/icons/location.svg';
 
+  /// File path: assets/icons/location_search.svg
+  String get locationSearch => 'assets/icons/location_search.svg';
+
   /// File path: assets/icons/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/icons/logo.png');
 
