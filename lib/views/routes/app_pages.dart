@@ -19,7 +19,8 @@ class AppPages {
         binding: RegistrationBinding()),
     GetPage(
       name: AppRoutesName.homeScreen,
-      page: () => const HomeScreen(),
+      page: () =>  HomeScreen(),
+      binding: HomeBinding()
     )
   ];
 }

@@ -10,7 +10,8 @@ import '../../../global/constants/constants.dart';
 class SliderWidget extends StatelessWidget {
   final double ratingCount;
   final title;
-  const SliderWidget({Key? key, required this.ratingCount, this.title}) : super(key: key);
+  const SliderWidget({Key? key, required this.ratingCount, this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +21,7 @@ class SliderWidget extends StatelessWidget {
         width: 180,
         height: 159,
         child: Card(
+          elevation: 0,
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

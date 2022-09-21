@@ -4,15 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sibzamini/controller/controller.dart';
 
 import 'package:sibzamini/gen/assets.gen.dart';
+
 import 'package:sibzamini/views/screens/home/carsol_widget.dart';
 import 'package:sibzamini/views/screens/home/slider_widgets/slider_list.dart';
 import 'package:sibzamini/views/views.dart';
 
 import 'slider_widgets/slider_header.dart';
 
-class HomeScreen extends StatelessWidget {
+const _drawerText = [
+  'همه',
+  'اکسیشن‌مو',
+  'رنگ‌لایت‌مو',
+  'خدمات‌ناخان',
+  'خدمات‌لیزر',
+  'خدمات‌تزریق‌ژل',
+  'خدمات‌کراتینه',
+  'خدمات‌پوست',
+];
+
+class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -20,12 +33,15 @@ class HomeScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      key: controller.scaffoldKey,
       backgroundColor: SolidColors.backGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: SvgPicture.asset(Assets.icons.menu),
-          onPressed: () {},
+          onPressed: () {
+            controller.openDrawer();
+          },
         ),
         centerTitle: true,
         title: Transform.scale(
@@ -33,6 +49,73 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 1,
       ),
+      drawer: SafeArea(
+        child: Container(
+          width: width / 1.5,
+          height: height / 1.001,
+          child: Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: SvgPicture.asset(Assets.icons.logos),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Divider(
+                    height: 0.8,
+                    color: SolidColors.textColor4,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ...List.generate(
+                    _drawerText.length,
+                    (index) => InkWell(
+                          onTap: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            child: Text(
+                              _drawerText[index],
+                              style: AppTextTheme.caption.copyWith(
+                                  color: SolidColors.textColor4, fontSize: 17),
+                            ),
+                          ),
+                        )),
+              ],
+            ),
+          ),
+        ),
+      ),
+      /*     Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: List.generate(
+                      8,
+                      (index) => Text(
+                        drawerText[index],
+                        style: AppTextTheme.caption,
+                      ),
+                    ),
+                  ),
+                ) */
       body: Column(
         children: [
           _searchBar(
@@ -259,7 +342,7 @@ class HomeScreen extends StatelessWidget {
     return InkWell(
       onTap: () {
         print('sh');
-        _showCityLocationBottomSheet(context, width);
+        _showCityLocationBottemSheet(context, width);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -300,78 +383,75 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Future<dynamic> _showCityLocationBottomSheet(BuildContext context, double width) {
+  Future<dynamic> _showCityLocationBottemSheet(
+      BuildContext context, double width) {
     return showModalBottomSheet(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20))),
-          isScrollControlled: true,
-          context: context,
-          builder: (context) => Container(
-                width: width,
-                height: MediaQuery.of(context).size.height / 1.3,
-                decoration: BoxDecoration(
+        isScrollControlled: true,
+        context: context,
+        builder: (context) => Container(
+              width: width,
+              height: MediaQuery.of(context).size.height / 1.3,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              )),
+              child: Card(
+                shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                )),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: InkWell(
-                          onTap: () {
-                            // TODO IMPL THE AUTOMATIC LOCATION
-                          },
-                          child: Container(
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(Assets.icons.locationSearch),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  'مکان‌یا‌بی‌خودکار',
-                                  style: AppTextTheme.caption.copyWith(
-                                      color: SolidColors.primaryBlue),
-                                )
-                              ],
-                            ),
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20))),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: InkWell(
+                        onTap: () {
+                          // TODO IMPL THE AUTOMATIC LOCATION
+                        },
+                        child: Container(
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(Assets.icons.locationSearch),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Text(
+                                'مکان‌یا‌بی‌خودکار',
+                                style: AppTextTheme.caption
+                                    .copyWith(color: SolidColors.primaryBlue),
+                              )
+                            ],
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: 20,
-                          physics: BouncingScrollPhysics(),
-                          itemBuilder: ((context, index) => Container(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: SolidColors.textColor4))),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 12),
-                                  child: Text(
-                                    'نام‌شهر',
-                                    style: AppTextTheme.caption.copyWith(
-                                        color: SolidColors.textColor4),
-                                  ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: 20,
+                        physics: BouncingScrollPhysics(),
+                        itemBuilder: ((context, index) => Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: SolidColors.textColor4))),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 12),
+                                child: Text(
+                                  'نام‌شهر',
+                                  style: AppTextTheme.caption
+                                      .copyWith(color: SolidColors.textColor4),
                                 ),
-                              )),
-                        ),
-                      )
-                    ],
-                  ),
+                              ),
+                            )),
+                      ),
+                    )
+                  ],
                 ),
-              ));
+              ),
+            ));
   }
 
   _searchBar(
