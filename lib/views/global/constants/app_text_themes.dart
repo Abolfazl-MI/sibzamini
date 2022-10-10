@@ -16,4 +16,16 @@ class AppTextTheme {
       color: SolidColors.textColor3,
       fontFamily: FontFamily.yekanBakh,
       fontSize: 20);
+
+      static const TextStyle subCaption = TextStyle(
+      color: SolidColors.textColor3,
+      fontFamily: FontFamily.yekanBakh,
+      fontSize: 14);
+
+       static const TextStyle captionBold = TextStyle(
+      color: SolidColors.textColor3,
+      fontFamily: FontFamily.yekanBakh,
+      fontWeight: FontWeight.bold,
+      fontSize: 20);
+
 }

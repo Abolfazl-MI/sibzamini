@@ -41,6 +41,8 @@ dependencies:
   flutter_svg: ^1.1.5
   persian_number_utility: ^1.1.2
   rate_in_stars: ^0.0.3
+  smooth_page_indicator: ^1.0.0+2
+  
     
 
 dev_dependencies:
