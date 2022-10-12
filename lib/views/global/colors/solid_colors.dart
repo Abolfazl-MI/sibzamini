@@ -12,4 +12,9 @@ class SolidColors {
   static const Color darkBlue = Color.fromRGBO(32, 66, 111, 1);
   static const Color darkGrey = Color.fromRGBO(245, 247, 251, 1);
   static const Color yellow = Color.fromRGBO(244, 168, 54, 1);
+  static const Color textColor5=Color(0xff8092AF);
 }
+
+
+
+// 8092AF

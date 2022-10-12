@@ -87,6 +87,8 @@ class DetailScreen extends GetView<DetailController> {
                 children: [
                   /// [BrandName]
                   Container(
+                    color: SolidColors.darkGrey,
+
                     padding: EdgeInsets.all(10),
                     width: width,
                     height: height * 0.05,

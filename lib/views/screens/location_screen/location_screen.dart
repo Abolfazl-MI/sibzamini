@@ -28,6 +28,8 @@ class LocationScreen extends StatelessWidget {
                       padding: EdgeInsets.all(10),
                       width: width,
                       height: height * 0.05,
+                    color: SolidColors.darkGrey,
+
                       // color: Colors.red,
                       // todo shoud change format coresponding to server
                       child: Text(
@@ -36,9 +38,7 @@ class LocationScreen extends StatelessWidget {
                             fontSize: 18, color: SolidColors.textColor4),
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                   
                     // TODO should get map  from more detail
 
                     Container(

@@ -34,6 +34,7 @@ class AppPages {
     GetPage(
       name: AppRoutesName.commentsScreen,
       page: () => CommentScreen(),
+      binding: DetailBiding()
       
     ),
     GetPage(

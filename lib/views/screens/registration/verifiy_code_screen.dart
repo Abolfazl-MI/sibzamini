@@ -79,7 +79,7 @@ class VerifyCodeScreen extends StatelessWidget {
                                 color: SolidColors.textColor4, fontSize: 22),
                           ),
                         ),
-                        RegistrationInput(
+                        AppInput(
                             controller: phoneNumberController,
                             onchange: (value) {
                               print(value);
