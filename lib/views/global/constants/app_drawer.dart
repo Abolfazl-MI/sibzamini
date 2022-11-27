@@ -17,6 +17,10 @@ const _drawerText = [
   'خدمات‌پوست',
 ];
 
+ButtonStyle _style = ButtonStyle(
+  overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
+);
+
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
 
@@ -24,6 +28,7 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     return SafeArea(
       child: Container(
         width: width / 1.5,
@@ -62,6 +67,7 @@ class AppDrawer extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextButton(
+                  style: _style,
                   onPressed: () {},
                   child: Text(_drawerText[0],
                       style: AppTextTheme.caption.copyWith(
@@ -72,6 +78,7 @@ class AppDrawer extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextButton(
+                  style: _style,
                   onPressed: () {},
                   child: Text(_drawerText[1],
                       style: AppTextTheme.caption.copyWith(
@@ -82,6 +89,7 @@ class AppDrawer extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextButton(
+                  style: _style,
                   onPressed: () {},
                   child: Text(_drawerText[2],
                       style: AppTextTheme.caption.copyWith(
@@ -102,6 +110,7 @@ class AppDrawer extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextButton(
+                  style: _style,
                   onPressed: () {},
                   child: Text(_drawerText[4],
                       style: AppTextTheme.caption.copyWith(
@@ -112,6 +121,7 @@ class AppDrawer extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextButton(
+                  style: _style,
                   onPressed: () {},
                   child: Text(_drawerText[5],
                       style: AppTextTheme.caption.copyWith(
@@ -122,6 +132,7 @@ class AppDrawer extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextButton(
+                  style: _style,
                   onPressed: () {},
                   child: Text(_drawerText[6],
                       style: AppTextTheme.caption.copyWith(
@@ -132,6 +143,7 @@ class AppDrawer extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextButton(
+                  style: _style,
                   onPressed: () {},
                   child: Text(_drawerText[7],
                       style: AppTextTheme.caption.copyWith(

@@ -106,7 +106,7 @@ class DetailScreen extends GetView<DetailController> {
                     // color: Colors.green,
                     // padding: EdgeInsets.all(10),
                     width: width,
-                    height: height * 0.37,
+                    height: height * 0.4,
                     child: Card(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -117,7 +117,7 @@ class DetailScreen extends GetView<DetailController> {
                           Container(
                             // color: Colors.amber,
                             width: width,
-                            height: 208,
+                            height: 210,
                             child: Column(
                               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -320,7 +320,7 @@ class DetailScreen extends GetView<DetailController> {
                   /// [Services of salon]
                   Container(
                     width: width,
-                    height: height * 0.36,
+                    height: height * 0.4,
                     // color: Colors.amber,
                     // TODO SHOULD GET FROM SERVEr
                     child: PageView.builder(
@@ -348,30 +348,8 @@ class DetailScreen extends GetView<DetailController> {
                                   ///[service picture]
                                   child: Container(
                                     width: width,
-                                    child: index==0?Stack(
-                                      children: [
-                                        Positioned(
-                                          bottom: 20,
-                                          right: 20,
-                                          child: SizedBox(
-                                            width: 90,
-                                            height: 50,
-                                            child: Card(
-                                              color: SolidColors.primaryBlue,
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                children: [
-                                                  /// [image count should get from server]
-                                                  SvgPicture.asset(Assets.icons.image),
-                                                  Text('4'.toPersianDigit()+'عکس', style: AppTextTheme.caption.copyWith(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),), 
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ):null,
-                                    height: height * 0.20,
+                                   
+                                    height: height * 0.23,
                                     decoration: BoxDecoration(
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.circular(12),
