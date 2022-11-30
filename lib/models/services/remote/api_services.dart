@@ -1,10 +1,12 @@
 import "package:dio/dio.dart";
 
 class ApiServices {
-  Dio _dio = Dio(BaseOptions(baseUrl: 'http://sunict.ir/api/v1', headers: {
+ final Dio _dio = Dio(BaseOptions(baseUrl: 'http://sunict.ir/api/v1', headers: {
     'Accept': 'application/json',
     'Authorization': 'x5rjvhs4dnq3k4ael7yfrr0xk4et9gzumbgyzw88q3u6yp529q',
-  }));
+  },),);
+// 442->phonenumber
+
 
   createUserAccount({
     required String phoneNumber,

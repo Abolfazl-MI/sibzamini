@@ -1,18 +1,20 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:sibzamini/core/data_staes.dart';
-
+import 'package:sibzamini/core/error_code.dart';
+import 'dart:developer';
 class LocationServices {
 
 
   Future<DataState<String>> getUserCityLocation() async {
+    log('********Getting user location********');
     bool? isServcesEnabled;
     Position? currentPossition;
     LocationPermission locationPermission;
     try {
       isServcesEnabled = await Geolocator.isLocationServiceEnabled();
       if (!isServcesEnabled) {
-        return DataFailState('Location Service is not Enable');
+        return DataFailState(DISSABLED_LOCATION_SERVICE);
       }
       locationPermission = await Geolocator.checkPermission();
       switch (locationPermission) {
@@ -20,7 +22,7 @@ class LocationServices {
           locationPermission = await Geolocator.requestPermission();
           break;
         case LocationPermission.deniedForever:
-          return DataFailState('Location Persmission Required !');
+          return DataFailState(LOCATION_ACCESS_DENIDD);
       }
       currentPossition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best,
@@ -31,7 +33,10 @@ class LocationServices {
       Placemark current_city=placemarks[0];
       return DataSuccesState(current_city.locality);
     } catch (e) {
-      return DataFailState(e.toString());
+      return DataFailState(SOMETHING_WENT_WRONG);
     }
+  }
+  Future requestPermission()async{
+    
   }
 }

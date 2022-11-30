@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/views/views.dart';
 
 class RegistrationController extends GetxController {
@@ -15,12 +16,24 @@ class RegistrationController extends GetxController {
   // used for validating phone number
   String? validatePhoneNumber(String? value) {
     if (value == null || value.isEmpty) {
-      errorMessage.value = 'شماره‌تلفن‌برای ‌ورود‌الزامی‌است ';
-      return 'شماره‌تلفن‌برای ‌ورود‌الزامی‌است ';
+      errorMessage.value = PHONE_NUMBER_REQUIRED;
+      return PHONE_NUMBER_REQUIRED;
     } else if (!value.isValidIranianMobileNumber()) {
-      return 'شماره‌تلفن‌را‌درست‌وارد‌کنید';
+      return PHONE_NUMBER_INVALID;
     }
     return null;
+  }
+
+  String ? validateName(String? value){
+    if(value==null || value.isEmpty){
+        errorMessage.value=NAME_REQUIRED;
+        return NAME_REQUIRED;
+
+    }else if(value.length<2){
+      errorMessage.value=NAME_INVALID;
+      return NAME_INVALID;
+      
+    }
   }
 
   validPenCode(String? value) {
@@ -39,7 +52,7 @@ class RegistrationController extends GetxController {
     await Future.delayed(Duration(seconds: 3));
     isLoading = false;
     resendVerfiyCode();
-    Get.offAndToNamed(AppRoutesName.verifyCodeScreen);
+    Get.offAndToNamed(rVerifyCodeScreen);
   }
 
   resendVerfiyCode() async {

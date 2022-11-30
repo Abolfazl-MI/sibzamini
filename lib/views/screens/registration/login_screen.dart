@@ -51,25 +51,26 @@ class RegistrationScreen extends GetView<RegistrationController> {
                       children: [
                         SvgPicture.asset(Assets.icons.logos),
                         SizedBox(
-                          height: 37,
+                          height: 10,
                         ),
-                        RichText(
-                          text: const TextSpan(
-                              text: 'ورود ',
-                              style: TextStyle(
-                                  color: SolidColors.textColor4, fontSize: 14),
-                              children: [
-                                TextSpan(
-                                    text: '|',
-                                    style: TextStyle(
-                                        color: SolidColors.borderColor)),
-                                TextSpan(
-                                    text: ' ثبت‌نام',
-                                    style: TextStyle(
-                                        color: SolidColors.textColor4,
-                                        fontSize: 14)),
-                              ]),
-                        ),
+                        Text('ورود با شماره',),
+                        // RichText(
+                        //   text: const TextSpan(
+                        //       text: 'ورود ',
+                        //       style: TextStyle(
+                        //           color: SolidColors.textColor4, fontSize: 14),
+                        //       children: [
+                        //         TextSpan(
+                        //             text: '|',
+                        //             style: TextStyle(
+                        //                 color: SolidColors.borderColor)),
+                        //         TextSpan(
+                        //             text: ' ثبت‌نام',
+                        //             style: TextStyle(
+                        //                 color: SolidColors.textColor4,
+                        //                 fontSize: 14)),
+                        //       ]),
+                        // ),
                         const SizedBox(
                           height: 100,
                         ),
@@ -137,6 +138,31 @@ class RegistrationScreen extends GetView<RegistrationController> {
                             )),
                           ),
                         ),
+                        SizedBox(height: 20,),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'اکانت نداری؟',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: SolidColors.textColor4),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Get.offNamed(rSignUpScreen);
+                                },
+                                child: Text(
+                                  'ثبت نام کن',
+                                  style: TextStyle(
+                                    color: SolidColors.primaryBlue
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),

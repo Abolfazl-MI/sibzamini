@@ -26,7 +26,7 @@ class SliderList extends StatelessWidget {
             ratingCount: 2,
             imageUrl: Assets.images.modernBeautySalonInterior2.path,
             onTap: () {
-              Get.toNamed(AppRoutesName.detailScreen);
+              Get.toNamed(rDetailScreen);
             },
           );
         },

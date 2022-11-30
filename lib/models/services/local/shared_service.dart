@@ -41,7 +41,7 @@ class SharedStorageService {
   }
 
   // cheecks if user  had logedin before or not
-  Future checkLogin() async {
+  Future <bool> checkLogin() async {
     try {
       String? token = _pref!.getString(_token);
       if (token == null) {
@@ -50,8 +50,10 @@ class SharedStorageService {
       if (token != null) {
         return true;
       }
+      return false;
     } catch (e) {
       log(e.toString());
+      return false;
     }
   }
 }

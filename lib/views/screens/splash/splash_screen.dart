@@ -1,21 +1,13 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sibzamini/controller/splash/splash_controller.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
-import 'package:sibzamini/views/routes/app_route_names.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+class SplashScreen extends GetView<SplashScreenController> {
+  const SplashScreen({super.key});
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    // TODO: hard coded splash screen
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -33,18 +25,5 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
-  }
-
-  _navigateToHome() async {
-    await Future.delayed(Duration(seconds: 3));
-    Navigator.of(context)
-        .pushReplacementNamed(AppRoutesName.homeScreen);
-  }
-
-  @override
-  void initState() {
-    _navigateToHome();
-    // TODO: implement initState
-    super.initState();
   }
 }

@@ -13,7 +13,7 @@ class User extends Equatable {
   final int? id;
   User({this.city, this.id, this.mobile, this.name});
   @override
-  // TODO: implement props
+ 
   List<Object?> get props => [
         name,
         city,
@@ -23,5 +23,5 @@ class User extends Equatable {
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  Map<String, dynamic> toJson() => $_UserToJson(this);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 }
