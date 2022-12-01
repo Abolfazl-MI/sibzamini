@@ -56,15 +56,6 @@ class RegistrationController extends GetxController {
     }
   }
 
-  //sends otp code for first time
-  sendVerfiyCode() async {
-    isLoading = true;
-    update();
-    await Future.delayed(Duration(seconds: 3));
-    isLoading = false;
-    resendVerfiyCode();
-    Get.offAndToNamed(rVerifyCodeScreen);
-  }
 
   // resends the otp code
   resendVerfiyCode() async {
@@ -89,7 +80,7 @@ class RegistrationController extends GetxController {
 
   // registerUser
 
-  createUserAccount({
+  Future<void> createUserAccount({
     required String name,
     required String phoneNumber,
   }) async {
@@ -97,7 +88,7 @@ class RegistrationController extends GetxController {
     update();
     DataState<String> city = await _locationServices.getUserCityLocation();
     if (city is DataFailState) {
-      _apiServices.cancleRequest();
+      // _apiServices.cancleRequest();
       isLoading = false;
       update();
       if (city.error == LOCATION_ACCESS_DENIDD) {
@@ -110,42 +101,68 @@ class RegistrationController extends GetxController {
             backgroundColor: Colors.red);
       }
     }
-    FormData data = FormData.fromMap(
-        {'name': name, 'mobile': phoneNumber, 'city': city.data});
-    DataState<User> result = await _apiServices.createUserAccount(data: data);
+
+    if (city is DataSuccesState) {
+      DataState<User> result = await _apiServices.createUserAccount(
+          name: name, phoneNumber: phoneNumber, city: city.data!);
+      if (result is DataSuccesState) {
+        isLoading = false;
+        update();
+        Get.snackbar('\u{1F642}' 'موفقیت امیز بود', 'شما وارد شدید،خوش آمدید',
+            backgroundColor: Colors.green);
+        await _sharedStorageService.saveUserToken(result.data!.token!);
+        Get.offNamed(rHomeScreen, arguments: {'user': result.data});
+      }
+      if (result is DataFailState) {
+        isLoading = false;
+        update();
+        Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', result.error!,
+            backgroundColor: Colors.red);
+      }
+    }
+  }
+
+  Future<void> requestLoginUser({required String phoneNumber}) async {
+    isLoading = true;
+    update();
+    DataState<bool> result =
+        await _apiServices.loginUserAccount(phoneNumber: phoneNumber);
     if (result is DataSuccesState) {
       isLoading = false;
       update();
-      Get.snackbar('\u{1F642}' 'موفقیت امیز بود', 'شما وارد شدید،خوش آمدید',
+      Get.snackbar(
+          '\u{1F642}' 'موفقیت آمیز بود', 'کد احراز هویت برای شما ارسال شد',
           backgroundColor: Colors.green);
-      await _sharedStorageService.saveUserToken(result.data!.token!);
-      Get.offNamed(rHomeScreen, arguments: {'user': result.data});
+      Get.offNamed(rVerifyCodeScreen);
     }
     if (result is DataFailState) {
       isLoading = false;
       update();
-      Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', SOMETHING_WENT_WRONG,
+      Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', result.error!,
           backgroundColor: Colors.red);
     }
   }
 
-  requestLoginUser({required String phoneNumber}) async {
+  Future<void> confirmOtpCode(
+      {required String otpCode, required String phoneNumber}) async {
     isLoading = true;
     update();
-    FormData data = FormData.fromMap({'mobile': phoneNumber});
-    DataState<bool> result = await _apiServices.loginUserAccount(data: data);
-    if(result is DataSuccesState){
-      isLoading=false;
-      update();
-      Get.snackbar('\u{1F642}' 'موفقیت آمیز بود', 'کد احراز هویت برای شما ارسال شد',
+    DataState<User> resualt = await _apiServices.confirmUserOtp(
+        otpCode: otpCode, phoneNumber: phoneNumber);
+    if (resualt is DataSuccesState){
+        await _sharedStorageService.saveUserToken(resualt.data!.token!);
+        isLoading=false;
+        update();
+         Get.snackbar(
+          '\u{1F642}' 'موفقیت آمیز بود', 'وارد شدید، خوش امدید',
           backgroundColor: Colors.green);
-      Get.offNamed(rVerifyCodeScreen);
+          Get.offNamed(rHomeScreen,arguments: {'user':resualt.data});
     }
-    if(result is DataFailState){
-      isLoading=false;
-      update();
-       Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', result.error!,
-          backgroundColor: Colors.red);
+    if(resualt is DataFailState){
+        isLoading=false;
+        update();
+        Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', resualt.error!,
+            backgroundColor: Colors.red);
     }
   }
 }

@@ -125,9 +125,7 @@ class VerifyCodeScreen extends StatelessWidget {
                         GetBuilder<RegistrationController>(
                           builder: (controller) => InkWell(
                             onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                controller.sendVerfiyCode();
-                              }
+                             
                             },
                             child: Container(
                               width: width,

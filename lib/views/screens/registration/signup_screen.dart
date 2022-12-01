@@ -50,10 +50,10 @@ class SignUpScreen extends GetView<RegistrationController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SvgPicture.asset(Assets.icons.logos),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text(
+                        const Text(
                           'ساخت حساب کاربری',
                         ),
                         // RichText(
@@ -86,10 +86,11 @@ class SignUpScreen extends GetView<RegistrationController> {
                         ),
 
                         AppInput(
+                          icon:const Icon(Icons.person_outline),
                             controller: nameController,
                             hintText: "ابوالفضل".toPersianDigit(),
                             onchange: (value) {
-                              value.toPersianDigit();
+                            
                           },
                             validator: (value) => controller.validateName(value)
 
@@ -138,9 +139,9 @@ class SignUpScreen extends GetView<RegistrationController> {
                         ),
                         InkWell(
                           onTap: () {
-                            if (formKey.currentState!.validate()) {
-                              controller.sendVerfiyCode();
-                            }
+                            // if (formKey.currentState!.validate()) {
+                            //   controller.sendVerfiyCode();
+                            // }
                           },
                           child: Container(
                             width: width,
@@ -160,14 +161,14 @@ class SignUpScreen extends GetView<RegistrationController> {
                             )),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 'اکانت داری؟',
                                 style: TextStyle(
                                     fontSize: 15,
@@ -177,7 +178,7 @@ class SignUpScreen extends GetView<RegistrationController> {
                                 onPressed: () {
                                   Get.offNamed(rLoginScreen);
                                 },
-                                child: Text(
+                                child:  const Text(
                                   'وارد شو',
                                   style:
                                       TextStyle(color: SolidColors.primaryBlue),

@@ -116,9 +116,9 @@ class RegistrationScreen extends GetView<RegistrationController> {
                         ),
                         InkWell(
                           onTap: () {
-                            if (formKey.currentState!.validate()) {
-                              controller.sendVerfiyCode();
-                            }
+                            // if (formKey.currentState!.validate()) {
+                            //   controller.sendVerfiyCode();
+                            // }
                           },
                           child: Container(
                             width: width,

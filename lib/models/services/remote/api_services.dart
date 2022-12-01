@@ -15,8 +15,13 @@ class ApiServices {
     ),
   );
 
-  Future<DataState<User>> createUserAccount({required FormData data}) async {
+  Future<DataState<User>> createUserAccount(
+      {required String name,
+      required String phoneNumber,
+      required String city}) async {
     try {
+      FormData data =
+          FormData.fromMap({'name': name, 'mobile': phoneNumber, 'city': city});
       Response response = await _dio.post(register, data: data);
       if (response.statusCode == 200) {
         User user = User.fromJson(response.data);
@@ -28,17 +33,36 @@ class ApiServices {
     }
   }
 
-  confirmUserOtp({required String otpCode}) async {
-    // TODO: Impelement the user otp code confirmation
+  Future<DataState<User>> confirmUserOtp({required String otpCode, required String phoneNumber}) async {
+    try{
+      FormData data=FormData.fromMap({
+        'mobile':phoneNumber, 
+        'token':otpCode
+      });
+      Response response = await _dio.post(loginCheck, data: data);
+      if(response.statusCode==200){
+          User user =User.fromJson(response.data);
+          return DataSuccesState(user);
+      }
+      if(response.statusCode==404 &&  response.data['response']=="invalid token"){
+        return DataFailState('کد وارد شده صحیح نمیباشد');
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }catch(e){
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
   }
 
-  Future<DataState<bool>> loginUserAccount({required FormData data}) async {
+  Future<DataState<bool>> loginUserAccount(
+      {required String phoneNumber}) async {
     try {
-      Response response= await _dio.post(login,data: data);
-      if(response.statusCode==200){
+      FormData data = FormData.fromMap({'mobile': phoneNumber});
+
+      Response response = await _dio.post(login, data: data);
+      if (response.statusCode == 200) {
         return DataSuccesState(true);
       }
-      if(response.statusCode==404){
+      if (response.statusCode == 404) {
         return DataFailState(USER_NOT_FOUND);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
