@@ -11,7 +11,8 @@ class User extends Equatable {
   final String? city;
   final String? mobile;
   final int? id;
-  User({this.city, this.id, this.mobile, this.name});
+  final String ? token;
+  User({this.city, this.id, this.mobile, this.name,this.token});
   @override
  
   List<Object?> get props => [
