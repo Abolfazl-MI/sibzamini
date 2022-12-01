@@ -90,7 +90,7 @@ class SignUpScreen extends GetView<RegistrationController> {
                             hintText: "ابوالفضل".toPersianDigit(),
                             onchange: (value) {
                               value.toPersianDigit();
-                            },
+                          },
                             validator: (value) => controller.validateName(value)
 
                             // key: formKey,
