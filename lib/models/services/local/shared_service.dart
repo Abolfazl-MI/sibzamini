@@ -13,7 +13,7 @@ class SharedStorageService {
   }
 
   // saves user token to shared db
-  Future<void> saveUserID(String value) async {
+  Future<void> saveUserToken(String value) async {
     try {
       await _pref!.setString(_token, value);
     } catch (e) {
@@ -22,7 +22,7 @@ class SharedStorageService {
   }
 
 // deletes user id form db
-  Future<void> deleteUserID() async {
+  Future<void> deleteUserToken() async {
     try {
       await _pref!.remove(_token);
     } catch (e) {
@@ -31,7 +31,7 @@ class SharedStorageService {
   }
 
 // return userId
-  Future getuserID() async {
+  Future getuserToken() async {
     try {
       String? userId = _pref!.getString(_token);
       return userId;
