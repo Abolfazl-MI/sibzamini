@@ -15,14 +15,11 @@ class ApiServices {
     ),
   );
 
-
-  Future <DataState<User>> createUserAccount({
-    required FormData data
-  }) async {
+  Future<DataState<User>> createUserAccount({required FormData data}) async {
     try {
-      Response response= await _dio.post(register, data:data);
-      if(response.statusCode==200){
-        User user=User.fromJson(response.data);
+      Response response = await _dio.post(register, data: data);
+      if (response.statusCode == 200) {
+        User user = User.fromJson(response.data);
         return DataSuccesState(user);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
@@ -35,8 +32,19 @@ class ApiServices {
     // TODO: Impelement the user otp code confirmation
   }
 
-  loginUserAccount({required String userPhoneNumber}) {
-    // TODO: Implement the user login
+  Future<DataState<bool>> loginUserAccount({required FormData data}) async {
+    try {
+      Response response= await _dio.post(login,data: data);
+      if(response.statusCode==200){
+        return DataSuccesState(true);
+      }
+      if(response.statusCode==404){
+        return DataFailState(USER_NOT_FOUND);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
   }
 
   getSalonList({required String cityName}) {
@@ -59,8 +67,7 @@ class ApiServices {
     // TODO:implement the  get categories
   }
 
-
-  cancleRequest(){
-     return CancelToken().cancel();
+  cancleRequest() {
+    return CancelToken().cancel();
   }
 }

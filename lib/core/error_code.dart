@@ -4,7 +4,7 @@ const String LOCATION_ACCESS_DENIDD='برای ادامه استفاده از ا�
 const String SOMETHING_WENT_WRONG='متاسفانه مشکلی پیش اومده، دوباره تلاش کنید';
 const String PHONE_NUMBER_REQUIRED='شماره‌تلفن‌برای ‌ورود‌الزامی‌است ';
 const String PHONE_NUMBER_INVALID='شماره‌تلفن‌را‌درست‌وارد‌کنید';
-
+const String USER_NOT_FOUND='کاربری با این شماره ثبت نشده است';
 // required
 const String NAME_REQUIRED='وارد کردن نام الزامی است';
 const String NAME_INVALID='نام را درست وارد کنید';

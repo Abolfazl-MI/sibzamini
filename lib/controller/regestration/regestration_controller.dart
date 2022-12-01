@@ -128,4 +128,24 @@ class RegistrationController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
+
+  requestLoginUser({required String phoneNumber}) async {
+    isLoading = true;
+    update();
+    FormData data = FormData.fromMap({'mobile': phoneNumber});
+    DataState<bool> result = await _apiServices.loginUserAccount(data: data);
+    if(result is DataSuccesState){
+      isLoading=false;
+      update();
+      Get.snackbar('\u{1F642}' 'موفقیت آمیز بود', 'کد احراز هویت برای شما ارسال شد',
+          backgroundColor: Colors.green);
+      Get.offNamed(rVerifyCodeScreen);
+    }
+    if(result is DataFailState){
+      isLoading=false;
+      update();
+       Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', result.error!,
+          backgroundColor: Colors.red);
+    }
+  }
 }
