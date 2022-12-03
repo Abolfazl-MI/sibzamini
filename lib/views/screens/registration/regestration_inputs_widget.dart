@@ -34,6 +34,7 @@ class AppInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textAlign:TextAlign.center,
       keyboardType: TextInputType.number,
       validator: validator,
       controller: controller,

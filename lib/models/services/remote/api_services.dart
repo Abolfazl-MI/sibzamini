@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import "package:dio/dio.dart";
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/core/error_code.dart';
@@ -59,6 +61,7 @@ class ApiServices {
       FormData data = FormData.fromMap({'mobile': phoneNumber});
 
       Response response = await _dio.post(login, data: data);
+      print(response.data);
       if (response.statusCode == 200) {
         return DataSuccesState(true);
       }
@@ -67,7 +70,7 @@ class ApiServices {
       }
       return DataFailState(SOMETHING_WENT_WRONG);
     } catch (e) {
-      return DataFailState(SOMETHING_WENT_WRONG);
+      return DataFailState(e.toString());
     }
   }
 

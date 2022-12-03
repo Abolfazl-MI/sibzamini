@@ -5,7 +5,7 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import
+// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal
 
 import 'package:flutter/widgets.dart';
 
@@ -14,6 +14,9 @@ class $AssetsFontsGen {
 
   /// File path: assets/fonts/YekanBakh-Regular.ttf
   String get yekanBakhRegular => 'assets/fonts/YekanBakh-Regular.ttf';
+
+  /// List of all assets
+  List<String> get values => [yekanBakhRegular];
 }
 
 class $AssetsIconsGen {
@@ -89,6 +92,33 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/search.svg
   String get search => 'assets/icons/search.svg';
+
+  /// List of all assets
+  List<dynamic> get values => [
+        arrowLeft,
+        email2,
+        group,
+        image,
+        locationlocationFill,
+        locationlocationOutline,
+        arrowBackFiiled,
+        arrowBackThinBlue,
+        chat,
+        commentsFill,
+        commentsOutline,
+        heart,
+        heart2,
+        homeFill,
+        homeOutline,
+        iPad,
+        location,
+        locationSearch,
+        logo,
+        logos,
+        menu,
+        menuFILL0Wght400GRAD0Opsz481,
+        search
+      ];
 }
 
 class $AssetsImagesGen {
@@ -116,6 +146,26 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/slaon.png
   AssetGenImage get slaon => const AssetGenImage('assets/images/slaon.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [
+        cardbg,
+        fakeMap,
+        femaleHairdresserMakingHairstyleRedheadWomanBeautySalon,
+        hairdresserCuttingLongHairSalonBlond1293568081,
+        modernBeautySalonInterior2,
+        slaon
+      ];
+}
+
+class $AssetsLottiesGen {
+  const $AssetsLottiesGen();
+
+  /// File path: assets/lotties/loading.json
+  String get loading => 'assets/lotties/loading.json';
+
+  /// List of all assets
+  List<String> get values => [loading];
 }
 
 class Assets {
@@ -124,6 +174,7 @@ class Assets {
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
 }
 
 class AssetGenImage {
@@ -183,6 +234,8 @@ class AssetGenImage {
       cacheHeight: cacheHeight,
     );
   }
+
+  ImageProvider provider() => AssetImage(_assetName);
 
   String get path => _assetName;
 

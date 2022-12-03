@@ -1,5 +1,5 @@
 const String rSplashScreen = '/';
-const String rLoginScreen = '/registrationScreen';
+const String rLoginScreen = '/loginScreen';
 const String rSignUpScreen='/signupScreen';
 const String rVerifyCodeScreen = '/verifyCodeScreen';
 const String rHomeScreen = '/homeScreen';

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:persian_number_utility/persian_number_utility.dart';
@@ -19,6 +18,7 @@ class RegistrationController extends GetxController {
   final LocationServices _locationServices = LocationServices();
   int timeLaps = 60;
   bool isEnable = false;
+  int maxResendCode = 3;
   Rx<String> errorMessage = ''.obs;
   Rx<bool> hadSendCodeBefore = false.obs;
   bool isLoading = false;
@@ -27,9 +27,10 @@ class RegistrationController extends GetxController {
     if (value == null || value.isEmpty) {
       errorMessage.value = PHONE_NUMBER_REQUIRED;
       return PHONE_NUMBER_REQUIRED;
-    } else if (!value.isValidIranianMobileNumber()) {
-      return PHONE_NUMBER_INVALID;
     }
+    // else if (!value.isValidIranianMobileNumber()) {
+    //   return PHONE_NUMBER_INVALID;
+    // }
     return null;
   }
 
@@ -56,9 +57,25 @@ class RegistrationController extends GetxController {
     }
   }
 
-
   // resends the otp code
-  resendVerfiyCode() async {
+  resendVerfiyCodeTimer() async {
+    if (maxResendCode == 0) {
+
+      Get.snackbar(
+          '\u{1F641}' ' یکم صبر کنید  ', 'لطفا کمی صبر کنید ،دوباره تلاش کنید ',
+          backgroundColor: Colors.red);
+      await Future.delayed(Duration(seconds: 5),(){
+        maxResendCode=3;
+        update();
+      });
+    }
+    if (timeLaps == 0 && maxResendCode > 0) {
+      maxResendCode = maxResendCode - 1;
+      update();
+      // await _apiServices.loginUserAccount(phoneNumber: Get.arguments['mobile']);
+      timeLaps = 50;
+      update();
+    }
     Timer.periodic(Duration(seconds: 1), (timer) {
       timeLaps = timeLaps - 1;
       update();
@@ -66,16 +83,8 @@ class RegistrationController extends GetxController {
         timer.cancel();
         update();
       }
-      print(timeLaps);
+      // print(timeLaps);
     });
-    if (timeLaps == 0) {
-      timeLaps = 50;
-      update();
-
-      // TODO: RESIND FUNCTIONALITY  HERE
-      print('sended code');
-    }
-    update();
   }
 
   // registerUser
@@ -133,7 +142,8 @@ class RegistrationController extends GetxController {
       Get.snackbar(
           '\u{1F642}' 'موفقیت آمیز بود', 'کد احراز هویت برای شما ارسال شد',
           backgroundColor: Colors.green);
-      Get.offNamed(rVerifyCodeScreen);
+      await Future.delayed(Duration(seconds: 3));
+      Get.offNamed(rVerifyCodeScreen, arguments: {'mobile': phoneNumber});
     }
     if (result is DataFailState) {
       isLoading = false;
@@ -149,20 +159,19 @@ class RegistrationController extends GetxController {
     update();
     DataState<User> resualt = await _apiServices.confirmUserOtp(
         otpCode: otpCode, phoneNumber: phoneNumber);
-    if (resualt is DataSuccesState){
-        await _sharedStorageService.saveUserToken(resualt.data!.token!);
-        isLoading=false;
-        update();
-         Get.snackbar(
-          '\u{1F642}' 'موفقیت آمیز بود', 'وارد شدید، خوش امدید',
+    if (resualt is DataSuccesState) {
+      await _sharedStorageService.saveUserToken(resualt.data!.token!);
+      isLoading = false;
+      update();
+      Get.snackbar('\u{1F642}' 'موفقیت آمیز بود', 'وارد شدید، خوش امدید',
           backgroundColor: Colors.green);
-          Get.offNamed(rHomeScreen,arguments: {'user':resualt.data});
+      Get.offNamed(rHomeScreen, arguments: {'user': resualt.data});
     }
-    if(resualt is DataFailState){
-        isLoading=false;
-        update();
-        Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', resualt.error!,
-            backgroundColor: Colors.red);
+    if (resualt is DataFailState) {
+      isLoading = false;
+      update();
+      Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', resualt.error!,
+          backgroundColor: Colors.red);
     }
   }
 }

@@ -47,7 +47,7 @@ class SharedStorageService {
       if (token == null) {
         return false;
       }
-      if (token != null) {
+      if (token.isNotEmpty) {
         return true;
       }
       return false;

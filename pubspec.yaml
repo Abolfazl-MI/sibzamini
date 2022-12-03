@@ -30,6 +30,8 @@ dependencies:
   geocoding: 
   shared_preferences: 
   equatable: 
+  lottie: 
+  connectivity_plus: ^0.0.1
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +49,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/fonts/
+    - assets/lotties/
 
   fonts:
     - family: YekanBakh
