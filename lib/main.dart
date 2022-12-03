@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:sibzamini/gen/fonts.gen.dart';
-import 'package:sibzamini/models/services/local/shared_service.dart';
+import 'package:sibzamini/services/local/shared_service.dart';
 import 'package:sibzamini/views/views.dart';
 
 void main()async {
