@@ -14,33 +14,30 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  cupertino_icons: 
-  get:  
-  dio:  
-  carousel_slider:  
-  flutter_svg:  
-  persian_number_utility:  
-  rate_in_stars:  
-  smooth_page_indicator: 
+  cupertino_icons: ^1.0.5
+  get: ^4.6.5
+  dio: ^4.0.6 
+  carousel_slider: ^4.1.1 
+  flutter_svg: ^1.1.6 
+  persian_number_utility: ^1.1.2
+  rate_in_stars:  ^0.0.3
+  smooth_page_indicator: ^1.0.0+2
   flutter_rating_bar: 
-  # connectivity_plus: 
-  # lottie: 
-  json_annotation: 
-  geolocator: 
-  geocoding: 
-  shared_preferences: 
-  equatable: 
-  lottie: 
-  connectivity_plus: ^0.0.1
-
+  json_annotation: ^4.0.1
+  geolocator: ^9.0.2
+  geocoding: ^2.0.5
+  shared_preferences: ^2.0.15
+  equatable: ^2.0.5
+  lottie: ^2.0.0
+  connectivity_plus: ^3.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: 
-  flutter_gen_runner: 
-  build_runner: 
-  json_serializable: 
+  flutter_lints: ^2.0.1
+  flutter_gen_runner: ^5.1.0+1
+  build_runner: ^2.3.2
+  json_serializable: ^6.5.4 
 
 flutter:
   uses-material-design: true
