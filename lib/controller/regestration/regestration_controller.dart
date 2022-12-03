@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart' hide FormData;
-import 'package:persian_number_utility/persian_number_utility.dart';
-import 'package:sibzamini/core/data_staes.dart';
 
+import 'package:get/get.dart' hide FormData;
+
+import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/core/error_code.dart';
+import 'package:sibzamini/models/user_model/user_modle.dart';
 import 'package:sibzamini/services/local/location_service.dart';
 import 'package:sibzamini/services/local/shared_service.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
-import 'package:sibzamini/models/user_model/user_modle.dart';
 import 'package:sibzamini/views/views.dart';
 
 class RegistrationController extends GetxController {
