@@ -5,7 +5,6 @@ import 'package:json_annotation/json_annotation.dart';
 part 'user_modle.g.dart';
 
 @JsonSerializable()
-@immutable
 class User extends Equatable {
   final String? name;
   final String? city;
