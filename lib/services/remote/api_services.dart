@@ -3,6 +3,7 @@ import 'dart:developer';
 import "package:dio/dio.dart";
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/core/error_code.dart';
+import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/models/user_model/user_modle.dart';
 
@@ -27,7 +28,6 @@ class ApiServices {
       Response response = await _dio.post(register, data: data);
       print(response.data);
       if (response.statusCode == 200) {
-        
         User user = User.fromJson(response.data);
         return DataSuccesState(user);
       }
@@ -37,22 +37,22 @@ class ApiServices {
     }
   }
 
-  Future<DataState<User>> confirmUserOtp({required String otpCode, required String phoneNumber}) async {
-    try{
-      FormData data=FormData.fromMap({
-        'mobile':phoneNumber, 
-        'token':otpCode
-      });
+  Future<DataState<User>> confirmUserOtp(
+      {required String otpCode, required String phoneNumber}) async {
+    try {
+      FormData data =
+          FormData.fromMap({'mobile': phoneNumber, 'token': otpCode});
       Response response = await _dio.post(loginCheck, data: data);
-      if(response.statusCode==200){
-          User user =User.fromJson(response.data);
-          return DataSuccesState(user);
+      if (response.statusCode == 200) {
+        User user = User.fromJson(response.data);
+        return DataSuccesState(user);
       }
-      if(response.statusCode==404 &&  response.data['response']=="invalid token"){
+      if (response.statusCode == 404 &&
+          response.data['response'] == "invalid token") {
         return DataFailState('کد وارد شده صحیح نمیباشد');
       }
       return DataFailState(SOMETHING_WENT_WRONG);
-    }catch(e){
+    } catch (e) {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
@@ -76,8 +76,20 @@ class ApiServices {
     }
   }
 
-  getSalonList({required String cityName}) {
-    // TODO:impelemnt the getting list of sallons
+  Future<DataState<List<Salon>>> getSalonList(
+      {required String cityName, required String path}) async {
+    try {
+      FormData data = FormData.fromMap({'city': cityName});
+      Response response = await _dio.post(path, data: data);
+      if(response.statusCode==200){
+          List<Map<String,dynamic>> rawData=response.data;
+          List<Salon> salons=rawData.map((e) => Salon.fromJson(e)).toList();
+          return DataSuccesState(salons);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
   }
 
   getSalonDetail() {
