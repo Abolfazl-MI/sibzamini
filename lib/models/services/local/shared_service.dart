@@ -7,13 +7,22 @@ import 'dart:developer';
 class SharedStorageService {
   SharedPreferences? _pref;
   final String _token = 'token';
+
+  SharedStorageService(){
+    _initPerfs();
+  }
+
+
   // initiate the pref service at main
-  Future<void> initPerfs() async {
+  Future<void> _initPerfs() async {
     _pref = await SharedPreferences.getInstance();
   }
 
   // saves user token to shared db
   Future<void> saveUserToken(String value) async {
+    if(_pref ==null){
+      _pref=await SharedPreferences.getInstance();
+    }
     try {
       await _pref!.setString(_token, value);
     } catch (e) {
@@ -23,6 +32,9 @@ class SharedStorageService {
 
 // deletes user id form db
   Future<void> deleteUserToken() async {
+    if(_pref ==null){
+      _pref=await SharedPreferences.getInstance();
+    }
     try {
       await _pref!.remove(_token);
     } catch (e) {
@@ -32,6 +44,9 @@ class SharedStorageService {
 
 // return userId
   Future getuserToken() async {
+    if(_pref ==null){
+      _pref=await SharedPreferences.getInstance();
+    }
     try {
       String? userId = _pref!.getString(_token);
       return userId;
@@ -42,6 +57,9 @@ class SharedStorageService {
 
   // cheecks if user  had logedin before or not
   Future <bool> checkLogin() async {
+    if(_pref ==null){
+      _pref=await SharedPreferences.getInstance();
+    }
     try {
       String? token = _pref!.getString(_token);
       if (token == null) {

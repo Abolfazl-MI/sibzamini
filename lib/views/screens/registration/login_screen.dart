@@ -64,6 +64,7 @@ class RegistrationScreen extends GetView<RegistrationController> {
                               ),
                             ),
                             AppInput(
+                                keyboardType: TextInputType.number,
                                 controller: phoneNumberController,
                                 hintText: "*******0912".toPersianDigit(),
                                 onchange: (value) {

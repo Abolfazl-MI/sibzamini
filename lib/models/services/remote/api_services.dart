@@ -25,7 +25,9 @@ class ApiServices {
       FormData data =
           FormData.fromMap({'name': name, 'mobile': phoneNumber, 'city': city});
       Response response = await _dio.post(register, data: data);
+      print(response.data);
       if (response.statusCode == 200) {
+        
         User user = User.fromJson(response.data);
         return DataSuccesState(user);
       }

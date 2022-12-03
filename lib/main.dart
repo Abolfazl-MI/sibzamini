@@ -7,7 +7,7 @@ import 'package:sibzamini/views/views.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
- await SharedStorageService().initPerfs();
+//  await SharedStorageService().initPerfs();
   runApp(const MyApp());
 }
 

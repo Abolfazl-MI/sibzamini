@@ -57,6 +57,7 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                               ),
                             ),
                             AppInput(
+                              keyboardType: TextInputType.number,
                                 hintText: '2568'.toPersianDigit(),
                                 controller: otpController,
                                 onchange: (value) {

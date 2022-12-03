@@ -88,6 +88,7 @@ class RegistrationController extends GetxController {
   }
 
   // registerUser
+// ! incomplited cause of city location service
 
   Future<void> createUserAccount({
     required String name,
@@ -109,6 +110,7 @@ class RegistrationController extends GetxController {
             '\u{1F610}' 'سرویس مکان یابی روشن نیست', DISSABLED_LOCATION_SERVICE,
             backgroundColor: Colors.red);
       }
+      // if(city.error==DISSABLED_LOCATION_SERVICE)
     }
 
     if (city is DataSuccesState) {

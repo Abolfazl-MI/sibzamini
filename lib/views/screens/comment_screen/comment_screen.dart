@@ -107,6 +107,7 @@ class CommentScreen extends GetView<DetailController> {
                         .copyWith(color: SolidColors.textColor5),
                   ),
                   AppInput(
+                    keyboardType: TextInputType.name,
                     fillColor: Color(0xffF5F7FB),
                     controller: nameController,
                     hintTextstyle: AppTextTheme.subCaption
@@ -131,6 +132,7 @@ class CommentScreen extends GetView<DetailController> {
                         .copyWith(color: SolidColors.textColor5),
                   ),
                   AppInput(
+                    keyboardType: TextInputType.emailAddress,
                     fillColor: Color(0xffF5F7FB),
                     controller: nameController,
                     hintTextstyle: AppTextTheme.subCaption
@@ -259,80 +261,78 @@ class CommentScreen extends GetView<DetailController> {
 
           SliverList(
             delegate: SliverChildBuilderDelegate((context, index) => Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom:
-                          BorderSide(color: SolidColors.borderColor2)),
-                  color: Colors.white),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Column(
-                children: [
-                  /// [OTHER USER INFO AND RATING SECTION ]
-                  Row(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(color: SolidColors.borderColor2)),
+                      color: Colors.white),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Column(
                     children: [
-                      CircleAvatar(
-                        maxRadius: 25,
-                        backgroundColor: SolidColors.darkGrey,
-                        child: Center(
-                          child: Transform.scale(
-                            scale: 0.9,
-                            child: SvgPicture.asset(Assets.icons.group),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      /// [OTHER USER INFO AND RATING SECTION ]
+                      Row(
                         children: [
-                          ///TODO [userName get from server]
-                          Text(
-                            'ابوالفضل مشهدی',
-                            style: AppTextTheme.captionBold,
+                          CircleAvatar(
+                            maxRadius: 25,
+                            backgroundColor: SolidColors.darkGrey,
+                            child: Center(
+                              child: Transform.scale(
+                                scale: 0.9,
+                                child: SvgPicture.asset(Assets.icons.group),
+                              ),
+                            ),
                           ),
-                          Row(
-                            // TODO SHOULD GET FROM SERVER
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              RatingStars(
-                                iconSize: 18,
-                                rating: 3,
-                                editable: false,
-                                color: SolidColors.yellow,
+                              ///TODO [userName get from server]
+                              Text(
+                                'ابوالفضل مشهدی',
+                                style: AppTextTheme.captionBold,
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              // TODO SHOULD GET FORM SERVER BASED USER RATING COUNT
-                              Text('متوسط')
+                              Row(
+                                // TODO SHOULD GET FROM SERVER
+                                children: [
+                                  RatingStars(
+                                    iconSize: 18,
+                                    rating: 3,
+                                    editable: false,
+                                    color: SolidColors.yellow,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  // TODO SHOULD GET FORM SERVER BASED USER RATING COUNT
+                                  Text('متوسط')
+                                ],
+                              )
                             ],
                           )
                         ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: width,
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد ',
+                          textAlign: TextAlign.justify,
+                          style: AppTextTheme.baseStyle
+                              .copyWith(color: SolidColors.textColor5),
+                        ),
+                        decoration: BoxDecoration(
+                            color: SolidColors.darkGrey,
+                            border: Border.all(color: SolidColors.borderColor2),
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      SizedBox(
+                        height: 5,
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: width,
-                    padding: EdgeInsets.all(15),
-                    child: Text(
-                      'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد ',
-                      textAlign: TextAlign.justify,
-                      style: AppTextTheme.baseStyle
-                          .copyWith(color: SolidColors.textColor5),
-                    ),
-                    decoration: BoxDecoration(
-                        color: SolidColors.darkGrey,
-                        border:
-                            Border.all(color: SolidColors.borderColor2),
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  )
-                ],
-              ),
-            )),
+                )),
           )
         ],
       ),

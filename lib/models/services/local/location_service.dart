@@ -3,9 +3,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/core/error_code.dart';
 import 'dart:developer';
+
 class LocationServices {
-
-
   Future<DataState<String>> getUserCityLocation() async {
     log('********Getting user location********');
     bool? isServcesEnabled;
@@ -17,12 +16,12 @@ class LocationServices {
         return DataFailState(DISSABLED_LOCATION_SERVICE);
       }
       locationPermission = await Geolocator.checkPermission();
-      switch (locationPermission) {
-        case LocationPermission.denied:
-          locationPermission = await Geolocator.requestPermission();
-          break;
-        case LocationPermission.deniedForever:
-          return DataFailState(LOCATION_ACCESS_DENIDD);
+
+      if (locationPermission == LocationPermission.denied) {
+        locationPermission = await Geolocator.requestPermission();
+      }
+      if(locationPermission == LocationPermission.deniedForever){
+        return DataFailState(LOCATION_ACCESS_DENIDD);
       }
       currentPossition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best,
@@ -30,13 +29,12 @@ class LocationServices {
       );
       List<Placemark> placemarks = await placemarkFromCoordinates(
           currentPossition.latitude, currentPossition.longitude);
-      Placemark current_city=placemarks[0];
+      Placemark current_city = placemarks[0];
       return DataSuccesState(current_city.locality);
     } catch (e) {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
-  Future requestPermission()async{
-    
-  }
+
+  Future requestPermission() async {}
 }
