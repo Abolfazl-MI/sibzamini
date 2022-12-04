@@ -8,3 +8,4 @@ const String newestSalon = '/new';
 const String salonServices = '/services'; //! id should added
 const String salonInfo = '/salon'; //! id shold added
 const String searchSalon='/search';
+const String salonComments='/comments/list';

@@ -3,6 +3,7 @@ import 'dart:developer';
 import "package:dio/dio.dart";
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/core/error_code.dart';
+import 'package:sibzamini/models/comment_model/comment_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/models/user_model/user_modle.dart';
@@ -81,10 +82,10 @@ class ApiServices {
     try {
       FormData data = FormData.fromMap({'city': cityName});
       Response response = await _dio.post(path, data: data);
-      if(response.statusCode==200){
-          List<Map<String,dynamic>> rawData=response.data;
-          List<Salon> salons=rawData.map((e) => Salon.fromJson(e)).toList();
-          return DataSuccesState(salons);
+      if (response.statusCode == 200) {
+        List<Map<String, dynamic>> rawData = response.data;
+        List<Salon> salons = rawData.map((e) => Salon.fromJson(e)).toList();
+        return DataSuccesState(salons);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
     } catch (e) {
@@ -92,8 +93,39 @@ class ApiServices {
     }
   }
 
-  getSalonDetail() {
-    // TODO: implement salon detail get
+  Future<DataState<Salon>> getSalonDetail({required int id}) async {
+    try {
+      Response response = await _dio.get('$salonInfo/$id');
+      if (response.statusCode == 200) {
+        Salon salon = Salon.fromJson(response.data);
+        return DataSuccesState(salon);
+      }
+      if (response.statusCode == 404) {
+        return DataFailState(SALON_NOT_FOUND);
+      }
+      return DataFailState(SALON_NOT_FOUND);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
+  }
+
+  Future<DataState<List<Comment>>> getSalonComments({required int id}) async {
+    try {
+      FormData data = FormData.fromMap({'salon': id});
+      Response response = await _dio.post(salonComments, data: data);
+      if (response.statusCode == 200) {
+        List<Map<String, dynamic>> rawData = response.data;
+        List<Comment> comments =
+            rawData.map((e) => Comment.fromJson(e)).toList();
+        return DataSuccesState(comments);
+      }
+      if (response.statusCode == 422) {
+        return DataFailState(SALON_NOT_FOUND);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
   }
 
   sendComment() {
