@@ -10,3 +10,4 @@ const String NAME_REQUIRED='وارد کردن نام الزامی است';
 const String NAME_INVALID='نام را درست وارد کنید';
 const String NO_INTERNET_CONNECTION="به اینترنت متصل نیستید، اتصال خود را چک کنید";
 const String VPN_CONNCETION_DETECTED='لطفا اتصال فیلترشکن را غیر فعال کنید';
+const String SALON_NOT_FOUND="سالن با مشخصات ذکر شده، بافت نشد";
