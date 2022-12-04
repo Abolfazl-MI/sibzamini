@@ -161,11 +161,14 @@ class $AssetsImagesGen {
 class $AssetsLottiesGen {
   const $AssetsLottiesGen();
 
+  /// File path: assets/lotties/error.json
+  String get error => 'assets/lotties/error.json';
+
   /// File path: assets/lotties/loading.json
   String get loading => 'assets/lotties/loading.json';
 
   /// List of all assets
-  List<String> get values => [loading];
+  List<String> get values => [error, loading];
 }
 
 class Assets {
