@@ -22,7 +22,7 @@ class SplashScreenController extends GetxController {
     }
     if (userLocation is DataFailState) {
       Get.offNamed(rErrorScreen,
-          arguments: {'location_error': userLocation.error});
+          arguments: {'error': userLocation.error});
     }
   }
 
@@ -40,7 +40,7 @@ class SplashScreenController extends GetxController {
     }
     if (isInterNetEnabled is DataFailState) {
       Get.offNamed(rErrorScreen,
-          arguments: {'splash_error': isInterNetEnabled.error});
+          arguments: {'error': isInterNetEnabled.error});
     }
   }
 

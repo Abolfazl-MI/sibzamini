@@ -38,7 +38,7 @@ class DetailController extends GetxController {
     }
     if (salonDetailResult is DataFailState) {
       Get.offNamed(rErrorScreen,
-          arguments: {'detail_error': salonDetailResult.error});
+          arguments: {'error': salonDetailResult.error});
     }
   }
 
