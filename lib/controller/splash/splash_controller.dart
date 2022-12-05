@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 
 import 'package:sibzamini/core/data_staes.dart';
-import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/services/local/location_service.dart';
 import 'package:sibzamini/services/local/shared_service.dart';
