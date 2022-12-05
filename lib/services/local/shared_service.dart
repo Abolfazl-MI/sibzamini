@@ -1,77 +1,54 @@
-
-
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sibzamini/core/data_staes.dart';
-import 'dart:developer';
 
 class SharedStorageService {
-  SharedPreferences? _pref;
-  final String _token = 'token';
+   late SharedPreferences _pref;
 
-  SharedStorageService(){
-    _initPerfs();
+  Future<void> init()async{
+   _pref= await SharedPreferences.getInstance();
   }
-
-
-  // initiate the pref service at main
-  Future<void> _initPerfs() async {
-    _pref = await SharedPreferences.getInstance();
+  final String _token = 'token';
+  final String _city = 'city';
+  
+  SharedStorageService(){
+    init();
   }
 
   // saves user token to shared db
   Future<void> saveUserToken(String value) async {
-    if(_pref ==null){
-      _pref=await SharedPreferences.getInstance();
-    }
-    try {
-      await _pref!.setString(_token, value);
-    } catch (e) {
-      log(e.toString());
-    }
+    await _pref.setString(_token, value);
   }
 
 // deletes user id form db
   Future<void> deleteUserToken() async {
-    if(_pref ==null){
-      _pref=await SharedPreferences.getInstance();
-    }
-    try {
-      await _pref!.remove(_token);
-    } catch (e) {
-      log(e.toString());
-    }
+    await _pref.remove(_token);
   }
 
 // return userId
-  Future getuserToken() async {
-    if(_pref ==null){
-      _pref=await SharedPreferences.getInstance();
-    }
-    try {
-      String? userId = _pref!.getString(_token);
-      return userId;
-    } catch (e) {
-      log(e.toString());
-    }
+  Future<String?> getuserToken() async {
+    return _pref.getString(_token);
   }
 
   // cheecks if user  had logedin before or not
-  Future <bool> checkLogin() async {
-    if(_pref ==null){
-      _pref=await SharedPreferences.getInstance();
-    }
-    try {
-      String? token = _pref!.getString(_token);
-      if (token == null) {
-        return false;
-      }
-      if (token.isNotEmpty) {
-        return true;
-      }
-      return false;
-    } catch (e) {
-      log(e.toString());
+  Future<bool> checkLogin() async {
+    String? token = _pref.getString(_token);
+    if (token == null) {
       return false;
     }
+    if (token.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+  // saves user city
+  Future<void> saveUserCity(String city) async {
+    await _pref.setString(_city, city);
+  }
+  //deletes user city
+  Future<void> deleteUserCity() async {
+    await _pref.remove(_city);
+  }
+  // returns the user city
+  Future<String?> getUserCity() async {
+    return _pref.getString(_city);
   }
 }
