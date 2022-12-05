@@ -1,12 +1,12 @@
-import 'dart:developer';
-
 import "package:dio/dio.dart";
+
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/core/error_code.dart';
+import 'package:sibzamini/models/category_model/category_model.dart';
 import 'package:sibzamini/models/comment_model/comment_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
-import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/models/user_model/user_modle.dart';
+import 'package:sibzamini/services/remote/api_const.dart';
 
 class ApiServices {
   final Dio _dio = Dio(
@@ -128,6 +128,31 @@ class ApiServices {
     }
   }
 
+  Future<DataState<List<Salon>>> getSalonByCategories({
+    required String city,
+    required SalonCategory category,
+  }) async {
+    try {
+      FormData data = FormData.fromMap({
+        'city': city,
+        'category': category.slug,
+      });
+      Response response = await _dio.post(searchSalon, data: data);
+      if (response.statusCode == 200) {
+        List<Map<String, dynamic>> rawData = response.data;
+        List<Salon> salons = rawData.map((e) => Salon.fromJson(e)).toList();
+        return DataSuccesState(salons);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+      // if(response.statusCode==)
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
+  }
+
+  getSalonBySearch() {
+    // TODO IMPLEMENT THE SEARCH WITH SALONS
+  }
   sendComment() {
     // TODO: impelement the user post comment
   }
@@ -140,6 +165,7 @@ class ApiServices {
     // TODO:implement the  get categories
   }
 
+  getUserCityLocation() {}
   cancleRequest() {
     return CancelToken().cancel();
   }
