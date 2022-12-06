@@ -60,10 +60,10 @@ class SignUpScreen extends GetView<RegistrationController> {
                               ),
                             ),
                             AppInput(
-                                keyboardType: TextInputType.name,
+                                // keyboardType: TextInputType.name,
                                 icon: const Icon(Icons.person_outline),
                                 controller: nameController,
-                                hintText: "ابوالفضل".toPersianDigit(),
+                                hintText: "abolfazl".toPersianDigit(),
                                 onchange: (value) {},
                                 validator: (value) =>
                                     controller.validateName(value)),
@@ -94,6 +94,7 @@ class SignUpScreen extends GetView<RegistrationController> {
                             InkWell(
                               onTap: () {
                                 if (formKey.currentState!.validate()) {
+                                  FocusManager.instance.primaryFocus?.unfocus();
                                   controller.createUserAccount(
                                     name: nameController.text,
                                     phoneNumber: phoneNumberController.text

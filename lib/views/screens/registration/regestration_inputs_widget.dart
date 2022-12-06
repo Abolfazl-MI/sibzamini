@@ -17,13 +17,13 @@ class AppInput extends StatelessWidget {
   final Color? fillColor;
   final Color? borderColor;
   final TextStyle? hintTextstyle;
-  final TextInputType keyboardType;
+  final TextInputType ? keyboardType;
   String? Function(String?)? validator;
 
   AppInput(
       {Key? key,
 
-      required this.keyboardType,
+       this.keyboardType,
       required this.controller,
       this.onchange,
       this.validator,
@@ -38,7 +38,7 @@ class AppInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       textAlign:TextAlign.center,
-      keyboardType: keyboardType,
+      keyboardType: keyboardType ?? null,
       validator: validator,
       controller: controller,
       onChanged: onchange,
