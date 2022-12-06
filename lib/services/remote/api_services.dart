@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import "package:dio/dio.dart";
 
 import 'package:sibzamini/core/data_staes.dart';
@@ -32,10 +34,20 @@ class ApiServices {
         User user = User.fromJson(response.data);
         return DataSuccesState(user);
       }
+      if (response.statusCode ==422) {
+        return DataFailState(response.data['errors']['mobile'][0]);
+      }
       return DataFailState(SOMETHING_WENT_WRONG);
-    } catch (e) {
+    } on DioError catch(e){
+      if(e.response!.statusCode==422){
+        return DataFailState(e.response!.data['errors']['mobile'][0]);
+      }
       return DataFailState(SOMETHING_WENT_WRONG);
     }
+    catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
+  
   }
 
   Future<DataState<User>> confirmUserOtp(
@@ -58,8 +70,7 @@ class ApiServices {
     }
   }
 
-  Future<DataState<bool>> loginUserAccount(
-      {required String phoneNumber}) async {
+  Future<DataState<bool>> requestOtpCode({required String phoneNumber}) async {
     try {
       FormData data = FormData.fromMap({'mobile': phoneNumber});
 
