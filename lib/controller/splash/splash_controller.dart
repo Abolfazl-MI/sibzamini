@@ -18,6 +18,7 @@ class SplashScreenController extends GetxController {
     DataState<String> userLocation =
         await _locationServices.getUserCityLocation();
     if (userLocation is DataSuccesState) {
+      await _storageService.saveUserCity(userLocation.data!);
       return userLocation;
     }
     if (userLocation is DataFailState) {
@@ -27,13 +28,15 @@ class SplashScreenController extends GetxController {
   }
 
   Future<void> _splashScreenDecition() async {
+    await Future.delayed(Duration(seconds: 3));
     DataState<bool> isInterNetEnabled =
         await _internetConnectivityService.isInterNetEnabled();
     if (isInterNetEnabled is DataSuccesState) {
       bool checkUserLogin = await _storageService.checkLogin();
       if (checkUserLogin) {
-        String userLocation = _getUserLocation();
-        Get.off(rHomeScreen, arguments: {'city': userLocation});
+        // String userLocation = _getUserLocation();
+        // ! should get user currennt city location
+        Get.offNamed(rHomeScreen, arguments: {'city': 'Tehran'});
       } else {
         Get.offNamed(rLoginScreen);
       }
