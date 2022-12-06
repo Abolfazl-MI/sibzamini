@@ -60,12 +60,11 @@ class RegistrationController extends GetxController {
   // resends the otp code
   resendVerfiyCodeTimer() async {
     if (maxResendCode == 0) {
-
       Get.snackbar(
           '\u{1F641}' ' یکم صبر کنید  ', 'لطفا کمی صبر کنید ،دوباره تلاش کنید ',
           backgroundColor: Colors.red);
-      await Future.delayed(Duration(seconds: 5),(){
-        maxResendCode=3;
+      await Future.delayed(Duration(seconds: 5), () {
+        maxResendCode = 3;
         update();
       });
     }
@@ -96,48 +95,52 @@ class RegistrationController extends GetxController {
   }) async {
     isLoading = true;
     update();
-    DataState<String> city = await _locationServices.getUserCityLocation();
-    if (city is DataFailState) {
-      // _apiServices.cancleRequest();
+    // DataState<String> city = await _locationServices.getUserCityLocation();
+    // if (city is DataFailState) {
+    //   // _apiServices.cancleRequest();
+    //   isLoading = false;
+    //   update();
+    //   if (city.error == LOCATION_ACCESS_DENIDD) {
+    //     Get.snackbar('\u{1F610}' 'دسترسی مکان محدود شد', LOCATION_ACCESS_DENIDD,
+    //         backgroundColor: Colors.red);
+    //   }
+    //   if (city.error == DISSABLED_LOCATION_SERVICE) {
+    //     Get.snackbar(
+    //         '\u{1F610}' 'سرویس مکان یابی روشن نیست', DISSABLED_LOCATION_SERVICE,
+    //         backgroundColor: Colors.red);
+    //   }
+    //   // if(city.error==DISSABLED_LOCATION_SERVICE)
+    // }
+
+    // if (city is DataSuccesState) {
+    // ! hard code city , should get from user
+    DataState<User> result = await _apiServices.createUserAccount(
+        name: name, phoneNumber: phoneNumber, city: 'tehran');
+    if (result is DataSuccesState) {
+      await _apiServices.requestOtpCode(phoneNumber: phoneNumber);
       isLoading = false;
       update();
-      if (city.error == LOCATION_ACCESS_DENIDD) {
-        Get.snackbar('\u{1F610}' 'دسترسی مکان محدود شد', LOCATION_ACCESS_DENIDD,
-            backgroundColor: Colors.red);
-      }
-      if (city.error == DISSABLED_LOCATION_SERVICE) {
-        Get.snackbar(
-            '\u{1F610}' 'سرویس مکان یابی روشن نیست', DISSABLED_LOCATION_SERVICE,
-            backgroundColor: Colors.red);
-      }
-      // if(city.error==DISSABLED_LOCATION_SERVICE)
+      Get.snackbar(
+          '\u{1F642}' 'موفقیت آمیز بود', 'کد احراز هویت برای شما ارسال شد',
+          backgroundColor: Colors.green);
+      await _sharedStorageService.saveUserToken(result.data!.token!);
+      Get.offNamed(rVerifyCodeScreen, arguments: {'mobile': phoneNumber});
     }
-
-    if (city is DataSuccesState) {
-      DataState<User> result = await _apiServices.createUserAccount(
-          name: name, phoneNumber: phoneNumber, city: city.data!);
-      if (result is DataSuccesState) {
-        isLoading = false;
-        update();
-        Get.snackbar('\u{1F642}' 'موفقیت امیز بود', 'شما وارد شدید،خوش آمدید',
-            backgroundColor: Colors.green);
-        await _sharedStorageService.saveUserToken(result.data!.token!);
-        Get.offNamed(rHomeScreen, arguments: {'user': result.data});
-      }
-      if (result is DataFailState) {
-        isLoading = false;
-        update();
-        Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', result.error!,
-            backgroundColor: Colors.red);
-      }
+    if (result is DataFailState) {
+      isLoading = false;
+      update();
+      Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', result.error!,
+          colorText: Colors.white,
+          backgroundColor: Color.fromARGB(255, 236, 100, 90));
     }
+    // }
   }
 
   Future<void> requestLoginUser({required String phoneNumber}) async {
     isLoading = true;
     update();
     DataState<bool> result =
-        await _apiServices.loginUserAccount(phoneNumber: phoneNumber);
+        await _apiServices.requestOtpCode(phoneNumber: phoneNumber);
     if (result is DataSuccesState) {
       isLoading = false;
       update();
@@ -165,9 +168,10 @@ class RegistrationController extends GetxController {
       await _sharedStorageService.saveUserToken(resualt.data!.token!);
       isLoading = false;
       update();
-      Get.snackbar('\u{1F642}' 'موفقیت آمیز بود', 'وارد شدید، خوش امدید',
+       Get.snackbar('\u{1F642}' 'موفقیت امیز بود', 'شما وارد شدید،خوش آمدید',
           backgroundColor: Colors.green);
-      Get.offNamed(rHomeScreen, arguments: {'user': resualt.data});
+      await Future.delayed(Duration(seconds: 3));
+      Get.offNamed(rHomeScreen);
     }
     if (resualt is DataFailState) {
       isLoading = false;
