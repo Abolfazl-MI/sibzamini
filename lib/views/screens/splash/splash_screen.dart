@@ -5,7 +5,6 @@ import 'package:sibzamini/gen/assets.gen.dart';
 
 class SplashScreen extends GetView<SplashScreenController> {
   const SplashScreen({super.key});
-// TODO: connectivity check
   @override
   Widget build(BuildContext context) {
     return Scaffold(
