@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:convert';
 
 import "package:dio/dio.dart";
 
@@ -16,6 +17,7 @@ class ApiServices {
       baseUrl: 'http://sunict.ir/api/v1',
       headers: {
         'Accept': 'application/json',
+        'Content-Type':"application/json",
         'Authorization': 'x5rjvhs4dnq3k4ael7yfrr0xk4et9gzumbgyzw88q3u6yp529q',
       },
     ),
@@ -94,8 +96,8 @@ class ApiServices {
       FormData data = FormData.fromMap({'city': cityName});
       Response response = await _dio.post(path, data: data);
       if (response.statusCode == 200) {
-        List<Map<String, dynamic>> rawData = response.data;
-        List<Salon> salons = rawData.map((e) => Salon.fromJson(e)).toList();
+        List<dynamic>rawData=response.data;
+        List<Salon>salons=rawData.map((e) => Salon.fromJson(e)).toList();
         return DataSuccesState(salons);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
@@ -125,7 +127,7 @@ class ApiServices {
       FormData data = FormData.fromMap({'salon': id});
       Response response = await _dio.post(salonComments, data: data);
       if (response.statusCode == 200) {
-        List<Map<String, dynamic>> rawData = response.data;
+        List<dynamic> rawData = response.data;
         List<Comment> comments =
             rawData.map((e) => Comment.fromJson(e)).toList();
         return DataSuccesState(comments);
@@ -150,7 +152,7 @@ class ApiServices {
       });
       Response response = await _dio.post(searchSalon, data: data);
       if (response.statusCode == 200) {
-        List<Map<String, dynamic>> rawData = response.data;
+        List<dynamic> rawData = response.data;
         List<Salon> salons = rawData.map((e) => Salon.fromJson(e)).toList();
         return DataSuccesState(salons);
       }
@@ -165,18 +167,31 @@ class ApiServices {
     // TODO IMPLEMENT THE SEARCH WITH SALONS
   }
   sendComment() {
-    // TODO: impelement the user post comment
+    // TODO: impelement the user post comment 
   }
 
   bookMarkSalon() {
     // TODO:Implement the user book mark salon
   }
 
-  categoriesList() {
-    // TODO:implement the  get categories
+  Future<DataState<List<SalonCategory>>> categoriesList()async {
+    try{
+      Response response = await _dio.get(categories);
+      if(response.statusCode==200){
+        List<dynamic> rawData=response.data;
+        List<SalonCategory> categories= rawData.map((e) => SalonCategory.fromJson(e)).toList();
+        return DataSuccesState(categories);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }catch(e){
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
+
   }
 
-  getUserCityLocation() {}
+  getUserCityLocation() {
+    // TODO: impelenet the  user city from lat and long
+  }
   cancleRequest() {
     return CancelToken().cancel();
   }
