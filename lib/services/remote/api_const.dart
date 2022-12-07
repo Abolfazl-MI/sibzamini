@@ -8,5 +8,12 @@ const String newestSalon = '/new';
 const String salonServices = '/services'; //! id should added
 const String salonInfo = '/salon'; //! id shold added
 const String searchSalon='/search';
-const String salonComments='/comments/list';
+//  CATEGOTRY
 const String categories='/cats';
+// COMMENTS
+const String salonComments='/comments/list';
+const String newSalonComment='/comments/new';
+// BOOK MARK 
+const String bookMarkList='/bookmarks/list';
+const String bookMarkSalon='/bookmarks/add';
+const String deleteSalonBookMark='/bookmarks/delete';
