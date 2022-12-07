@@ -35,6 +35,7 @@ class HomeController extends GetxController {
     DataState<List<Salon>> result =
         await _apiServices.getSalonList(cityName: cityName, path: bestSalons);
     if (result is DataSuccesState) {
+        print(result.data);
       if (result.data != null) {
         bestSalonsList = result.data!;
         isLoading = false;
@@ -42,6 +43,8 @@ class HomeController extends GetxController {
       }
     }
     if (result is DataFailState) {
+        print(result.error);
+
       isLoading = false;
       update();
       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', result.error!,
@@ -53,13 +56,17 @@ class HomeController extends GetxController {
   Future<void> getNewesSalons({required String cityName}) async {
     DataState<List<Salon>> resualt =
         await _apiServices.getSalonList(cityName: cityName, path: newestSalon);
+      // print('{data:$}');
+    
     if (resualt is DataSuccesState) {
+      print(resualt.data);
       if (resualt.data != null) {
         newestSalonList = resualt.data!;
         update();
       }
     }
     if (resualt is DataFailState) {
+      print(resualt);
       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', resualt.error!,
           backgroundColor: Colors.red);
     }
@@ -76,10 +83,12 @@ class HomeController extends GetxController {
     DataState<List<Salon>> result = await _apiServices.getSalonByCategories(
         city: userCity!, category: category);
     if (result is DataSuccesState) {
+      print(result.data);
       salonsBasedOnCategory = result.data!;
       update();
     }
     if (result is DataFailState) {
+      print(result.error);
       Get.offNamed(rErrorScreen, arguments: {'error': result.error});
     }
   }
@@ -105,9 +114,9 @@ class HomeController extends GetxController {
 
   Future<void> getHomeFeedSalons({int? limit}) async {
     // todo should get user current city
-    getNewesSalons(cityName: 'tehran');
-    getBestSalons(cityName: 'tehran');
-    getSalonCategories();
+    await getNewesSalons(cityName: 'tehran');
+    await getBestSalons(cityName: 'tehran');
+    await getSalonCategories();
     print(bestSalonsList);
     print(newestSalonList);
   }
