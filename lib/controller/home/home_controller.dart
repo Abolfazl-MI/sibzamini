@@ -23,7 +23,7 @@ class HomeController extends GetxController {
   List<Salon> bestSalonsList = [];
   List<Salon> newestSalonList = [];
   List<Salon> salonsBasedOnCategory = [];
-  List<SalonCategory> salonCategories = [];
+  List<ServiceCategory> salonCategories = [];
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool isLoading = false;
   bool isCategoryLoadign=false;
@@ -75,7 +75,7 @@ class HomeController extends GetxController {
   // search Salons
   Future<void> searchSalons({required String salonQuery}) async {}
   // get salon base on categories
-  Future<void> getSalonByCategories({required SalonCategory category}) async {
+  Future<void> getSalonByCategories({required ServiceCategory category}) async {
     String? userCity = await _storageService.getUserCity();
     if (userCity == null) {
       // todo : should get user current city location
@@ -97,7 +97,7 @@ class HomeController extends GetxController {
   Future<void>getSalonCategories()async{
     isCategoryLoadign=true;
     update();
-    DataState<List<SalonCategory>> resualt= await _apiServices.categoriesList();
+    DataState<List<ServiceCategory>> resualt= await _apiServices.getCategoriesList();
     if(resualt is DataSuccesState){
       salonCategories=resualt.data!;
       isCategoryLoadign=false;
