@@ -1,14 +1,11 @@
-import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:sibzamini/models/category_model/category_model.dart';
+
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/models/category_model/category_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
-import '';
 import 'package:sibzamini/services/local/shared_service.dart';
 import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
@@ -26,27 +23,27 @@ class HomeController extends GetxController {
   List<ServiceCategory> salonCategories = [];
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool isLoading = false;
-  bool isCategoryLoadign=false;
+  bool isCategoryLoadign = false;
   //methods
   // get best Salons
   Future<void> getBestSalons({required String cityName}) async {
-    isLoading = true;
-    update();
+    // isLoading = true;
+    // update();
     DataState<List<Salon>> result =
         await _apiServices.getSalonList(cityName: cityName, path: bestSalons);
     if (result is DataSuccesState) {
-        print(result.data);
+      // print(result.data);
       if (result.data != null) {
         bestSalonsList = result.data!;
-        isLoading = false;
+        // isLoading = false;
         update();
       }
     }
     if (result is DataFailState) {
-        print(result.error);
+      // print(result.error);
 
-      isLoading = false;
-      update();
+      // isLoading = false;
+      // update();
       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', result.error!,
           backgroundColor: Colors.red);
     }
@@ -56,17 +53,17 @@ class HomeController extends GetxController {
   Future<void> getNewesSalons({required String cityName}) async {
     DataState<List<Salon>> resualt =
         await _apiServices.getSalonList(cityName: cityName, path: newestSalon);
-      // print('{data:$}');
-    
+    // print('{data:$}');
+
     if (resualt is DataSuccesState) {
-      print(resualt.data);
+      // print(resualt.data);
       if (resualt.data != null) {
         newestSalonList = resualt.data!;
         update();
       }
     }
     if (resualt is DataFailState) {
-      print(resualt);
+      // print(resualt);
       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', resualt.error!,
           backgroundColor: Colors.red);
     }
@@ -83,42 +80,47 @@ class HomeController extends GetxController {
     DataState<List<Salon>> result = await _apiServices.getSalonByCategories(
         city: userCity!, category: category);
     if (result is DataSuccesState) {
-      print(result.data);
+      // print(result.data);
       salonsBasedOnCategory = result.data!;
       update();
     }
     if (result is DataFailState) {
-      print(result.error);
+      // print(result.error);
       Get.offNamed(rErrorScreen, arguments: {'error': result.error});
     }
   }
 
   // get salons category
-  Future<void>getSalonCategories()async{
-    isCategoryLoadign=true;
-    update();
-    DataState<List<ServiceCategory>> resualt= await _apiServices.getCategoriesList();
-    if(resualt is DataSuccesState){
-      salonCategories=resualt.data!;
-      isCategoryLoadign=false;
+  Future<void> getSalonCategories() async {
+    // isCategoryLoadign=true;
+    // update();
+    DataState<List<ServiceCategory>> resualt =
+        await _apiServices.getCategoriesList();
+    if (resualt is DataSuccesState) {
+      salonCategories = resualt.data!;
+      // isCategoryLoadign=false;
       update();
     }
-    if(resualt is DataFailState){
-      isCategoryLoadign=false;
+    if (resualt is DataFailState) {
+      // isCategoryLoadign=false;
       update();
-       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', resualt.error!,
+      Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', resualt.error!,
           backgroundColor: Colors.red);
     }
   }
 
-
   Future<void> getHomeFeedSalons({int? limit}) async {
+    
+    isLoading = true;
+    update();
+    
     // todo should get user current city
     await getNewesSalons(cityName: 'tehran');
     await getBestSalons(cityName: 'tehran');
     await getSalonCategories();
-    print(bestSalonsList);
-    print(newestSalonList);
+    isLoading = false;
+    update();
+    
   }
 
   // opens the home darwer
