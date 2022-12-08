@@ -28,7 +28,7 @@ class SplashScreenController extends GetxController {
   }
 
   Future<void> _splashScreenDecition() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 1, milliseconds: 500));
     DataState<bool> isInterNetEnabled =
         await _internetConnectivityService.isInterNetEnabled();
     if (isInterNetEnabled is DataSuccesState) {
