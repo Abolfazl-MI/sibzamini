@@ -21,7 +21,7 @@ class ServiceCategory extends Equatable {
         slug,
       ];
 
-  factory ServiceCategory.fromJson(Map<String,dynamic>json)=>_$SalonCategoryFromJson(json);
+  factory ServiceCategory.fromJson(Map<String,dynamic>json)=>_$ServiceCategoryFromJson(json);
 
-  Map<String,dynamic> toJson()=>_$SalonCategoryToJson(this);
+  Map<String,dynamic> toJson()=>_$ServiceCategoryToJson(this);
 }
