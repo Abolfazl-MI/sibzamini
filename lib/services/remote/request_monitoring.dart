@@ -1,22 +1,23 @@
 //  this class used for monitoring the request and just for debugng goal
 
 import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 class ApiInterCeptor extends Interceptor{
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  Future onRequest(RequestOptions options, RequestInterceptorHandler handler)async {
     log('REQUEST [${options.method}]=> PATH: ${options.path}');
     return super.onRequest(options, handler);
   }
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  Future onResponse(Response response, ResponseInterceptorHandler handler)async {
     log('RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
     return super.onResponse(response, handler);
   }
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  Future onError(DioError err, ErrorInterceptorHandler handler)async {
     log('ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
     return super.onError(err, handler);
   }
