@@ -5,10 +5,12 @@ import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/models/category_model/category_model.dart';
 import 'package:sibzamini/models/comment_model/comment_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
+import 'package:sibzamini/models/services_model/services_model.dart';
 import 'package:sibzamini/models/user_model/user_modle.dart';
 import 'package:sibzamini/services/remote/api_const.dart';
+import 'package:sibzamini/services/remote/request_monitoring.dart';
 
-class ApiServices {
+class ApiServices extends Interceptor {
   // DIO CONFIGURATION
   final Dio _dio = Dio(
     BaseOptions(
@@ -19,7 +21,8 @@ class ApiServices {
         'Authorization': 'x5rjvhs4dnq3k4ael7yfrr0xk4et9gzumbgyzw88q3u6yp529q',
       },
     ),
-  );
+  )..interceptors.add(ApiInterCeptor());
+
   // sends name and user phone number to create account
   Future<DataState<User>> createUserAccount(
       {required String name,
@@ -29,7 +32,8 @@ class ApiServices {
       FormData data =
           FormData.fromMap({'name': name, 'mobile': phoneNumber, 'city': city});
       Response response = await _dio.post(register, data: data);
-      print(response.data);
+      // print(response.data);
+
       if (response.statusCode == 200) {
         User user = User.fromJson(response.data);
         return DataSuccesState(user);
@@ -75,7 +79,7 @@ class ApiServices {
       FormData data = FormData.fromMap({'mobile': phoneNumber});
 
       Response response = await _dio.post(login, data: data);
-      print(response.data);
+      // print(response.data);
       if (response.statusCode == 200) {
         return DataSuccesState(true);
       }
@@ -182,11 +186,10 @@ class ApiServices {
       }
       return DataFailState(NO_THING_FIND);
     } on DioError catch (e) {
-      if(e.response!.statusCode==404){
+      if (e.response!.statusCode == 404) {
         return DataFailState(NO_THING_FIND);
       }
       return DataFailState(NO_THING_FIND);
-
     } catch (e) {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
@@ -195,9 +198,29 @@ class ApiServices {
   sendComment() {
     // TODO: impelement the user post comment
   }
-
-  getSingleSalonServices() {
-    // TODO: implement the get single salon service
+// returns Salon services based on salon id passed
+  Future<DataState<List<SalonService>>> getSingleSalonServices(
+      {required int salonId}) async {
+    try {
+      Response response = await _dio.get('$salonServices/$salonId');
+      if (response.statusCode == 200) {
+        List<dynamic> rawData = response.data;
+        List<SalonService> salonServices =
+            rawData.map((e) => SalonService.fromJson(e)).toList();
+        return DataSuccesState(salonServices);
+      }
+      if (response.statusCode == 404) {
+        return DataFailState(NO_THING_FIND);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } on DioError catch (e) {
+      if (e.response!.statusCode == 404) {
+        return DataFailState(NO_THING_FIND);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
   }
 
   bookMarkSalon() {
