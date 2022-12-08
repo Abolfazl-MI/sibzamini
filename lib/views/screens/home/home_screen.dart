@@ -1,20 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 import 'package:sibzamini/controller/controller.dart';
-
 import 'package:sibzamini/gen/assets.gen.dart';
-
 import 'package:sibzamini/views/global/constants/app_drawer.dart';
-
+import 'package:sibzamini/views/global/widgets/loading_widget.dart';
 import 'package:sibzamini/views/screens/home/carsol_widget.dart';
 import 'package:sibzamini/views/screens/home/slider_widgets/slider_list.dart';
 import 'package:sibzamini/views/views.dart';
 
 import 'slider_widgets/slider_header.dart';
+
+import 'package:sibzamini/views/global/widgets/custome_shimmerh_loading.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -40,7 +40,7 @@ class HomeScreen extends GetView<HomeController> {
         backgroundColor: Colors.white,
         elevation: 1,
       ),
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(),
       body: Column(
         children: [
           _searchBar(
@@ -58,7 +58,76 @@ class HomeScreen extends GetView<HomeController> {
 
   _bodySection(double width) {
     return Expanded(
-        child: SizedBox(
+        // BUG home loading didnt disable
+        child: GetBuilder<HomeController>(builder: (builderController) {
+      return SizedBox(
+        // color: Colors.amber,
+        child: Shimmer(
+          linearGradient: shimmerGradient,
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Container(
+              alignment: Alignment.centerRight,
+              child: Column(
+                children: [
+                  ShimmerLoading(
+                      isLoading: builderController.isLoading,
+                      child: _carsol_section(width)),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  ShimmerLoading(
+                    isLoading: builderController.isLoading,
+                    child: SliderHeader(
+                        rightText: 'بهترین‌سالن‌های‌اطراف‌شما',
+                        leftText: 'نمایش‌ همه',
+                        onTap: () {}),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  ShimmerLoading(
+                    isLoading: builderController.isLoading,
+                    child: SliderList(
+                      salons: builderController.bestSalonsList,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ShimmerLoading(
+                    isLoading: builderController.isLoading,
+                    child: _addSection(width),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  ShimmerLoading(
+                    isLoading: builderController.isLoading,
+                    child: SliderHeader(
+                        rightText: 'جدید‌ترین‌سالن‌ها',
+                        leftText: 'نمایش‌ همه',
+                        onTap: () {}),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ShimmerLoading(
+                    isLoading: builderController.isLoading,
+                    child: SliderList(salons: builderController.newestSalonList)),
+                  SizedBox(
+                    height: 15,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }));
+  }
+
+/* SizedBox(
       // color: Colors.amber,
       child: SingleChildScrollView(
         child: Container(
@@ -76,7 +145,9 @@ class HomeScreen extends GetView<HomeController> {
               SizedBox(
                 height: 12,
               ),
-              SliderList(),
+              SliderList(
+                salons: controller.bestSalonsList,
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -91,7 +162,9 @@ class HomeScreen extends GetView<HomeController> {
               SizedBox(
                 height: 12,
               ),
-              SliderList(),
+              SliderList(
+                salons:controller.newestSalonList
+              ),
               SizedBox(
                 height: 22,
               ),
@@ -99,9 +172,7 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ),
       ),
-    ));
-  }
-
+    ) */
   _addSection(double width) {
     return Container(
         width: width,
