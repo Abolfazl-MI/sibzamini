@@ -19,16 +19,15 @@ class SliderList extends StatelessWidget {
       // color: Colors.amber,
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
-        itemCount:salons.length,
+        itemCount: salons.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          
           return SliderWidget(
             title: salons[index].name!,
-            ratingCount:salons[index].rate!.toDouble(),
+            ratingCount: salons[index].rate!.toDouble(),
             imageUrl: 'https://sunict.ir${salons[index].pic}',
             onTap: () {
-              Get.toNamed(rDetailScreen);
+              Get.toNamed(rDetailScreen, arguments: {'id': salons[index].id});
             },
           );
         },
