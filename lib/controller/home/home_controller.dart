@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -110,7 +112,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getHomeFeedSalons({int? limit}) async {
-    
+    log('============Fetchig Home Iteams============');
     isLoading = true;
     update();
     
