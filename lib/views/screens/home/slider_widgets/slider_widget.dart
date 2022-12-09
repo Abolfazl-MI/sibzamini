@@ -26,10 +26,10 @@ class SliderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(8),
       child: SizedBox(
         width: 180,
-        height: 170,
+        height: 100,
         child: InkWell(
           onTap: onTap,
           child: Card(
@@ -38,13 +38,13 @@ class SliderWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CachedNetworkImage(
                   imageUrl: imageUrl,
                   imageBuilder: (context, imageProvider) => Container(
                     width: 180,
-                    height: 50,
+                    height: 120,
                     decoration: BoxDecoration(
                       // color: Colors.green,
                       image: DecorationImage(
@@ -57,7 +57,7 @@ class SliderWidget extends StatelessWidget {
                   ),
                   errorWidget: (context, url, error) => Container(
                     width: 180,
-                    height: 50,
+                    height: 120,
                     color: Colors.grey.withOpacity(0.6),
                     child: Center(
                       child: Icon(
@@ -68,7 +68,7 @@ class SliderWidget extends StatelessWidget {
                   ),
                   placeholder: (context, url) => Container(
                     width: 180,
-                    height: 50,
+                    height: 120,
                     child: Center(
                       child: Transform.scale(
                         scale: 0.4,
@@ -77,34 +77,39 @@ class SliderWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Transform.scale(
-                      scale: 0.9,
-                      child: CircleAvatar(
-                        backgroundColor: Color(0xffF5F7FB),
-                        child: SvgPicture.asset(Assets.icons.logos),
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          title,
-                          style: AppTextTheme.caption,
+                
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Transform.scale(
+                        scale: 0.9,
+                        child: CircleAvatar(
+                          backgroundColor: Color(0xffF5F7FB),
+                          child: SvgPicture.asset(Assets.icons.logos),
                         ),
-                        RatingStars(
-                            iconSize: 20,
-                            rating: ratingCount,
-                            editable: false,
-                            color: SolidColors.yellow)
-                      ],
-                    )
-                  ],
-                )
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: AppTextTheme.caption,
+                          ),
+                          RatingStars(
+                              iconSize: 20,
+                              rating: ratingCount,
+                              editable: false,
+                              color: SolidColors.yellow)
+                        ],
+                      )
+                    ],
+                  ),
+                ), 
+                // SizedBox(
+                //   height: 5,
+                // ),
               ],
             ),
           ),
