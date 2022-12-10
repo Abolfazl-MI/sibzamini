@@ -99,7 +99,7 @@ class ApiServices extends Interceptor {
       FormData data = FormData.fromMap({'city': cityName});
       Response response = await _dio.post(path, data: data);
       if (response.statusCode == 200) {
-        List<dynamic> rawData = response.data;
+        List<dynamic> rawData = response.data['data'];
         List<Salon> salons = rawData.map((e) => Salon.fromJson(e)).toList();
         return DataSuccesState(salons);
       }
