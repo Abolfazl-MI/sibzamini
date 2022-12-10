@@ -94,10 +94,11 @@ class DetailController extends GetxController {
       return 'عالی';
     }
   }
-
+  Future launchUrl(double lat,double lon )async{
+    // https://www.google.com/maps/search/MM39%2BF63,+/@32.6536303,51.6680323,17z?hl=en
+  }
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     getSalonDetail(id: Get.arguments['id']);
   }

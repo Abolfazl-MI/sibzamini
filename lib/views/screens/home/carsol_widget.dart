@@ -10,7 +10,6 @@ class CarsolWidget extends StatelessWidget {
   const CarsolWidget({super.key, required this.imgSrc, required this.width});
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     // throw UnimplementedError();
     return Container(
       decoration: BoxDecoration(

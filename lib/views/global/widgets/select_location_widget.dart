@@ -9,7 +9,6 @@ import 'package:sibzamini/views/global/constants/app_text_themes.dart';
 class SelectLocationWidget extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     // throw UnimplementedError();
     return  InkWell(
       onTap: () {

@@ -8,7 +8,6 @@ import 'package:sibzamini/views/global/constants/constants.dart';
 class SearchBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,

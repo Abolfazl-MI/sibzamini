@@ -94,7 +94,6 @@ class AppBigInput extends StatelessWidget {
       required this.height});
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     // throw UnimplementedError();
 
     return SizedBox(
