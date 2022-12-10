@@ -20,11 +20,12 @@ class SalonService extends Equatable {
     this.content,
     this.cat,
   });
+  String get imgUrl => 'https://sunict.ir$photo';
 
   factory SalonService.fromJson(Map<String, dynamic> json) =>
       _$SalonServiceFromJson(json);
 
   Map<String, dynamic> toJson() => _$SalonServiceToJson(this);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [id, name, amount, photo, content, cat];
 }

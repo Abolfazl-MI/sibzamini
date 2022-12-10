@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 
 import 'package:equatable/equatable.dart';
@@ -36,7 +38,8 @@ class Salon extends Equatable {
     this.pic,
     this.rate,
   });
-
+  String  get imgurl =>'https://sunict.ir$pic';
+  double  get rateToDouble=>rate!=null?rate!.toDouble():0.0;
   @override
   List<Object?> get props => [
         id,
