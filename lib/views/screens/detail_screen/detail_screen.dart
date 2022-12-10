@@ -1,10 +1,12 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rate_in_stars/rate_in_stars.dart';
 import 'package:sibzamini/controller/detail/detail_controller.dart';
@@ -32,7 +34,7 @@ class DetailScreen extends GetView<DetailController> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Color(0xffF5F7FB),
+      backgroundColor: const Color(0xffF5F7FB),
       key: scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -81,371 +83,386 @@ class DetailScreen extends GetView<DetailController> {
       child: Scaffold(
           backgroundColor: SolidColors.backGroundColor,
           body: GetBuilder<DetailController>(
-
-            builder:(builderController)=> Column(
+            builder: (builderController) => Column(
               children: [
                 SearchBarWidget(),
                 SelectLocationWidget(),
-                Expanded(
-                    child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      /// [BrandName]
-                      Container(
-                        color: SolidColors.darkGrey,
-              
-                        padding: EdgeInsets.all(10),
-                        width: width,
-                        height: height * 0.05,
-                        // color: Colors.red,
-                        // todo shoud change format coresponding to server
-                        // child: Text(
-                        //   'اسم برند/خدمات پوست/سالن ایمان',
-                        //   style: AppTextTheme.caption.copyWith(
-                        //       fontSize: 18, color: SolidColors.textColor4),
-                        // ),
-                      ),
-              
-                      /// [Brand header realted]
-                      ShimmerLoading(
-                        isLoading: builderController.isLoading,
-                        child: Container(
-                          // color: Colors.green,
-                          // padding: EdgeInsets.all(10),
-                          width: width,
-                          height: height * 0.4,
-                          child: Card(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                /// [image slider]
-                                //TODO SHOULD GET FORM SERVER
-                          
-                                Container(
-                                  // color: Colors.amber,
-                                  width: width,
-                                  height: 210,
-                                  child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      // image slider
-                                      SizedBox(
-                                        width: width,
-                                        height: 190,
-                                        child: PageView.builder(
-                                          controller: sliderController,
-                                          physics: AlwaysScrollableScrollPhysics(),
-                                          itemCount: 5,
-                                          itemBuilder: (context, index) {
-                                            return Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 14, vertical: 10),
-                                              child: Container(
-                                                // color: Colors.blueAccent,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                          
-                                                  /// [slider images settings]
-                          
-                                                  image: DecorationImage(
-                                                    image: AssetImage(
-                                                      Assets
-                                                          .images
-                                                          .femaleHairdresserMakingHairstyleRedheadWomanBeautySalon
-                                                          .path,
-                                                    ),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      // dots under image
-                                      // TODO SHOULD GET FROM SERVER
-                                      Center(
-                                        child: SmoothPageIndicator(
-                                          controller: sliderController,
-                                          effect: SlideEffect(
-                                              activeDotColor: SolidColors.primaryBlue,
-                                              dotColor: SolidColors.textColor4,
-                                              dotHeight: 10,
-                                              dotWidth: 10),
-                                          count: 5,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                          
-                                SizedBox(
-                                  height: 5,
-                                ),
-                          
-                                /// [salon name and rating ]
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 14),
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: SolidColors.backGroundColor,
-                                        child: Center(
-                                          child: Transform.scale(
-                                              scale: 0.7,
-                                              child: SvgPicture.asset(
-                                                  Assets.icons.logos)),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Column(
-                                        // mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'سالن زیبایی ایمان',
-                                            style: AppTextTheme.caption.copyWith(),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          // should get from server
-                                          RatingStars(
-                                            rating: 3,
-                                            editable: false,
-                                            color: SolidColors.yellow,
-                                            iconSize: 15,
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                          
-                                /// [fotter of card]
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Container(
-                                  width: width,
-                                  height: 40,
-                                  // color: Colors.red,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 14),
-                                        child: Text(
-                                          '4'.toPersianDigit() + 'خدمت فعال',
-                                          style: AppTextTheme.subCaption
-                                              .copyWith(fontSize: 15),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          IconButton(
-                                              onPressed: () {},
-                                              icon: SvgPicture.asset(
-                                                  Assets.icons.commentsOutline)),
-                                          IconButton(
-                                              onPressed: () {},
-                                              icon: SvgPicture.asset(
-                                                  Assets.icons.heart)),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      top: BorderSide(
-                                        // strokeAlign: StrokeAlign.center,
-                                        color:
-                                            SolidColors.textColor4.withOpacity(0.7),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-              
-                      SizedBox(
-                        height: 30,
-                      ),
-              
-                      /// [About us section]
-                      ShimmerLoading(
-                        isLoading: builderController.isLoading,
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          width: width,
-                          color: Colors.white,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 14, vertical: 5),
-                                child: Text(
-                                  'درباره ما',
-                                  style: AppTextTheme.captionBold.copyWith(
-                                    color: SolidColors.primaryBlue,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 14, vertical: 2),
-                                child: Text(
-                                  'خدمات ما چیست؟',
-                                  style: AppTextTheme.captionBold,
-                                ),
-                              ),
-                              // TODO FETCHE FROM SERVER
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 14),
-                                child: Text(
-                                    "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. ",
-                                    style: AppTextTheme.caption.copyWith(
-                                        fontSize: 18, color: SolidColors.textColor4)),
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // contiue from here
-                      SizedBox(
-                        height: 20,
-                      ),
-              
-                      /// [Services of salon]
-                      ShimmerLoading(
-                        isLoading: builderController.isLoading,
-                        child: Container(
-                          width: width,
-                          height: height * 0.4,
-                          // color: Colors.amber,
-                          // TODO SHOULD GET FROM SERVEr
-                          child: PageView.builder(
-                            itemCount: 5,
-                            padEnds: false,
-                            itemBuilder: ((context, index) {
-                              return Container(
-                                margin:
-                                    EdgeInsets.symmetric(vertical: 8, horizontal: 40),
-                                width: 150,
-                                height: 150,
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12)),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 12,
-                                          vertical: 8,
-                                        ),
-                                        //TODO should change to cachedNetWorkImage
-                                        ///[service picture]
-                                        child: Container(
-                                          width: width,
-                                         
-                                          height: height * 0.23,
-                                          decoration: BoxDecoration(
-                                            color: Colors.grey,
-                                            borderRadius: BorderRadius.circular(12),
-                                            image: DecorationImage(
-                                              image: AssetImage(Assets
-                                                  .images
-                                                  .femaleHairdresserMakingHairstyleRedheadWomanBeautySalon
-                                                  .path),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      ///[ services provides by salon should get from server]
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal:10.0),
-                                        child: Text(
-                                          'شنیون مو در سالن ایمان',
-                                          style: AppTextTheme.captionBold
-                                              .copyWith(color: SolidColors.textColor3),
-                                        ),
-                                      ),
-                                      // 
-                                      ///[the price of sercies]
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal:10.0),
-                                        child: Row(
-                                          children: [
-                                            // in case that have off we use this code should maintane when connected to server
-                                            Text(
-                                              '450,000'.toPersianDigit(),
-                                              style: AppTextTheme.captionBold.copyWith(
-                                                  color: Colors.red,
-                                                  decoration:
-                                                      TextDecoration.lineThrough),
-                                            ),
-                                            SizedBox(width: 5,),
-                                            Text(
-                                              '250,000'.toPersianDigit(),
-                                              style: AppTextTheme.caption,
-                                            ),
-                                            SizedBox(width: 5,),
-                                    
-                                            Text(
-                                              'تومان',
-                                              style: AppTextTheme.baseStyle,
-                                            )
-                                          ],
-                                        ),
-                                      ), 
-                                      /// [fotter of Card]
-                                      Flexible(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز ', 
-                                           
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 120,
-                      ),
-                    ],
-                  ),
-                ))
+                _body(width, height, builderController)
               ],
             ),
           )),
     );
   }
+
+  _body(double width, double height, DetailController builderController) {
+    return Expanded(
+        child: SingleChildScrollView(
+      child: Column(
+        children: [
+          /// [BrandName]
+          Container(
+            color: SolidColors.darkGrey,
+            padding: const EdgeInsets.all(10),
+            width: width,
+            height: height * 0.05,
+          ),
+
+          /// [Brand header realted]
+          _brandHeader(builderController, width, height),
+
+          const SizedBox(
+            height: 30,
+          ),
+
+          /// [About us section]
+          _aboutUs(builderController, width),
+          // contiue from here
+          const SizedBox(
+            height: 20,
+          ),
+
+          /// [Services of salon]
+          builderController.salonServices == null
+              ? Container()
+              : _serviceSection(builderController, width, height),
+        ],
+      ),
+    ));
+  }
+
+  _brandHeader(
+      DetailController builderController, double width, double height) {
+    return ShimmerLoading(
+      isLoading: builderController.isLoading,
+      child: SizedBox(
+        // color: Colors.green,
+        // padding: EdgeInsets.all(10),
+        width: width,
+        height: height * 0.4,
+        child: Card(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              // image heder
+              SizedBox(
+                // color: Colors.amber,
+                width: width,
+                height: 210,
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 10),
+                    child: CachedNetworkImage(
+                      imageUrl: builderController.salonDetail?.imgurl ??
+                          'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fhair-salon&psig=AOvVaw3uGYrHlxGb7b4Xoj5c3lPE&ust=1670743020906000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCJCkpffA7vsCFQAAAAAdAAAAABAJ',
+                      placeholder: ((context, url) => Container(
+                            child: Center(
+                                child: Transform.scale(
+                                    scale: 0.5,
+                                    child:
+                                        Lottie.asset(Assets.lotties.loading))),
+                          )),
+                      imageBuilder: ((context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )),
+                      errorWidget: ((context, url, error) => Container(
+                            color: Colors.grey,
+                            child: const Center(
+                              child: Icon(
+                                Icons.image_not_supported_outlined,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )),
+                    )),
+              ),
+
+              const SizedBox(
+                height: 5,
+              ),
+
+              /// [salon name and rating ]
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: SolidColors.backGroundColor,
+                      child: Center(
+                        child: Transform.scale(
+                            scale: 0.7,
+                            child: SvgPicture.asset(Assets.icons.logos)),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Column(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          builderController.salonDetail?.name ?? 'abolfzl',
+                          style: AppTextTheme.caption.copyWith(),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        // should get from server
+                        RatingStars(
+                          rating: builderController.salonDetail?.rateToDouble ??
+                              0.0,
+                          editable: false,
+                          color: SolidColors.yellow,
+                          iconSize: 15,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+
+              /// [fotter of card]
+              const SizedBox(
+                height: 3,
+              ),
+              Container(
+                width: width,
+                height: 40,
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      // strokeAlign: StrokeAlign.center,
+                      color: SolidColors.textColor4.withOpacity(0.7),
+                    ),
+                  ),
+                ),
+                // color: Colors.red,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                      child: Text(
+                        '${builderController.salonServices?.length.toString().toPersianDigit() ?? 0}خدمت فعال',
+                        style: AppTextTheme.subCaption.copyWith(fontSize: 15),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {},
+                            icon:
+                                SvgPicture.asset(Assets.icons.commentsOutline)),
+                        IconButton(
+                            onPressed: () {},
+                            icon: SvgPicture.asset(Assets.icons.heart)),
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  ShimmerLoading _aboutUs(DetailController builderController, double width) {
+    return ShimmerLoading(
+      isLoading: builderController.isLoading,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        width: width,
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+              child: Text(
+                'درباره ما',
+                style: AppTextTheme.captionBold.copyWith(
+                  color: SolidColors.primaryBlue,
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+              child: Text(
+                'خدمات ما چیست؟',
+                style: AppTextTheme.captionBold,
+              ),
+            ),
+            // TODO FETCHE FROM SERVER
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+              child: Text(
+                  builderController.salonDetail?.about ??
+                      "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. ",
+                  style: AppTextTheme.caption
+                      .copyWith(fontSize: 18, color: SolidColors.textColor4)),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+// BUG alot space should resolve
+  _serviceSection(
+      DetailController builderController, double width, double height) {
+    return ShimmerLoading(
+      isLoading: builderController.isLoading,
+      child: SizedBox(
+        width: width,
+        height: height * 0.4,
+        // color: Colors.amber,
+        child: PageView.builder(
+          itemCount: builderController.salonServices!.length,
+          padEnds: false,
+          itemBuilder: ((context, index) {
+            return Container(
+              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+              width: 150,
+              height: 150,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+
+                        ///[service picture]
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              builderController.salonServices![index].imgUrl,
+                          errorWidget: ((context, url, error) => Container(
+                                child: Center(
+                                  child: Icon(
+                                    Icons.image_not_supported_outlined,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                width: width,
+                                height: height * 0.23,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                              )),
+                          placeholder: (context, url) => Container(
+                            width: width,
+                            height: height * 0.23,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            // clipBehavior: ,
+                            child: Center(
+                                child: Transform.scale(
+                              scale: 0.5,
+                              child: Lottie.asset(Assets.lotties.loading),
+                            )),
+                          ),
+                          imageBuilder: ((context, imageProvider) => Container(
+                                width: width,
+                                height: height * 0.23,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(12),
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              )),
+                        )),
+
+                    ///[ services provides by salon should get from server]
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        builderController.salonServices![index].name!,
+                        style: AppTextTheme.captionBold
+                            .copyWith(color: SolidColors.textColor3),
+                      ),
+                    ),
+                    //
+                    ///[the price of sercies]
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Row(
+                        children: [
+                          // !in case that have off we use this code should maintane when connected to server
+                          // Text(
+                          //   '450,000'.toPersianDigit(),
+                          //   style: AppTextTheme
+                          //       .captionBold
+                          //       .copyWith(
+                          //           color: Colors.red,
+                          //           decoration:
+                          //               TextDecoration
+                          //                   .lineThrough),
+                          // ),
+                          // const SizedBox(
+                          //   width: 5,
+                          // ),
+                          Text(
+                            '${builderController.salonServices![index].amount!}'
+                                .toPersianDigit(),
+                            style: AppTextTheme.caption,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+
+                          const Text(
+                            'تومان',
+                            style: AppTextTheme.baseStyle,
+                          )
+                        ],
+                      ),
+                    ),
+
+                    /// [fotter of Card]
+                    Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                            builderController.salonServices![index].content ??
+                                ''
+                            // 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز ',
+                            ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            );
+          }),
+        ),
+      ),
+    );
+  }
 }
 
 class BottomNavigation extends GetView<DetailController> {
-  BottomNavigation({
+  const BottomNavigation({
     Key? key,
     required this.size,
     required this.bodyMargin,
@@ -479,7 +496,9 @@ class BottomNavigation extends GetView<DetailController> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   IconButton(
-                    onPressed: () => controller.updateSelectedIndex(0),
+                    onPressed: controller.isLoading
+                        ? () {}
+                        : () => controller.updateSelectedIndex(0),
                     icon: controller.selectedIndex == 0
                         ? SvgPicture.asset(Assets.icons.homeFill)
                         : SvgPicture.asset(
@@ -487,13 +506,17 @@ class BottomNavigation extends GetView<DetailController> {
                           ),
                   ),
                   IconButton(
-                      onPressed: () => controller.updateSelectedIndex(1),
+                      onPressed: controller.isLoading
+                          ? () {}
+                          : () => controller.updateSelectedIndex(1),
                       icon: controller.selectedIndex == 1
                           ? SvgPicture.asset(Assets.icons.locationlocationFill)
                           : SvgPicture.asset(
                               Assets.icons.locationlocationOutline)),
                   IconButton(
-                    onPressed: () => controller.updateSelectedIndex(2),
+                    onPressed: controller.isLoading
+                        ? () {}
+                        : () => controller.updateSelectedIndex(2),
                     icon: controller.selectedIndex == 2
                         ? SvgPicture.asset(Assets.icons.commentsFill)
                         : SvgPicture.asset(Assets.icons.commentsOutline),
