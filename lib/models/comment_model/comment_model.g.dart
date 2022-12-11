@@ -12,6 +12,7 @@ Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
       score: json['score'] as int?,
       parent: json['parent'] as String?,
       user: json['user'] as String?,
+      name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
       'score': instance.score,
       'parent': instance.parent,
       'user': instance.user,
+      'name': instance.name,
     };

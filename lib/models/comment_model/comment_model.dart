@@ -9,12 +9,14 @@ class Comment extends Equatable {
   final int? score;
   final String? parent;
   final String? user;
+  final String? name;
   const Comment({
     this.id,
     this.comment,
     this.score,
     this.parent,
     this.user,
+    this.name
   });
 
   factory Comment.fromJson(Map<String, dynamic> json) =>

@@ -485,7 +485,7 @@ class BottomNavigation extends GetView<DetailController> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 20,
+      bottom: 10,
       right: 0,
       left: 0,
       child: Container(
