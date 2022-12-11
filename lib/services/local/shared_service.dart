@@ -8,6 +8,7 @@ class SharedStorageService {
   }
   final String _token = 'token';
   final String _city = 'city';
+  final String _userId='userId';
   
   SharedStorageService(){
     init();
@@ -50,5 +51,13 @@ class SharedStorageService {
   // returns the user city
   Future<String?> getUserCity() async {
     return _pref.getString(_city);
+  }
+  // saves user id
+  Future<void> saveUserId(int id)async{
+    await _pref.setInt(_userId, id);
+  }
+  // returns user id 
+  Future<int?>getUserId()async{
+    return _pref.getInt(_userId);
   }
 }

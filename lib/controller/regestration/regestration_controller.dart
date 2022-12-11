@@ -166,6 +166,7 @@ class RegistrationController extends GetxController {
         otpCode: otpCode, phoneNumber: phoneNumber);
     if (resualt is DataSuccesState) {
       await _sharedStorageService.saveUserToken(resualt.data!.token!);
+      await _sharedStorageService.saveUserId(resualt.data!.id!);
       isLoading = false;
       update();
        Get.snackbar('\u{1F642}' 'موفقیت امیز بود', 'شما وارد شدید،خوش آمدید',
