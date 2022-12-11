@@ -90,6 +90,9 @@ class $AssetsIconsGen {
   AssetGenImage get menuFILL0Wght400GRAD0Opsz481 =>
       const AssetGenImage('assets/icons/menu_FILL0_wght400_GRAD0_opsz48 1.png');
 
+  /// File path: assets/icons/not_find.svg
+  String get notFind => 'assets/icons/not_find.svg';
+
   /// File path: assets/icons/search.svg
   String get search => 'assets/icons/search.svg';
 
@@ -117,6 +120,7 @@ class $AssetsIconsGen {
         logos,
         menu,
         menuFILL0Wght400GRAD0Opsz481,
+        notFind,
         search
       ];
 }
