@@ -49,8 +49,8 @@ class LocationScreen extends GetView<DetailController> {
 
                     GetBuilder<DetailController>(
                       builder: (detailController) {
-                          print(detailController.salonDetail!.lat);
-                          print(detailController.salonDetail!.lng);
+                          // print(detailController.salonDetail!.lat);
+                          // print(detailController.salonDetail!.lng);
 
                         return  Container(
                         width: MediaQuery.of(context).size.width,
@@ -116,25 +116,35 @@ class LocationScreen extends GetView<DetailController> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: InkWell(
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'بازکردن نقشه',
-                                          style: AppTextTheme.captionBold
-                                              .copyWith(
-                                                  fontSize: 18,
-                                                  color:
-                                                      SolidColors.primaryBlue),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_back_ios_new,
-                                          color: SolidColors.primaryBlue,
-                                          size: 18,
-                                        ),
-                                      ],
+                                GetBuilder<DetailController>(
+                                  builder:(detailContoller)=> Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      onTap: (){
+                                        detailContoller.launchMApUrl(
+                                          detailContoller.salonDetail!.lat!,
+                                          detailContoller.salonDetail!.lng!,
+
+                                        );
+                                      },
+                                      // onTap: ()=>controller.launchMApUrl(lat, lon),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'بازکردن نقشه',
+                                            style: AppTextTheme.captionBold
+                                                .copyWith(
+                                                    fontSize: 18,
+                                                    color:
+                                                        SolidColors.primaryBlue),
+                                          ),
+                                          Icon(
+                                            Icons.arrow_back_ios_new,
+                                            color: SolidColors.primaryBlue,
+                                            size: 18,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),

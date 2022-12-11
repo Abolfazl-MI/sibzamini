@@ -42,11 +42,11 @@ class CommentScreen extends GetView<DetailController> {
               color: SolidColors.darkGrey,
               // color: Colors.red,
               // todo shoud change format coresponding to server
-              child: Text(
-                'اسم برند/خدمات پوست/سالن ایمان',
-                style: AppTextTheme.caption
-                    .copyWith(fontSize: 18, color: SolidColors.textColor4),
-              ),
+              // child: Text(
+              //   'اسم برند/خدمات پوست/سالن ایمان',
+              //   style: AppTextTheme.caption
+              //       .copyWith(fontSize: 18, color: SolidColors.textColor4),
+              // ),
             ),
           ),
 
@@ -191,76 +191,82 @@ class CommentScreen extends GetView<DetailController> {
               color: Colors.white,
               padding: EdgeInsets.symmetric(horizontal: 10),
               width: width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                        text: 'نظرات ',
-                        style: AppTextTheme.caption,
-                        children: [
-                          /// [comment count should get from server]
-                          TextSpan(
-                              text: '3'.toPersianDigit(),
-                              style: AppTextTheme.captionBold
-                                  .copyWith(color: SolidColors.primaryBlue))
-                        ]),
-                  ),
-                  Row(
-                    children: [
-                      ///[salon all comments  gets from server]
-                      Text(
-                        'متوسط',
-                        style: AppTextTheme.captionBold,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Container(
-                        width: 150,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: SolidColors.darkGrey,
-                            border: Border.all(color: SolidColors.borderColor2),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    
+                    RichText(
+                      text: TextSpan(
+                          text: 'نظرات ',
+                          style: AppTextTheme.caption,
                           children: [
-                            /// [all rating count from server]
+                            /// [comment count should get from server]
+                            TextSpan(
+                                text: '3'.toPersianDigit(),
+                                style: AppTextTheme.captionBold
+                                    .copyWith(color: SolidColors.primaryBlue))
+                          ]),
+                    ),
+                    Row(
+                      children: [
+                        ///[salon all comments  gets from server]
+                        Text(
+                          'متوسط',
+                          style: AppTextTheme.captionBold,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          width: 150,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: SolidColors.darkGrey,
+                              border: Border.all(color: SolidColors.borderColor2),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              /// [all rating count from server]
 
-                            RatingStars(
-                              editable: false,
-                              iconSize: 18,
-                              rating: 3,
-                              color: SolidColors.yellow,
-                            ),
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: SolidColors.primaryBlue,
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Center(
-                                child: Text(
-                                  '3'.toPersianDigit(),
-                                  style: AppTextTheme.captionBold
-                                      .copyWith(color: Colors.white),
+                              RatingStars(
+                                editable: false,
+                                iconSize: 18,
+                                rating: 3,
+                                color: SolidColors.yellow,
+                              ),
+                              Container(
+                                width: 30,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: SolidColors.primaryBlue,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Center(
+                                  child: Text(
+                                    '3'.toPersianDigit(),
+                                    style: AppTextTheme.captionBold
+                                        .copyWith(color: Colors.white),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  // contunee form here
-                ],
+                      ],
+                    ),
+                    // contunee form here
+                  ],
+                ),
               ),
             ),
           ),
 
           SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) => Container(
+            delegate: SliverChildBuilderDelegate(
+              // childCount: 
+              (context, index) => Container(
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(color: SolidColors.borderColor2)),

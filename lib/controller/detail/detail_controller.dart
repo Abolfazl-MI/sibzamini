@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/models/comment_model/comment_model.dart';
@@ -7,7 +8,7 @@ import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/models/services_model/services_model.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 class DetailController extends GetxController {
   // dependcies
   final ApiServices _apiServices = ApiServices();
@@ -55,6 +56,8 @@ class DetailController extends GetxController {
     }
     if (results is DataFailState) {
       // handle the error
+      salonComments=[];
+      update();
     }
   }
   Future<void> _getSalonServices({required int id})async{
@@ -94,8 +97,14 @@ class DetailController extends GetxController {
       return 'عالی';
     }
   }
-  Future launchUrl(double lat,double lon )async{
-    // https://www.google.com/maps/search/MM39%2BF63,+/@32.6536303,51.6680323,17z?hl=en
+  Future launchMApUrl(double lat,double lon )async{
+    // String _url='https://www.google.com/maps/search/MM39%2BF63,+/@$lat,$lon,17z?hl=en';
+    // if(!await launchUrl(lat, lon))
+    final Uri url=Uri.parse('https://www.google.com/maps/search/MM39%2BF63,+/@$lat,$lon,17z?hl=en');
+    if(!await launchUrl(url)){
+      Get.snackbar('\u{1F610}' 'مشکلی پیش آمده','دوباره تلاشکنید ',
+          backgroundColor: Colors.red);
+    }
   }
   @override
   void onInit() {

@@ -19,7 +19,6 @@ import 'package:sibzamini/views/global/widgets/search_bar_widget.dart';
 import 'package:sibzamini/views/global/widgets/select_location_widget.dart';
 import 'package:sibzamini/views/screens/comment_screen/comment_screen.dart';
 import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../global/constants/constants.dart';
 
@@ -97,6 +96,7 @@ class DetailScreen extends GetView<DetailController> {
   _body(double width, double height, DetailController builderController) {
     return Expanded(
         child: SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       child: Column(
         children: [
           /// [BrandName]
@@ -122,9 +122,161 @@ class DetailScreen extends GetView<DetailController> {
           ),
 
           /// [Services of salon]
-          builderController.salonServices == null
-              ? Container()
-              : _serviceSection(builderController, width, height),
+          GetBuilder<DetailController>(builder: (dController) {
+            // print(dController.salonServices);
+            if (dController.salonServices == null || dController.salonServices!.isEmpty) {
+              return Container();
+            }
+            if (dController.salonServices != null) {
+              return Container(
+                width: width,
+                height: height * 0.3,
+                // color: Colors.red,
+                child: PageView.builder(
+                  itemCount: dController.salonServices!.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 40),
+                      width: 150,
+                      height: 150,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 8,
+                                ),
+
+                                ///[service picture]
+                                child: CachedNetworkImage(
+                                  imageUrl: builderController
+                                      .salonServices![index].imgUrl,
+                                  errorWidget: ((context, url, error) =>
+                                      Container(
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.image_not_supported_outlined,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        width: width,
+                                        height: height * 0.23,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                      )),
+                                  placeholder: (context, url) => Container(
+                                    width: width,
+                                    height: height * 0.23,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    // clipBehavior: ,
+                                    child: Center(
+                                        child: Transform.scale(
+                                      scale: 0.5,
+                                      child:
+                                          Lottie.asset(Assets.lotties.loading),
+                                    )),
+                                  ),
+                                  imageBuilder: ((context, imageProvider) =>
+                                      Container(
+                                        width: width,
+                                        height: height * 0.23,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      )),
+                                )),
+
+                            ///[ services provides by salon should get from server]
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Text(
+                                builderController.salonServices![index].name!,
+                                style: AppTextTheme.captionBold
+                                    .copyWith(color: SolidColors.textColor3),
+                              ),
+                            ),
+                            //
+                            ///[the price of sercies]
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Row(
+                                children: [
+                                  // !in case that have off we use this code should maintane when connected to server
+                                  // Text(
+                                  //   '450,000'.toPersianDigit(),
+                                  //   style: AppTextTheme
+                                  //       .captionBold
+                                  //       .copyWith(
+                                  //           color: Colors.red,
+                                  //           decoration:
+                                  //               TextDecoration
+                                  //                   .lineThrough),
+                                  // ),
+                                  // const SizedBox(
+                                  //   width: 5,
+                                  // ),
+                                  Text(
+                                    '${builderController.salonServices![index].amount!}'
+                                        .toPersianDigit(),
+                                    style: AppTextTheme.caption,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+
+                                  const Text(
+                                    'تومان',
+                                    style: AppTextTheme.baseStyle,
+                                  )
+                                ],
+                              ),
+                            ),
+
+                            /// [fotter of Card]
+                            Flexible(
+                              child: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(builderController
+                                            .salonServices![index].content ??
+                                        ''
+                                    // 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز ',
+                                    ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            }
+          return Container();
+          }
+          ),
+          const SizedBox(
+            height: 20,
+          ),
         ],
       ),
     ));
@@ -153,7 +305,7 @@ class DetailScreen extends GetView<DetailController> {
                         horizontal: 14, vertical: 10),
                     child: CachedNetworkImage(
                       imageUrl: builderController.salonDetail?.imgurl ??
-                          'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fphotos%2Fhair-salon&psig=AOvVaw3uGYrHlxGb7b4Xoj5c3lPE&ust=1670743020906000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCJCkpffA7vsCFQAAAAAdAAAAABAJ',
+                          'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shana.ir%2Fnews%2F462102%2F%25D8%25B1%25D9%2588%25D8%25A7%25D8%25A8%25D8%25B7-%25D8%25A7%25DB%258C%25D8%25B1%25D8%25A7%25D9%2586-%25D9%2588-%25DA%2586%25DB%258C%25D9%2586-%25D8%25B1%25D8%25A7%25D9%2587%25D8%25A8%25D8%25B1%25D8%25AF%25DB%258C-%25D8%25A7%25D8%25B3%25D8%25AA&psig=AOvVaw2NvlbKFHu40kX6ieFbwuEp&ust=1670824676692000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMCqtJDx8PsCFQAAAAAdAAAAABAZ',
                       placeholder: ((context, url) => Container(
                             child: Center(
                                 child: Transform.scale(
@@ -317,148 +469,7 @@ class DetailScreen extends GetView<DetailController> {
       ),
     );
   }
-// BUG alot space should resolve
-  _serviceSection(
-      DetailController builderController, double width, double height) {
-    return ShimmerLoading(
-      isLoading: builderController.isLoading,
-      child: SizedBox(
-        width: width,
-        height: height * 0.4,
-        // color: Colors.amber,
-        child: PageView.builder(
-          itemCount: builderController.salonServices!.length,
-          padEnds: false,
-          itemBuilder: ((context, index) {
-            return Container(
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 40),
-              width: 150,
-              height: 150,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 8,
-                        ),
 
-                        ///[service picture]
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              builderController.salonServices![index].imgUrl,
-                          errorWidget: ((context, url, error) => Container(
-                                child: Center(
-                                  child: Icon(
-                                    Icons.image_not_supported_outlined,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                width: width,
-                                height: height * 0.23,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              )),
-                          placeholder: (context, url) => Container(
-                            width: width,
-                            height: height * 0.23,
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            // clipBehavior: ,
-                            child: Center(
-                                child: Transform.scale(
-                              scale: 0.5,
-                              child: Lottie.asset(Assets.lotties.loading),
-                            )),
-                          ),
-                          imageBuilder: ((context, imageProvider) => Container(
-                                width: width,
-                                height: height * 0.23,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              )),
-                        )),
-
-                    ///[ services provides by salon should get from server]
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Text(
-                        builderController.salonServices![index].name!,
-                        style: AppTextTheme.captionBold
-                            .copyWith(color: SolidColors.textColor3),
-                      ),
-                    ),
-                    //
-                    ///[the price of sercies]
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Row(
-                        children: [
-                          // !in case that have off we use this code should maintane when connected to server
-                          // Text(
-                          //   '450,000'.toPersianDigit(),
-                          //   style: AppTextTheme
-                          //       .captionBold
-                          //       .copyWith(
-                          //           color: Colors.red,
-                          //           decoration:
-                          //               TextDecoration
-                          //                   .lineThrough),
-                          // ),
-                          // const SizedBox(
-                          //   width: 5,
-                          // ),
-                          Text(
-                            '${builderController.salonServices![index].amount!}'
-                                .toPersianDigit(),
-                            style: AppTextTheme.caption,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-
-                          const Text(
-                            'تومان',
-                            style: AppTextTheme.baseStyle,
-                          )
-                        ],
-                      ),
-                    ),
-
-                    /// [fotter of Card]
-                    Flexible(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                            builderController.salonServices![index].content ??
-                                ''
-                            // 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز ',
-                            ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          }),
-        ),
-      ),
-    );
-  }
 }
 
 class BottomNavigation extends GetView<DetailController> {

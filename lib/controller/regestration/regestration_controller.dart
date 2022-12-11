@@ -153,7 +153,7 @@ class RegistrationController extends GetxController {
     if (result is DataFailState) {
       isLoading = false;
       update();
-      Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', result.error!,
+      Get.snackbar('\u{1F610}' 'مشکلی پیش اومده', SOMETHING_WENT_WRONG,
           backgroundColor: Colors.red);
     }
   }
