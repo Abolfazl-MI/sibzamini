@@ -58,7 +58,6 @@ class HomeScreen extends GetView<HomeController> {
 
   _bodySection(double width) {
     return Expanded(
-        // BUG home loading didnt disable
         child: GetBuilder<HomeController>(builder: (builderController) {
       return SizedBox(
         // color: Colors.amber,
