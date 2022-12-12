@@ -195,9 +195,21 @@ class ApiServices extends Interceptor {
     }
   }
 
-  sendComment() {
-    // TODO: impelement the user post comment
+  // HACK this is incomplited function
+  // adds comments for salon with id given
+  sendComment(
+      {required int salonId,
+      required int userId,
+      required String comment,
+      required int rate}) async {
+    try {
+      // BUG: COMPLTE THE IMPLENETATION
+      FormData data = FormData.fromMap(
+          {'user': userId, 'salon': salonId, 'comment': comment, 'rate': rate});
+      Response response = await _dio.post(newSalonComment, data: data);
+    } catch (e) {}
   }
+
 // returns Salon services based on salon id passed
   Future<DataState<List<SalonService>>> getSingleSalonServices(
       {required int salonId}) async {
@@ -223,16 +235,45 @@ class ApiServices extends Interceptor {
     }
   }
 
-  bookMarkSalon() {
-    // TODO:Implement the user book mark salon
+  // added coresponding salon to user bookmark list
+  addSalonToBookMarks({required int userId, required int salonId}) async {
+    try {
+      FormData data = FormData.fromMap({
+        'user': userId,
+        'salon': salonId,
+      });
+      Response response = await _dio.post(bookMarkSalon, data: data);
+      // BUG complete this function based on responsse
+    } catch (e) {}
   }
 
-  getBookMarkedSalons() {
-    // TODO: implement the getting book mark list
+  // returns list of user bookmarked salons
+  Future<DataState<List<Salon>>> getBookMarkedSalons(
+      {required int userId}) async {
+    try {
+      FormData data = FormData.fromMap({'user': userId});
+      Response response = await _dio.post(bookMarkList, data: data);
+      if (response.statusCode == 200) {
+        List<dynamic> rawData = response.data;
+        List<Salon> bookMarkedSalons =
+            rawData.map((e) => Salon.fromJson(e)).toList();
+        return DataSuccesState(bookMarkedSalons);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
   }
-
-  deleteSalonBookMark() {
-    // TODO : implement the deletig salon from the book mark list
+  // deletes salon from user bookmarked salons base on the id of salon
+  deleteSalonFromBookMarkList({required int userId, required int salonId})async{
+    try{
+      FormData data=FormData.fromMap({
+        'user':userId, 
+        'salon':salonId
+      });
+      Response response= await _dio.post(deleteSalonBookMark, data:data);
+      // BUG should completed base on response 
+    }catch(e){}
   }
   // returns list of Services categories
   Future<DataState<List<ServiceCategory>>> getCategoriesList() async {
