@@ -170,8 +170,7 @@ class ApiServices extends Interceptor {
   }
 
   // returns list of salon base on user search
-  Future<DataState<List<Salon>>> getSalonBySearch(
-      {required String query, required String city}) async {
+  Future<DataState<List<Salon>>> getSalonBySearch({required String query, required String city}) async {
     try {
       FormData data = FormData.fromMap({'city': city, 'query': query});
       Response response = await _dio.post(searchSalon, data: data);
@@ -197,11 +196,7 @@ class ApiServices extends Interceptor {
 
   // HACK this is incomplited function
   // adds comments for salon with id given
-  sendComment(
-      {required int salonId,
-      required int userId,
-      required String comment,
-      required int rate}) async {
+  sendComment({required int salonId,required int userId,required String comment,required int rate}) async {
     try {
       // BUG: COMPLTE THE IMPLENETATION
       FormData data = FormData.fromMap(
@@ -236,22 +231,27 @@ class ApiServices extends Interceptor {
   }
 
   // added coresponding salon to user bookmark list
-  addSalonToBookMarks({required int userId, required int salonId}) async {
+  Future <DataState<bool>> addSalonToBookMarks({required String token, required int salonId}) async {
     try {
       FormData data = FormData.fromMap({
-        'user': userId,
+        'user': token,
         'salon': salonId,
       });
       Response response = await _dio.post(bookMarkSalon, data: data);
-      // BUG complete this function based on responsse
-    } catch (e) {}
+      if(response.statusCode==200){
+        return DataSuccesState(true);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
   }
 
   // returns list of user bookmarked salons
   Future<DataState<List<Salon>>> getBookMarkedSalons(
-      {required int userId}) async {
+      {required String userToken}) async {
     try {
-      FormData data = FormData.fromMap({'user': userId});
+      FormData data = FormData.fromMap({'user': userToken});
       Response response = await _dio.post(bookMarkList, data: data);
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
@@ -265,10 +265,10 @@ class ApiServices extends Interceptor {
     }
   }
   // deletes salon from user bookmarked salons base on the id of salon
-  deleteSalonFromBookMarkList({required int userId, required int salonId})async{
+  deleteSalonFromBookMarkList({required String userToken, required int salonId})async{
     try{
       FormData data=FormData.fromMap({
-        'user':userId, 
+        'user':userToken, 
         'salon':salonId
       });
       Response response= await _dio.post(deleteSalonBookMark, data:data);
