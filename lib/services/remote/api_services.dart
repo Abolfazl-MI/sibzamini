@@ -9,6 +9,7 @@ import 'package:sibzamini/models/services_model/services_model.dart';
 import 'package:sibzamini/models/user_model/user_modle.dart';
 import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/services/remote/request_monitoring.dart';
+import 'package:sibzamini/views/global/constants/map_token.dart';
 
 class ApiServices extends Interceptor {
   // DIO CONFIGURATION
@@ -170,7 +171,8 @@ class ApiServices extends Interceptor {
   }
 
   // returns list of salon base on user search
-  Future<DataState<List<Salon>>> getSalonBySearch({required String query, required String city}) async {
+  Future<DataState<List<Salon>>> getSalonBySearch(
+      {required String query, required String city}) async {
     try {
       FormData data = FormData.fromMap({'city': city, 'query': query});
       Response response = await _dio.post(searchSalon, data: data);
@@ -196,7 +198,11 @@ class ApiServices extends Interceptor {
 
   // HACK this is incomplited function
   // adds comments for salon with id given
-  sendComment({required int salonId,required int userId,required String comment,required int rate}) async {
+  sendComment(
+      {required int salonId,
+      required int userId,
+      required String comment,
+      required int rate}) async {
     try {
       // BUG: COMPLTE THE IMPLENETATION
       FormData data = FormData.fromMap(
@@ -231,14 +237,15 @@ class ApiServices extends Interceptor {
   }
 
   // added coresponding salon to user bookmark list
-  Future <DataState<bool>> addSalonToBookMarks({required String token, required int salonId}) async {
+  Future<DataState<bool>> addSalonToBookMarks(
+      {required String token, required int salonId}) async {
     try {
       FormData data = FormData.fromMap({
         'user': token,
         'salon': salonId,
       });
       Response response = await _dio.post(bookMarkSalon, data: data);
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         return DataSuccesState(true);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
@@ -264,17 +271,17 @@ class ApiServices extends Interceptor {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
+
   // deletes salon from user bookmarked salons base on the id of salon
-  deleteSalonFromBookMarkList({required String userToken, required int salonId})async{
-    try{
-      FormData data=FormData.fromMap({
-        'user':userToken, 
-        'salon':salonId
-      });
-      Response response= await _dio.post(deleteSalonBookMark, data:data);
-      // BUG should completed base on response 
-    }catch(e){}
+  deleteSalonFromBookMarkList(
+      {required String userToken, required int salonId}) async {
+    try {
+      FormData data = FormData.fromMap({'user': userToken, 'salon': salonId});
+      Response response = await _dio.post(deleteSalonBookMark, data: data);
+      // BUG should completed base on response
+    } catch (e) {}
   }
+
   // returns list of Services categories
   Future<DataState<List<ServiceCategory>>> getCategoriesList() async {
     try {
@@ -291,7 +298,22 @@ class ApiServices extends Interceptor {
     }
   }
 
-  getUserCityLocation() {
-    // TODO: impelenet the  user city from lat and long
+  Future<DataState<String>> getUserCityLocation(
+      {required double lat, required double lon}) async {
+    try {
+      _dio.options.headers.addAll({'x-api-key': map_token});
+      Response response =
+          await _dio.get('https://map.ir/fast-reverse', queryParameters: {
+        'lat': lat,
+        'lon': lon,
+      });
+      if (response.statusCode == 200) {
+        String city = response.data['city'];
+        return DataSuccesState(city);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
   }
 }
