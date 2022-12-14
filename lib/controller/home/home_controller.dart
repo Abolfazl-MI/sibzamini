@@ -1,5 +1,6 @@
-
+import 'dart:async';
 import 'dart:developer';
+import 'dart:html';
 
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/models/category_model/category_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
+import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/services/local/shared_service.dart';
 import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
@@ -17,15 +19,18 @@ class HomeController extends GetxController {
   // dependencies
   final ApiServices _apiServices = ApiServices();
   final SharedStorageService _storageService = SharedStorageService();
-
+  
   // variables
   List<Salon> bestSalonsList = [];
   List<Salon> newestSalonList = [];
   List<Salon> salonsBasedOnCategory = [];
   List<ServiceCategory> salonCategories = [];
+  List<Salon> bookMarkedSalons = [];
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool isLoading = false;
   bool isCategoryLoadign = false;
+  ConnectivityStatus connectivityStatus = ConnectivityStatus.disconnected;
+  late final StreamSubscription<ConnectivityStatus> _subscription;
   //methods
   // get best Salons
   Future<void> getBestSalons({required String cityName}) async {
@@ -111,18 +116,42 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> getHomeFeedSalons({int? limit}) async {
+  Future<void> addSalonToBookMarkList(
+      {required int salonId, required String userToken}) async {
+    await _apiServices.addSalonToBookMarks(token: userToken, salonId: salonId);
+  }
+
+  Future<void> _getBookMarkedSalons() async {
+    String? userToken = await _storageService.getuserToken();
+    DataState<List<Salon>> resualt =
+        await _apiServices.getBookMarkedSalons(userToken: userToken!);
+    if (resualt is DataSuccesState) {
+      bookMarkedSalons = resualt.data!;
+      update();
+    }
+    if (resualt is DataFailState) {
+      bookMarkedSalons = [];
+      update();
+    }
+  }
+
+  Future<void> getHomeFeedSalons() async {
     log('============Fetchig Home Iteams============');
     isLoading = true;
     update();
-    
+
     // todo should get user current city
     await getNewesSalons(cityName: 'tehran');
     await getBestSalons(cityName: 'tehran');
     await getSalonCategories();
+    await _getBookMarkedSalons();
     isLoading = false;
     update();
-    
+  }
+
+  updateInternetConnection(ConnectivityStatus status) {
+    connectivityStatus = status;
+    update();
   }
 
   // opens the home darwer
@@ -133,6 +162,16 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _subscription = InternetConnectivityService()
+        .connectivityResultStream()
+        .listen((event) => updateInternetConnection(event));
+
     getHomeFeedSalons();
+  }
+
+  @override
+  void onClose() async{
+   await _subscription.cancel();
+    super.onClose();
   }
 }
