@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:sibzamini/controller/controller.dart';
+import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
+import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/views/global/constants/app_drawer.dart';
 import 'package:sibzamini/views/global/widgets/loading_widget.dart';
 import 'package:sibzamini/views/screens/home/carsol_widget.dart';
@@ -41,18 +44,37 @@ class HomeScreen extends GetView<HomeController> {
         elevation: 1,
       ),
       drawer: AppDrawer(),
-      body: Column(
-        children: [
-          _searchBar(
-            width: width,
-            height: height,
-            context: context,
+      body: GetBuilder<HomeController>(builder: (controller) {
+        if (controller.connectivityStatus == ConnectivityStatus.connected) {
+          return Column(
+            children: [
+              _searchBar(
+                width: width,
+                height: height,
+                context: context,
+              ),
+              _selectLocationSection(width, context),
+              // body rest items
+              _bodySection(width)
+            ],
+          );
+        }
+        return Container(
+          width: width,
+          height: height,
+          child: Column(
+            children: [
+              Center(
+                child: Transform.scale(
+                  scale: 0.5,
+                  child: Lottie.asset(Assets.lotties.noInternet),
+                ),
+              ),
+              Text(NO_INTERNET_CONNECTION, style: AppTextTheme.caption)
+            ],
           ),
-          _selectLocationSection(width, context),
-          // body rest items
-          _bodySection(width)
-        ],
-      ),
+        );
+      }),
     );
   }
 
@@ -112,8 +134,9 @@ class HomeScreen extends GetView<HomeController> {
                     height: 10,
                   ),
                   ShimmerLoading(
-                    isLoading: builderController.isLoading,
-                    child: SliderList(salons: builderController.newestSalonList)),
+                      isLoading: builderController.isLoading,
+                      child: SliderList(
+                          salons: builderController.newestSalonList)),
                   SizedBox(
                     height: 15,
                   ),
