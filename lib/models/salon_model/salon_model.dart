@@ -62,3 +62,7 @@ class Salon extends Equatable {
   Map<String, dynamic> toMap() => _$SalonToJson(this);
 
 }
+
+extension SalonExtension on Salon{
+  bool isBookMarked(List<Salon>bookdMarkedSalon)=>bookdMarkedSalon.contains(this);
+}
