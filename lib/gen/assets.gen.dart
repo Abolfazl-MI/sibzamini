@@ -171,8 +171,11 @@ class $AssetsLottiesGen {
   /// File path: assets/lotties/loading.json
   String get loading => 'assets/lotties/loading.json';
 
+  /// File path: assets/lotties/no_internet.json
+  String get noInternet => 'assets/lotties/no_internet.json';
+
   /// List of all assets
-  List<String> get values => [error, loading];
+  List<String> get values => [error, loading, noInternet];
 }
 
 class Assets {
