@@ -6,18 +6,20 @@ import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/models/comment_model/comment_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/models/services_model/services_model.dart';
+import 'package:sibzamini/services/local/shared_service.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
 import 'package:url_launcher/url_launcher.dart';
 class DetailController extends GetxController {
   // dependcies
   final ApiServices _apiServices = ApiServices();
-
+  final SharedStorageService _storageService=SharedStorageService();
   // vaiables
   int selectedIndex = 0;
   Salon? salonDetail;
   double rateToSalon = 0;
   bool isLoading = false;
+  bool isCommentLoading=false;
   Salon? salondetail;
   List<Comment>? salonComments;
   List<SalonService>? salonServices;
@@ -84,19 +86,40 @@ class DetailController extends GetxController {
     update();
   }
 
-  getOpinionBasedRatingCount() {
-    if (rateToSalon == 1) {
+  getOpinionBasedRatingCount(int rate) {
+    if (rate == 1) {
       return 'بد';
-    } else if (rateToSalon == 2) {
+    } else if (rate == 2) {
       return 'ضعیف';
-    } else if (rateToSalon == 3) {
+    } else if (rate == 3) {
       return 'متوسط';
-    } else if (rateToSalon == 4) {
+    } else if (rate == 4) {
       return 'خوب';
-    } else if (rateToSalon == 5) {
+    } else if (rate == 5) {
       return 'عالی';
     }
   }
+
+  // sends user comment for coresponding salon 
+  Future<void>sendComment({required String comment, required int rate,})async{
+    String? usertToken=await _storageService.getuserToken();
+    if(usertToken!=null){
+      isCommentLoading=true;
+      update();
+      DataState<bool> result=await _apiServices.sendComment(salonId: salonDetail!.id!, userToken: usertToken, comment: comment, rate: rate);
+      if(result is DataSuccesState){
+        await _getSalonComments(id: salonDetail!.id!);
+        isCommentLoading=false;
+        update();
+      }
+      if(result is DataFailState){
+        Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', result.error!,
+          backgroundColor: Colors.red);
+      }
+    }
+  }
+  Future<void>addSalonToBookMarks()async{}
+  Future<void>deleteSalonBookMark()async{}
   Future launchMApUrl(double lat,double lon )async{
     // String _url='https://www.google.com/maps/search/MM39%2BF63,+/@$lat,$lon,17z?hl=en';
     // if(!await launchUrl(lat, lon))

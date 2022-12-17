@@ -196,19 +196,24 @@ class ApiServices extends Interceptor {
     }
   }
 
-  // HACK this is incomplited function
   // adds comments for salon with id given
-  sendComment(
+  Future <DataState<bool>> sendComment(
       {required int salonId,
-      required int userId,
+      required String userToken,
       required String comment,
       required int rate}) async {
     try {
       // BUG: COMPLTE THE IMPLENETATION
       FormData data = FormData.fromMap(
-          {'user': userId, 'salon': salonId, 'comment': comment, 'rate': rate});
+          {'user': userToken, 'salon': salonId, 'comment': comment, 'rate': rate});
       Response response = await _dio.post(newSalonComment, data: data);
-    } catch (e) {}
+        if(response.statusCode==200){
+            return DataSuccesState(true);
+        }
+        return DataFailState(SOMETHING_WENT_WRONG);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
   }
 
 // returns Salon services based on salon id passed
@@ -297,13 +302,14 @@ class ApiServices extends Interceptor {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
-
+// gets user city name base on lat and long passed
   Future<DataState<String>> getUserCityLocation(
       {required double lat, required double lon}) async {
     try {
+      _dio.options.baseUrl='https://map.ir';
       _dio.options.headers.addAll({'x-api-key': map_token});
       Response response =
-          await _dio.get('https://map.ir/fast-reverse', queryParameters: {
+          await _dio.get('/fast-reverse', queryParameters: {
         'lat': lat,
         'lon': lon,
       });

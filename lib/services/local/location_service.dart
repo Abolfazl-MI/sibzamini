@@ -36,5 +36,4 @@ class LocationServices {
     }
   }
 
-  Future requestPermission() async {}
 }
