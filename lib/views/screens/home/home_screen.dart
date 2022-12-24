@@ -59,10 +59,12 @@ class HomeScreen extends GetView<HomeController> {
             ],
           );
         }
+        //TODO  GET Salon by category
         return Container(
           width: width,
           height: height,
           child: Column(
+             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
                 child: Transform.scale(
@@ -102,7 +104,10 @@ class HomeScreen extends GetView<HomeController> {
                     child: SliderHeader(
                         rightText: 'بهترین‌سالن‌های‌اطراف‌شما',
                         leftText: 'نمایش‌ همه',
-                        onTap: () {}),
+                        onTap: () {
+                          // TODO Show all salons
+
+                        }),
                   ),
                   SizedBox(
                     height: 12,
@@ -128,7 +133,10 @@ class HomeScreen extends GetView<HomeController> {
                     child: SliderHeader(
                         rightText: 'جدید‌ترین‌سالن‌ها',
                         leftText: 'نمایش‌ همه',
-                        onTap: () {}),
+                        onTap: () {
+                          // TODO Show all salons
+
+                        }),
                   ),
                   SizedBox(
                     height: 10,

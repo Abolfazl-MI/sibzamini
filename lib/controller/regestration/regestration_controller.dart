@@ -28,9 +28,6 @@ class RegistrationController extends GetxController {
       errorMessage.value = PHONE_NUMBER_REQUIRED;
       return PHONE_NUMBER_REQUIRED;
     }
-    // else if (!value.isValidIranianMobileNumber()) {
-    //   return PHONE_NUMBER_INVALID;
-    // }
     return null;
   }
 
@@ -58,7 +55,7 @@ class RegistrationController extends GetxController {
   }
 
   // resends the otp code
-  resendVerfiyCodeTimer() async {
+  Future<void> resendVerfiyCodeTimer() async {
     if (maxResendCode == 0) {
       Get.snackbar(
           '\u{1F641}' ' یکم صبر کنید  ', 'لطفا کمی صبر کنید ،دوباره تلاش کنید ',
@@ -75,7 +72,7 @@ class RegistrationController extends GetxController {
       timeLaps = 50;
       update();
     }
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       timeLaps = timeLaps - 1;
       update();
       if (timeLaps == 0) {
@@ -87,33 +84,9 @@ class RegistrationController extends GetxController {
   }
 
   // registerUser
-// ! incomplited cause of city location service
-
-  Future<void> createUserAccount({
-    required String name,
-    required String phoneNumber,
-  }) async {
+  Future<void> createUserAccount({required String name,required String phoneNumber,}) async {
     isLoading = true;
     update();
-    // DataState<String> city = await _locationServices.getUserCityLocation();
-    // if (city is DataFailState) {
-    //   // _apiServices.cancleRequest();
-    //   isLoading = false;
-    //   update();
-    //   if (city.error == LOCATION_ACCESS_DENIDD) {
-    //     Get.snackbar('\u{1F610}' 'دسترسی مکان محدود شد', LOCATION_ACCESS_DENIDD,
-    //         backgroundColor: Colors.red);
-    //   }
-    //   if (city.error == DISSABLED_LOCATION_SERVICE) {
-    //     Get.snackbar(
-    //         '\u{1F610}' 'سرویس مکان یابی روشن نیست', DISSABLED_LOCATION_SERVICE,
-    //         backgroundColor: Colors.red);
-    //   }
-    //   // if(city.error==DISSABLED_LOCATION_SERVICE)
-    // }
-
-    // if (city is DataSuccesState) {
-    // ! hard code city , should get from user
     DataState<User> result = await _apiServices.createUserAccount(
         name: name, phoneNumber: phoneNumber, city: 'tehran');
     if (result is DataSuccesState) {
@@ -147,7 +120,7 @@ class RegistrationController extends GetxController {
       Get.snackbar(
           '\u{1F642}' 'موفقیت آمیز بود', 'کد احراز هویت برای شما ارسال شد',
           backgroundColor: Colors.green);
-      await Future.delayed(Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 3));
       Get.offNamed(rVerifyCodeScreen, arguments: {'mobile': phoneNumber});
     }
     if (result is DataFailState) {
@@ -158,6 +131,8 @@ class RegistrationController extends GetxController {
     }
   }
 
+
+
   Future<void> confirmOtpCode(
       {required String otpCode, required String phoneNumber}) async {
     isLoading = true;
@@ -166,13 +141,18 @@ class RegistrationController extends GetxController {
         otpCode: otpCode, phoneNumber: phoneNumber);
     if (resualt is DataSuccesState) {
       await _sharedStorageService.saveUserToken(resualt.data!.token!);
-      await _sharedStorageService.saveUserId(resualt.data!.id!);
       isLoading = false;
       update();
        Get.snackbar('\u{1F642}' 'موفقیت امیز بود', 'شما وارد شدید،خوش آمدید',
           backgroundColor: Colors.green);
       await Future.delayed(Duration(seconds: 3));
-      Get.offNamed(rHomeScreen);
+      DataState<String> cityState=await _locationServices.getUserCityLocation();
+      if(cityState is DataSuccesState){
+      Get.offNamed(rHomeScreen,arguments: {'city':cityState.data});
+      }else{
+        Get.snackbar('مشکلی پیش آمده', 'مشکلی در تشخیص مکان شما پیش امده لطفا دستی خودتان انتخاب کنید ');
+        Get.offNamed(rHomeScreen, arguments: {'city':'Tehran'}); 
+      }
     }
     if (resualt is DataFailState) {
       isLoading = false;

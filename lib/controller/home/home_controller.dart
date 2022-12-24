@@ -134,14 +134,14 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> getHomeFeedSalons() async {
+  Future<void> getHomeFeedSalons(String citylocation) async {
     log('============Fetchig Home Iteams============');
     isLoading = true;
     update();
 
     // todo should get user current city
-    await getNewesSalons(cityName: 'tehran');
-    await getBestSalons(cityName: 'tehran');
+    await getNewesSalons(cityName: citylocation);
+    await getBestSalons(cityName: citylocation);
     await getSalonCategories();
     await _getBookMarkedSalons();
     isLoading = false;
@@ -164,8 +164,8 @@ class HomeController extends GetxController {
     _subscription = InternetConnectivityService()
         .connectivityResultStream()
         .listen((event) => updateInternetConnection(event));
-
-    getHomeFeedSalons();
+    String ? cityName=Get.arguments['city'];
+    getHomeFeedSalons(cityName??'Tehran');
   }
 
   @override

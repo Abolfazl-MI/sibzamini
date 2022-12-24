@@ -412,8 +412,16 @@ class DetailScreen extends GetView<DetailController> {
                             icon:
                                 SvgPicture.asset(Assets.icons.commentsOutline)),
                         IconButton(
-                            onPressed: () {},
-                            icon: SvgPicture.asset(Assets.icons.heart)),
+                            onPressed: () {
+                              if(builderController.isBookedMarked){
+                                builderController.deleteSalonBookMark();
+                              }
+                              if(!builderController.isBookedMarked){
+                                builderController.addSalonToBookMarks();
+                              }
+                            },
+                            icon: builderController.isBookedMarked?Icon(Icons.favorite): Icon(Icons.favorite_border)
+                        ),
                       ],
                     )
                   ],

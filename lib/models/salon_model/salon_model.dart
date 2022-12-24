@@ -66,19 +66,5 @@ class Salon extends Equatable {
 extension SalonExtension on Salon{
   bool isBookMarked(List<Salon>bookdMarkedSalon)=>bookdMarkedSalon.contains(this);
 
-  String getRateToText(){
-    if (rate == 1) {
-      return 'بد';
-    } else if (rate == 2) {
-      return 'ضعیف';
-    } else if (rate == 3) {
-      return 'متوسط';
-    } else if (rate == 4) {
-      return 'خوب';
-    } else if (rate == 5) {
-      return 'عالی';
-    }
-    return '';
-  }
 }
 

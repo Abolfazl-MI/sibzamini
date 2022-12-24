@@ -254,7 +254,13 @@ class ApiServices extends Interceptor {
         return DataSuccesState(true);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
-    } catch (e) {
+    } on DioError catch(e){
+      if(e.response?.statusCode==401){
+        return DataFailState('این سالن از قبل اضافه شده است');
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
+    catch (e) {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
@@ -278,13 +284,18 @@ class ApiServices extends Interceptor {
   }
 
   // deletes salon from user bookmarked salons base on the id of salon
-  deleteSalonFromBookMarkList(
+  Future<DataState<bool>> deleteSalonFromBookMarkList(
       {required String userToken, required int salonId}) async {
     try {
       FormData data = FormData.fromMap({'user': userToken, 'salon': salonId});
       Response response = await _dio.post(deleteSalonBookMark, data: data);
-      // BUG should completed base on response
-    } catch (e) {}
+      if(response.statusCode==200){
+        return DataSuccesState(true);
+      }
+      return DataSuccesState(false);
+    } catch (e) {
+      return DataSuccesState(false);
+    }
   }
 
   // returns list of Services categories
@@ -314,7 +325,7 @@ class ApiServices extends Interceptor {
         'lon': lon,
       });
       if (response.statusCode == 200) {
-        String city = response.data['city'];
+        String city = response.data['province'];
         return DataSuccesState(city);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
