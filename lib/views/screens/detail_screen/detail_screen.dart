@@ -35,7 +35,16 @@ class DetailScreen extends GetView<DetailController> {
     return Scaffold(
       backgroundColor: const Color(0xffF5F7FB),
       key: scaffoldKey,
+      
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon:Icon(Icons.arrow_back_ios, color: Colors.grey,), 
+            onPressed: (){
+              Get.back();
+            },
+          )
+        ],
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: SvgPicture.asset(Assets.icons.menu),
