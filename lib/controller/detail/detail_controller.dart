@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sibzamini/core/data_staes.dart';
+import 'package:sibzamini/models/bookmarked_salon_model/book_marked_salon_model.dart';
 import 'package:sibzamini/models/comment_model/comment_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/models/services_model/services_model.dart';
@@ -23,6 +24,7 @@ class DetailController extends GetxController {
   bool isCommentLoading = false;
   bool isBookedMarked = false;
   Salon? salondetail;
+  int ? salonId;
   List<Comment>? salonComments;
   List<SalonService>? salonServices;
   TextEditingController commentController = TextEditingController();
@@ -86,7 +88,7 @@ class DetailController extends GetxController {
     await _getSalonDeatail(id: id);
     await _getSalonServices(id: id);
     await _getSalonComments(id: id);
-
+    Future.delayed(Duration(seconds: 5));
     await isBookedMarkedSalon();
     isLoading = false;
     update();
@@ -149,14 +151,17 @@ class DetailController extends GetxController {
 // BUG bookmarked salon model need to change
   Future<void> isBookedMarkedSalon() async {
     String? token = await _storageService.getuserToken();
+    print(token);
     if (token != null) {
-      DataState<List<Salon>> bookmarkedSalon =
+      DataState<List<BookMarkedSalon>> bookmarkedSalon =
           await _apiServices.getBookMarkedSalons(userToken: token);
       if (bookmarkedSalon is DataSuccesState) {
-        isBookedMarked = bookmarkedSalon.data!.contains(salondetail);
-        update();
-        print('isBookedMark:$isBookedMarked');
-        
+         for (BookMarkedSalon element in bookmarkedSalon.data!) { 
+          if(element.shop==salonId){
+            isBookedMarked=true;
+            update();
+          }
+         }
       } else {
         isBookedMarked = false;
         update();
@@ -214,6 +219,7 @@ class DetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    salonId=Get.arguments['id'];
     getSalonDetail(id: Get.arguments['id']);
   }
 }

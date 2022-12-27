@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:sibzamini/core/data_staes.dart';
+import 'package:sibzamini/models/bookmarked_salon_model/book_marked_salon_model.dart';
 import 'package:sibzamini/models/category_model/category_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
@@ -24,7 +25,7 @@ class HomeController extends GetxController {
   List<Salon> newestSalonList = [];
   List<Salon> salonsBasedOnCategory = [];
   List<ServiceCategory> salonCategories = [];
-  List<Salon> bookMarkedSalons = [];
+  List<BookMarkedSalon> bookMarkedSalons = [];
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool isLoading = false;
   bool isCategoryLoadign = false;
@@ -122,7 +123,7 @@ class HomeController extends GetxController {
 
   Future<void> _getBookMarkedSalons() async {
     String? userToken = await _storageService.getuserToken();
-    DataState<List<Salon>> resualt =
+    DataState<List<BookMarkedSalon>> resualt =
         await _apiServices.getBookMarkedSalons(userToken: userToken!);
     if (resualt is DataSuccesState) {
       bookMarkedSalons = resualt.data!;

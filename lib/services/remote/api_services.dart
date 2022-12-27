@@ -4,6 +4,7 @@ import "package:dio/dio.dart";
 
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/core/error_code.dart';
+import 'package:sibzamini/models/bookmarked_salon_model/book_marked_salon_model.dart';
 import 'package:sibzamini/models/category_model/category_model.dart';
 import 'package:sibzamini/models/comment_model/comment_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
@@ -269,15 +270,15 @@ class ApiServices extends Interceptor {
   }
 
   // returns list of user bookmarked salons
-  Future<DataState<List<Salon>>> getBookMarkedSalons(
+  Future<DataState<List<BookMarkedSalon>>> getBookMarkedSalons(
       {required String userToken}) async {
     try {
       FormData data = FormData.fromMap({'user': userToken});
       Response response = await _dio.post(bookMarkList, data: data);
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
-        List<Salon> bookMarkedSalons =
-            rawData.map((e) => Salon.fromJson(e)).toList();
+        List<BookMarkedSalon> bookMarkedSalons =
+            rawData.map((e) => BookMarkedSalon.fromJson(e)).toList();
         return DataSuccesState(bookMarkedSalons);
       }
       return DataFailState(SOMETHING_WENT_WRONG);

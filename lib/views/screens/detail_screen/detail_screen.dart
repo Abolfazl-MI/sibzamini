@@ -408,7 +408,9 @@ class DetailScreen extends GetView<DetailController> {
                     Row(
                       children: [
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              controller.updateSelectedIndex(2);
+                            },
                             icon:
                                 SvgPicture.asset(Assets.icons.commentsOutline)),
                         IconButton(
@@ -420,7 +422,7 @@ class DetailScreen extends GetView<DetailController> {
                                 builderController.addSalonToBookMarks();
                               }
                             },
-                            icon: builderController.isBookedMarked?Icon(Icons.favorite): Icon(Icons.favorite_border)
+                            icon: builderController.isBookedMarked?Icon(Icons.favorite, color:Colors.red): Icon(Icons.favorite_border)
                         ),
                       ],
                     )
