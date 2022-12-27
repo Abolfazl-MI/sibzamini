@@ -10,7 +10,7 @@ import 'package:sibzamini/services/local/shared_service.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 class DetailController extends GetxController {
   // dependcies
   final ApiServices _apiServices = ApiServices();
@@ -110,6 +110,7 @@ class DetailController extends GetxController {
   Future<void> sendComment({
     required String comment,
     required int rate,
+    required BuildContext context
   }) async {
     String? usertToken = await _storageService.getuserToken();
     if (usertToken != null) {
@@ -121,9 +122,21 @@ class DetailController extends GetxController {
           comment: comment,
           rate: rate);
       if (result is DataSuccesState) {
-        await _getSalonComments(id: salonDetail!.id!);
         isCommentLoading = false;
         update();
+        AwesomeDialog(
+          context:context, 
+          showCloseIcon: true,
+          dialogType: DialogType.success, 
+          borderSide: BorderSide(color:Colors.green), 
+          dismissOnBackKeyPress: false, 
+          dismissOnTouchOutside: true, 
+          title: 'کامنت شما ثبت شد', 
+          headerAnimationLoop: true, 
+          desc: 'کامنت شما با موفقیت ثبت شد، بعد از تایید نمایش داده خواهد شد', 
+          // btnOkOnPress: (){Get.back();},
+          animType: AnimType.scale
+        ).show();
       }
       if (result is DataFailState) {
         isCommentLoading=false;

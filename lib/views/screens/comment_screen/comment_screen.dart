@@ -205,7 +205,7 @@ class CommentScreen extends StatelessWidget {
                                 dController.rateToSalon > 0) {
                               controller.sendComment(
                                   comment: controller.commentController.text.trim(),
-                                  rate: dController.rateToSalon.toInt());
+                                  rate: dController.rateToSalon.toInt(),context: context);
                             }
                           },
                           child: SizedBox(
