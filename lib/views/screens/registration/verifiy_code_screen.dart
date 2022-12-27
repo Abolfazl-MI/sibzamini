@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:sibzamini/controller/regestration/regestration_controller.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/views/global/widgets/loading_widget.dart';
+import 'package:sibzamini/views/routes/app_route_names.dart';
 import 'package:sibzamini/views/screens/registration/regestration_inputs_widget.dart';
 import "package:persian_number_utility/persian_number_utility.dart";
 import '../../global/colors/solid_colors.dart';
@@ -19,7 +20,8 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: SolidColors.backGroundColor,
-      body: GetBuilder<RegistrationController>(initState: (state) {
+      body: GetBuilder<RegistrationController>(
+        initState: (state) {
         controller.resendVerfiyCodeTimer();
       }, builder: (controller) {
         return Stack(
@@ -64,6 +66,13 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                                   value.toPersianDigit();
                                   print(value);
                                   controller.validPenCode(value);
+                                  if(value.length==4){
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                    controller.confirmOtpCode(
+                                        otpCode:
+                                            otpController.text.toEnglishDigit(),
+                                        phoneNumber: Get.arguments['mobile']);
+                                  }
                                 },
                                 validator: (value) =>
                                     controller.validatePhoneNumber(value)
@@ -135,7 +144,31 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                                   )),
                                 ),
                               ),
+
                             ),
+                            Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'شماره اشتباه وارد کردید؟',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: SolidColors.textColor4),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.offNamed(rLoginScreen);
+                                    },
+                                    child: Text(
+                                      'اصلاح شماره',
+                                      style: TextStyle(
+                                          color: SolidColors.primaryBlue),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       ),

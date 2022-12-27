@@ -14,24 +14,20 @@ import 'package:sibzamini/views/global/widgets/search_bar_widget.dart';
 import 'package:sibzamini/views/global/widgets/select_location_widget.dart';
 import 'package:sibzamini/views/screens/registration/regestration_inputs_widget.dart';
 
-class CommentScreen extends GetView<DetailController> {
+class CommentScreen extends StatelessWidget {
   CommentScreen({super.key});
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
+    final controller=Get.find<DetailController>();
     return Scaffold(
       backgroundColor: SolidColors.backGroundColor,
       body: GetBuilder<DetailController>(builder: (dController) {
         print(dController.salonComments);
         return Shimmer(
           linearGradient: shimmerGradient,
-
           child: ShimmerLoading(
             isLoading: dController.isCommentLoading,
             child: CustomScrollView(
@@ -51,7 +47,7 @@ class CommentScreen extends GetView<DetailController> {
                 )),
                 SliverToBoxAdapter(
                   child:
-                  
+
                       /// [user comment sending section ]
                       Container(
                     padding: EdgeInsets.all(20),
@@ -65,7 +61,7 @@ class CommentScreen extends GetView<DetailController> {
                           'نظرات شما',
                           style: AppTextTheme.captionBold,
                         ),
-                  
+
                         ///[rating section]
                         Row(
                           children: [
@@ -92,79 +88,124 @@ class CommentScreen extends GetView<DetailController> {
                             SizedBox(
                               width: 5,
                             ),
-                            Text(controller.getOpinionBasedRatingCount(dController.getOpinionBasedRatingCount(dController.salonDetail!.id!)) ?? '')
+                            // Text(
+                            //   controller.getOpinionBasedRatingCount(dController.getOpinionBasedRatingCount(dController.salonDetail?.id??0)) ?? '')
                           ],
                         ),
                         SizedBox(
                           height: 5,
                         ),
-                  
+
                         // feilds
-                        Text(
-                          'نام نام خوانوادگی',
-                          style: AppTextTheme.baseStyle
-                              .copyWith(color: SolidColors.textColor5),
-                        ),
-                        AppInput(
-                          keyboardType: TextInputType.name,
-                          fillColor: Color(0xffF5F7FB),
-                          controller: nameController,
-                          hintTextstyle: AppTextTheme.subCaption.copyWith(
-                              color: SolidColors.textColor5, fontSize: 15),
-                          hintText: 'ابوالفضل مشهدی',
-                          icon: Container(
-                            child: Transform.scale(
-                                scale: 0.5,
-                                child: SvgPicture.asset(
-                                  Assets.icons.group,
-                                  color: SolidColors.primaryBlue,
-                                )),
-                          ),
-                        ),
+                        // Text(
+                        //   'نام نام خوانوادگی',
+                        //   style: AppTextTheme.baseStyle
+                        //       .copyWith(color: SolidColors.textColor5),
+                        // ),
+                        // AppInput(
+                        //   keyboardType: TextInputType.name,
+                        //   fillColor: Color(0xffF5F7FB),
+                        //   controller: nameController,
+                        //   hintTextstyle: AppTextTheme.subCaption.copyWith(
+                        //       color: SolidColors.textColor5, fontSize: 15),
+                        //   hintText: 'ابوالفضل مشهدی',
+                        //   icon: Container(
+                        //     child: Transform.scale(
+                        //         scale: 0.5,
+                        //         child: SvgPicture.asset(
+                        //           Assets.icons.group,
+                        //           color: SolidColors.primaryBlue,
+                        //         )),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 5,
                         ),
-                  
-                        Text(
-                          'ایمیل',
-                          style: AppTextTheme.baseStyle
-                              .copyWith(color: SolidColors.textColor5),
-                        ),
-                        AppInput(
-                          keyboardType: TextInputType.emailAddress,
-                          fillColor: Color(0xffF5F7FB),
-                          controller: nameController,
-                          hintTextstyle: AppTextTheme.subCaption.copyWith(
-                              color: SolidColors.textColor5, fontSize: 15),
-                          hintText: 'simbzamini@example.com',
-                          icon: Container(
-                            child: Transform.scale(
-                                scale: 0.5,
-                                child: SvgPicture.asset(Assets.icons.email2)),
-                          ),
-                        ),
+
+                        // Text(
+                        //   'ایمیل',
+                        //   style: AppTextTheme.baseStyle
+                        //       .copyWith(color: SolidColors.textColor5),
+                        // ),
+                        // AppInput(
+                        //   keyboardType: TextInputType.emailAddress,
+                        //   fillColor: Color(0xffF5F7FB),
+                        //   controller: emailController,
+                        //   hintTextstyle: AppTextTheme.subCaption.copyWith(
+                        //       color: SolidColors.textColor5, fontSize: 15),
+                        //   hintText: 'simbzamini@example.com',
+                        //   icon: Container(
+                        //     child: Transform.scale(
+                        //         scale: 0.5,
+                        //         child: SvgPicture.asset(Assets.icons.email2)),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 5,
                         ),
-                  
+
                         Text(
                           'پیام شما ',
                           style: AppTextTheme.baseStyle
                               .copyWith(color: SolidColors.textColor5),
                         ),
-                  
-                        buildTextField(
-                          controller: commentController,
-                          hintText: 'پیام خود را اینجا بنویسید ',
-                          // fillColor: SolidColors.textColor4
+
+                        // buildTextField(
+                        //   controller: controller.commentController,
+                        //   hintText: 'پیام خود را اینجا بنویسید ',
+                        //   // fillColor: SolidColors.textColor4
+                        // ),
+                        Container(
+                          // margin: EdgeInsets.all(12),
+                          height: 8 * 24.0,
+                          child: TextField(
+                            textInputAction: TextInputAction.done,
+                            controller: controller.commentController,
+                            maxLines: 50,
+                            decoration: InputDecoration(
+                              hintStyle: AppTextTheme.subCaption.copyWith(
+                                  color: SolidColors.textColor5, fontSize: 15),
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: SolidColors.borderColor2)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: SolidColors.borderColor2)),
+                              disabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: SolidColors.borderColor2)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: SolidColors.borderColor2)),
+                              hintText: 'پیام خود را اینجا بنویسید ',
+                              fillColor: SolidColors.darkGrey,
+                              filled: true,
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height: 5,
                         ),
                         InkWell(
-                          onTap: (){
-                            if(commentController.text !=null && nameController.text !=null && emailController.text!=null && dController.rateToSalon!=null){
-                              controller.sendComment(comment: commentController.text, rate: dController.rateToSalon.toInt());
+                          onTap: () {
+                            if (controller.commentController.text == null ||
+                                controller.commentController.text.isEmpty) {
+                              Get.snackbar('\u{1F610}' 'مشکلی پیش آمده',
+                                  'پر کردن بخش نظر الزامی است',
+                                  backgroundColor: Colors.red);
+                            }
+                            if (dController.rateToSalon == 0) {
+                              Get.snackbar('\u{1F610}' 'مشکلی پیش آمده',
+                                  'حداقل یک ستاره برای امتیاز الزامی',
+                                  backgroundColor: Colors.red);
+                            }
+                            if (controller.commentController.text != null &&
+                                controller.commentController.text.isNotEmpty &&
+                                dController.rateToSalon != null &&
+                                dController.rateToSalon > 0) {
+                              controller.sendComment(
+                                  comment: controller.commentController.text.trim(),
+                                  rate: dController.rateToSalon.toInt());
                             }
                           },
                           child: SizedBox(
@@ -203,7 +244,8 @@ class CommentScreen extends GetView<DetailController> {
                                   style: AppTextTheme.caption),
                               Transform.scale(
                                   scale: 0.7,
-                                  child: SvgPicture.asset(Assets.icons.notFind)),
+                                  child:
+                                      SvgPicture.asset(Assets.icons.notFind)),
                             ],
                           ))),
                   SliverToBoxAdapter(
@@ -236,16 +278,19 @@ class CommentScreen extends GetView<DetailController> {
                                   children: [
                                     /// [comment count should get from server]
                                     TextSpan(
-                                        text: dController.salonDetail!.rate.toString(),
-                                        style: AppTextTheme.captionBold.copyWith(
-                                            color: SolidColors.primaryBlue))
+                                        text: dController.salonDetail!.rate
+                                            .toString(),
+                                        style: AppTextTheme.captionBold
+                                            .copyWith(
+                                                color: SolidColors.primaryBlue))
                                   ]),
                             ),
                             Row(
                               children: [
                                 ///[salon all comments  gets from server]
                                 Text(
-                                  dController.getOpinionBasedRatingCount(dController.salonDetail!.id!),
+                                  dController.getOpinionBasedRatingCount(
+                                      dController.salonDetail!.id!),
                                   style: AppTextTheme.captionBold,
                                 ),
                                 SizedBox(
@@ -264,7 +309,7 @@ class CommentScreen extends GetView<DetailController> {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       /// [all rating count from server]
-                  
+
                                       RatingStars(
                                         editable: false,
                                         iconSize: 18,
@@ -276,7 +321,8 @@ class CommentScreen extends GetView<DetailController> {
                                         height: 30,
                                         decoration: BoxDecoration(
                                             color: SolidColors.primaryBlue,
-                                            borderRadius: BorderRadius.circular(5)),
+                                            borderRadius:
+                                                BorderRadius.circular(5)),
                                         child: Center(
                                           child: Text(
                                             '3'.toPersianDigit(),
@@ -298,88 +344,88 @@ class CommentScreen extends GetView<DetailController> {
                   ),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
-                        childCount:dController.salonComments!.length,
-                        (context, index)  {
-                          Comment indexComment=dController.salonComments![index];
-                          return Container(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: SolidColors.borderColor2)),
-                                  color: Colors.white),
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 10),
-                              child: Column(
-                                children: [
-                                  /// [OTHER USER INFO AND RATING SECTION ]
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        maxRadius: 25,
-                                        backgroundColor: SolidColors.darkGrey,
-                                        child: Center(
-                                          child: Transform.scale(
-                                            scale: 0.9,
-                                            child: SvgPicture.asset(
-                                                Assets.icons.group),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            indexComment.name!,
-                                            style: AppTextTheme.captionBold,
-                                          ),
-                                          Row(
-                                            children: [
-                                              RatingStars(
-                                                iconSize: 18,
-                                                rating: indexComment.score!.toDouble(),
-                                                editable: false,
-                                                color: SolidColors.yellow,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(dController.getOpinionBasedRatingCount(indexComment.score!))
-                                            ],
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Container(
-                                    width: width,
-                                    padding: EdgeInsets.all(15),
-                                    child: Text(
-                                      indexComment.comment!,
-                                      // 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد ',
-                                      textAlign: TextAlign.justify,
-                                      style: AppTextTheme.baseStyle
-                                          .copyWith(color: SolidColors.textColor5),
+                        childCount: dController.salonComments!.length,
+                        (context, index) {
+                      Comment indexComment = dController.salonComments![index];
+                      return Container(
+                        decoration: BoxDecoration(
+                            border: Border(
+                                bottom: BorderSide(
+                                    color: SolidColors.borderColor2)),
+                            color: Colors.white),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                        child: Column(
+                          children: [
+                            /// [OTHER USER INFO AND RATING SECTION ]
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  maxRadius: 25,
+                                  backgroundColor: SolidColors.darkGrey,
+                                  child: Center(
+                                    child: Transform.scale(
+                                      scale: 0.9,
+                                      child:
+                                          SvgPicture.asset(Assets.icons.group),
                                     ),
-                                    decoration: BoxDecoration(
-                                        color: SolidColors.darkGrey,
-                                        border: Border.all(
-                                            color: SolidColors.borderColor2),
-                                        borderRadius: BorderRadius.circular(10)),
                                   ),
-                                  SizedBox(
-                                    height: 5,
-                                  )
-                                ],
-                              ),
-                            );
-                        }
+                                ),
+                                SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      indexComment.name!,
+                                      style: AppTextTheme.captionBold,
+                                    ),
+                                    Row(
+                                      children: [
+                                        RatingStars(
+                                          iconSize: 18,
+                                          rating:
+                                              indexComment.score!.toDouble(),
+                                          editable: false,
+                                          color: SolidColors.yellow,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(dController
+                                            .getOpinionBasedRatingCount(
+                                                indexComment.score!))
+                                      ],
+                                    )
+                                  ],
+                                )
+                              ],
                             ),
-
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              width: width,
+                              padding: EdgeInsets.all(15),
+                              child: Text(
+                                indexComment.comment!,
+                                // 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد ',
+                                textAlign: TextAlign.justify,
+                                style: AppTextTheme.baseStyle
+                                    .copyWith(color: SolidColors.textColor5),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: SolidColors.darkGrey,
+                                  border: Border.all(
+                                      color: SolidColors.borderColor2),
+                                  borderRadius: BorderRadius.circular(10)),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            )
+                          ],
+                        ),
+                      );
+                    }),
                   )
                 ],
               ],

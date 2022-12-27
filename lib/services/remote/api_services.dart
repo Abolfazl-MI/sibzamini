@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import "package:dio/dio.dart";
 
 import 'package:sibzamini/core/data_staes.dart';
@@ -205,13 +207,14 @@ class ApiServices extends Interceptor {
     try {
       // BUG: COMPLTE THE IMPLENETATION
       FormData data = FormData.fromMap(
-          {'user': userToken, 'salon': salonId, 'comment': comment, 'rate': rate});
+          {'user': userToken, 'salon': salonId, 'comment': comment, 'rate': rate, 'parent':''});
       Response response = await _dio.post(newSalonComment, data: data);
         if(response.statusCode==200){
             return DataSuccesState(true);
         }
         return DataFailState(SOMETHING_WENT_WRONG);
     } catch (e) {
+      log(e.toString());
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }

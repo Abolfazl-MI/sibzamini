@@ -143,9 +143,11 @@ Widget buildTextField(
     // margin: EdgeInsets.all(12),
     height: maxLines * 24.0,
     child: TextField(
-      
+      textInputAction: TextInputAction.done,
+      controller: controller,
       maxLines: maxLines,
       decoration: InputDecoration(
+
         hintStyle: AppTextTheme.subCaption.copyWith(
                             color: SolidColors.textColor5, 
                             fontSize: 15

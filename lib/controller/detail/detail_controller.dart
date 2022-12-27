@@ -25,6 +25,8 @@ class DetailController extends GetxController {
   Salon? salondetail;
   List<Comment>? salonComments;
   List<SalonService>? salonServices;
+  TextEditingController commentController = TextEditingController();
+
   // methods
   // bottom navigation
   void updateSelectedIndex(int newValue) {
@@ -124,12 +126,14 @@ class DetailController extends GetxController {
         update();
       }
       if (result is DataFailState) {
+        isCommentLoading=false;
+        update();
         Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', result.error!,
             backgroundColor: Colors.red);
       }
     }
   }
-
+// BUG bookmarked salon model need to change
   Future<void> isBookedMarkedSalon() async {
     String? token = await _storageService.getuserToken();
     if (token != null) {
@@ -189,7 +193,7 @@ class DetailController extends GetxController {
     final Uri url = Uri.parse(
         'https://www.google.com/maps/search/MM39%2BF63,+/@$lat,$lon,17z?hl=en');
     if (!await launchUrl(url)) {
-      Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', 'دوباره تلاشکنید ',
+      Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', 'دوباره تلاش کنید ',
           backgroundColor: Colors.red);
     }
   }
