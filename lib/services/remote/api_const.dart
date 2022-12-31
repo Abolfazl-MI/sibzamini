@@ -17,3 +17,4 @@ const String newSalonComment='/comments/new';
 const String bookMarkList='/bookmarks/list';
 const String bookMarkSalon='/bookmarks/add';
 const String deleteSalonBookMark='/bookmarks/delete';
+const String cities='/cities';

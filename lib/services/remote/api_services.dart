@@ -6,6 +6,7 @@ import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/models/bookmarked_salon_model/book_marked_salon_model.dart';
 import 'package:sibzamini/models/category_model/category_model.dart';
+import 'package:sibzamini/models/cities_model/cities_model.dart';
 import 'package:sibzamini/models/comment_model/comment_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/models/services_model/services_model.dart';
@@ -339,6 +340,20 @@ class ApiServices extends Interceptor {
       return DataFailState(SOMETHING_WENT_WRONG);
     } catch (e) {
       return DataFailState(SOMETHING_WENT_WRONG);
+    }
+  }
+  Future<DataState<List<City>>>getAvailableCities()async{
+    try{
+    Response response = await _dio.get(cities);
+    if(response.statusCode==200){
+      List<dynamic>rawData=response.data;
+      List<City>cities=rawData.map((data)=>City.fromJson(data)).toList();
+      return DataSuccesState(cities);
+    }
+    return DataFailState(SOMETHING_WENT_WRONG);
+    }
+    catch(e){
+    return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
 }

@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
+import 'package:sibzamini/models/cities_model/cities_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/views/global/constants/app_drawer.dart';
 import 'package:sibzamini/views/global/widgets/loading_widget.dart';
@@ -64,7 +65,7 @@ class HomeScreen extends GetView<HomeController> {
           width: width,
           height: height,
           child: Column(
-             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
                 child: Transform.scale(
@@ -106,7 +107,6 @@ class HomeScreen extends GetView<HomeController> {
                         leftText: 'نمایش‌ همه',
                         onTap: () {
                           // TODO Show all salons
-
                         }),
                   ),
                   SizedBox(
@@ -135,7 +135,6 @@ class HomeScreen extends GetView<HomeController> {
                         leftText: 'نمایش‌ همه',
                         onTap: () {
                           // TODO Show all salons
-
                         }),
                   ),
                   SizedBox(
@@ -306,11 +305,12 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  _selectLocationSection(double width, BuildContext context) {
+  _selectLocationSection(
+      double width, BuildContext context, ) {
     return InkWell(
       onTap: () {
-        print('sh');
-        _showCityLocationBottemSheet(context, width);
+        _showCityLocationBottemSheet(
+            context, width, Get.find<HomeController>().availableCities);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -352,7 +352,7 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   Future<dynamic> _showCityLocationBottemSheet(
-      BuildContext context, double width) {
+      BuildContext context, double width, List<City> cities) {
     return showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -394,28 +394,46 @@ class HomeScreen extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: 20,
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: ((context, index) => Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: SolidColors.textColor4))),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 12),
-                                child: Text(
-                                  'نام‌شهر',
-                                  style: AppTextTheme.caption
-                                      .copyWith(color: SolidColors.textColor4),
-                                ),
-                              ),
-                            )),
-                      ),
-                    )
+                    cities.isNotEmpty
+                        ? Expanded(
+                            child: ListView.builder(
+                              itemCount: cities.length,
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: ((context, index) => Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color:
+                                                    SolidColors.textColor4))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 12),
+                                      child: TextButton(
+                                        onPressed: () {
+                                          // TODO GET SALON BY CITY NAME
+                                        },
+                                        child: Text(cities[index].name ?? '',
+                                            style: AppTextTheme.caption
+                                                .copyWith(
+                                                    color: SolidColors
+                                                        .textColor4)),
+                                      ),
+                                    ),
+                                  )),
+                            ),
+                          )
+                        : Expanded(
+                            // width:width,
+                            child: Column(children: [
+                              Transform.scale(
+                                  scale: 0.5,
+                                  child:
+                                      SvgPicture.asset(Assets.icons.notFind)),
+                              Text('موردی پیدا نشد بعدا تلاش کنید')
+                            ]),
+                          )
                   ],
                 ),
               ),
@@ -482,7 +500,7 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 }
-      /*     Padding(
+/*     Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

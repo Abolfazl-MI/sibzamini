@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/models/bookmarked_salon_model/book_marked_salon_model.dart';
 import 'package:sibzamini/models/category_model/category_model.dart';
+import 'package:sibzamini/models/cities_model/cities_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/services/local/shared_service.dart';
@@ -26,6 +27,7 @@ class HomeController extends GetxController {
   List<Salon> salonsBasedOnCategory = [];
   List<ServiceCategory> salonCategories = [];
   List<BookMarkedSalon> bookMarkedSalons = [];
+  List<City>availableCities=[];
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool isLoading = false;
   bool isCategoryLoadign = false;
@@ -135,6 +137,18 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> _getCitySalonsAvailable()async{
+    DataState<List<City>>cities=await _apiServices.getAvailableCities();
+    if(cities is DataSuccesState){
+      availableCities=cities.data!;
+      update();
+    }else{
+      availableCities=[];
+      update();
+    }
+
+  } 
+
   Future<void> getHomeFeedSalons(String citylocation) async {
     log('============Fetchig Home Iteams============');
     isLoading = true;
@@ -145,6 +159,7 @@ class HomeController extends GetxController {
     await getBestSalons(cityName: citylocation);
     await getSalonCategories();
     await _getBookMarkedSalons();
+    await _getCitySalonsAvailable();
     isLoading = false;
     update();
   }
