@@ -86,12 +86,16 @@ class ApiServices extends Interceptor {
       // print(response.data);
       if (response.statusCode == 200) {
         return DataSuccesState(true);
-      }
-      if (response.statusCode == 404) {
+      } 
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } on DioError catch(e){
+      if (e.response!.statusCode == 404) {
         return DataFailState(USER_NOT_FOUND);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
-    } catch (e) {
+
+    }
+     catch (e) {
       return DataFailState(e.toString());
     }
   }

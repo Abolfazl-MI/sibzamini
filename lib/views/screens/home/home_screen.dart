@@ -466,12 +466,15 @@ class HomeScreen extends GetView<HomeController> {
               ),
             ),
           ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: SvgPicture.asset(Assets.icons.group),
+          // ),
           IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(Assets.icons.group),
-          ),
-          IconButton(
-            onPressed: () {},
+            onPressed: () {
+              // Get.offNamed(rBookMarkedSalonsScreen);
+              Get.toNamed(rBookMarkedSalonsScreen);
+            },
             icon: SvgPicture.asset(Assets.icons.heart),
           ),
         ],

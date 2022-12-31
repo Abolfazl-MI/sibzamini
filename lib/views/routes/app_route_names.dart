@@ -7,3 +7,4 @@ const String rDetailScreen = '/detailScreen';
 const String rLocationScreen = '/locationScreen';
 const String rCommentsScreen = '/commentsScreen';
 const String rErrorScreen = '/errorScreen';
+const String rBookMarkedSalonsScreen='/bookMarkedSalonScreen';

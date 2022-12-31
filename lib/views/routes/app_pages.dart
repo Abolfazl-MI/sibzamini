@@ -3,6 +3,7 @@ import 'package:get/route_manager.dart';
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/controller/detail/detail_biding.dart';
 import 'package:sibzamini/controller/splash/splash_binding.dart';
+import 'package:sibzamini/views/screens/book_marked_salons/book_marked_salons.dart';
 import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
 import 'package:sibzamini/views/screens/registration/signup_screen.dart';
 import 'package:sibzamini/views/views.dart';
@@ -39,6 +40,9 @@ class AppPages {
       name: rLocationScreen,
       page: () => LocationScreen(),
     ),
-    GetPage(name: rErrorScreen, page: () => ErrorScreen())
+    GetPage(name: rErrorScreen, page: () => const ErrorScreen()),
+    GetPage(
+        name: rBookMarkedSalonsScreen,
+        page: () => const BookMarkedSalonsScreen())
   ];
 }
