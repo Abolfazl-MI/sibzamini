@@ -23,7 +23,7 @@ import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
 import '../../global/constants/constants.dart';
 
 class DetailScreen extends GetView<DetailController> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  // final scaffoldKey = GlobalKey<ScaffoldState>();
   final PageController imageSliderController = PageController();
 
   DetailScreen({Key? key}) : super(key: key);
@@ -34,7 +34,7 @@ class DetailScreen extends GetView<DetailController> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: const Color(0xffF5F7FB),
-      key: scaffoldKey,
+      // key: scaffoldKey,
       
       appBar: AppBar(
         actions: [
@@ -46,19 +46,19 @@ class DetailScreen extends GetView<DetailController> {
           )
         ],
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: SvgPicture.asset(Assets.icons.menu),
-          onPressed: () {
-            scaffoldKey.currentState!.openDrawer();
-          },
-        ),
+        // leading: IconButton(
+        //   icon: SvgPicture.asset(Assets.icons.menu),
+        //   onPressed: () {
+        //     scaffoldKey.currentState!.openDrawer();
+        //   },
+        // ),
         centerTitle: true,
         title: Transform.scale(
             scale: 0.8, child: SvgPicture.asset(Assets.icons.logos)),
         backgroundColor: Colors.white,
         elevation: 1,
       ),
-      drawer: AppDrawer(),
+      // drawer: AppDrawer(),
       body: Stack(
         children: [
           Positioned.fill(

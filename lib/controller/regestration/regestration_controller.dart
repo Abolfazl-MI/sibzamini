@@ -148,6 +148,7 @@ class RegistrationController extends GetxController {
       await Future.delayed(Duration(seconds: 3));
       DataState<String> cityState=await _locationServices.getUserCityLocation();
       if(cityState is DataSuccesState){
+        await _sharedStorageService.saveUserCity(cityState.data!);
       Get.offNamed(rHomeScreen,arguments: {'city':cityState.data});
       }else{
         Get.snackbar('مشکلی پیش آمده', 'مشکلی در تشخیص مکان شما پیش امده لطفا دستی خودتان انتخاب کنید ');

@@ -164,6 +164,7 @@ class ApiServices extends Interceptor {
       FormData data = FormData.fromMap({
         'city': city,
         'category': category.slug,
+        'query':''
       });
       Response response = await _dio.post(searchSalon, data: data);
       if (response.statusCode == 200) {

@@ -415,7 +415,9 @@ class HomeScreen extends GetView<HomeController> {
                                       child: TextButton(
                                         onPressed: () {
                                           Get.back();
-                                          Get.find<HomeController>().getHomeFeedSalons(cities[index].slug!);
+                                          Get.find<HomeController>()
+                                              .getHomeFeedSalons(
+                                                  cities[index].slug!);
                                         },
                                         child: Text(cities[index].name ?? '',
                                             style: AppTextTheme.caption

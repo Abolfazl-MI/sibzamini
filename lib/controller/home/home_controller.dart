@@ -15,12 +15,13 @@ import 'package:sibzamini/services/local/shared_service.dart';
 import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
+import 'package:sibzamini/services/local/location_service.dart';
 
 class HomeController extends GetxController {
   // dependencies
   final ApiServices _apiServices = ApiServices();
   final SharedStorageService _storageService = SharedStorageService();
-  
+  final LocationServices _locationServices=LocationServices();
   // variables
   List<Salon> bestSalonsList = [];
   List<Salon> newestSalonList = [];
@@ -80,22 +81,28 @@ class HomeController extends GetxController {
 
   // search Salons
   Future<void> searchSalons({required String salonQuery}) async {}
+
+
   // get salon base on categories
   Future<void> getSalonByCategories({required ServiceCategory category}) async {
     String? userCity = await _storageService.getUserCity();
     if (userCity == null) {
-      // todo : should get user current city location
+      DataState<String> cityState=await _locationServices.getUserCityLocation();
+      if(cityState is DataSuccesState){
+        userCity=cityState.data;
+        update();
+      }
     }
     DataState<List<Salon>> result = await _apiServices.getSalonByCategories(
         city: userCity!, category: category);
     if (result is DataSuccesState) {
-      // print(result.data);
+      print(result.data);
       salonsBasedOnCategory = result.data!;
       update();
     }
     if (result is DataFailState) {
-      // print(result.error);
-      Get.offNamed(rErrorScreen, arguments: {'error': result.error});
+      print(result.error);
+      // Get.offNamed(rErrorScreen, arguments: {'error': result.error});
     }
   }
 

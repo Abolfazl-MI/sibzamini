@@ -12,16 +12,6 @@ import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/views/global/colors/solid_colors.dart';
 import 'package:sibzamini/views/global/global.dart';
 
-const _drawerText = [
-  'همه',
-  'اکسیشن‌مو',
-  'رنگ‌لایت‌مو',
-  'خدمات‌ناخان',
-  'خدمات‌لیزر',
-  'خدمات‌تزریق‌ژل',
-  'خدمات‌کراتینه',
-  'خدمات‌پوست',
-];
 
 ButtonStyle _style = ButtonStyle(
   overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
@@ -50,14 +40,17 @@ class AppDrawer extends GetView<HomeController> {
           ),
           child:  ListView.builder(
             itemCount: controller.salonCategories.length,
+
             itemBuilder: ((context, index) {
-               
+              ServiceCategory category=controller.salonCategories[index];
               return Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextButton(
                   style: _style,
-                  onPressed: () {},
+                  onPressed: () {
+                      controller.getSalonByCategories(category: category);
+                  },
                   child: Text(controller.salonCategories[index].name??'test',
                       style: AppTextTheme.caption.copyWith(
                           color: SolidColors.textColor4, fontSize: 17)),
