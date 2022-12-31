@@ -306,7 +306,9 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   _selectLocationSection(
-      double width, BuildContext context, ) {
+    double width,
+    BuildContext context,
+  ) {
     return InkWell(
       onTap: () {
         _showCityLocationBottemSheet(
@@ -412,7 +414,8 @@ class HomeScreen extends GetView<HomeController> {
                                           vertical: 8, horizontal: 12),
                                       child: TextButton(
                                         onPressed: () {
-                                          // TODO GET SALON BY CITY NAME
+                                          Get.back();
+                                          Get.find<HomeController>().getHomeFeedSalons(cities[index].slug!);
                                         },
                                         child: Text(cities[index].name ?? '',
                                             style: AppTextTheme.caption

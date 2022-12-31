@@ -153,8 +153,6 @@ class HomeController extends GetxController {
     log('============Fetchig Home Iteams============');
     isLoading = true;
     update();
-
-    // todo should get user current city
     await getNewesSalons(cityName: citylocation);
     await getBestSalons(cityName: citylocation);
     await getSalonCategories();
