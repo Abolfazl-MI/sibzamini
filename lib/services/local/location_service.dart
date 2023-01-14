@@ -36,6 +36,8 @@ class LocationServices {
           await _apiServices.getUserCityLocation(
               lat: currentPossition.latitude, lon: currentPossition.longitude);
       if(persianCityName is DataSuccesState){
+        // log(persianCityName.data.toString());
+        print(persianCityName.data);
         log('[Persian CityLocation]=> ${persianCityName.data}');
         // iranCities.firstWhere((element) => element['title']==userPersianCity.data)['slug'];
         String finalCityName=iranCities.firstWhere((element) => element['title']==persianCityName.data)['slug'];

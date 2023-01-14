@@ -8,6 +8,9 @@ class BookMarkedSalon {
   String ? name;
   String ? address;
   String ? pic;
+  // String get imgUrl=>'';
+  String  get imgurl =>'https://sunict.ir$pic';
+  // double  get rateToDouble=>rate!=null?rate!.toDouble():0.0;
   BookMarkedSalon({
     this.id,
     this.shop,

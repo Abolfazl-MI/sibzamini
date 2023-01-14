@@ -9,6 +9,7 @@ import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/models/cities_model/cities_model.dart';
+import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/views/global/constants/app_drawer.dart';
 import 'package:sibzamini/views/global/widgets/loading_widget.dart';
@@ -16,6 +17,7 @@ import 'package:sibzamini/views/screens/home/carsol_widget.dart';
 import 'package:sibzamini/views/screens/home/slider_widgets/slider_list.dart';
 import 'package:sibzamini/views/views.dart';
 
+import 'bottomshets/fav_salon_bottom_sheet.dart';
 import 'slider_widgets/slider_header.dart';
 
 import 'package:sibzamini/views/global/widgets/custome_shimmerh_loading.dart';
@@ -60,7 +62,6 @@ class HomeScreen extends GetView<HomeController> {
             ],
           );
         }
-        //TODO  GET Salon by category
         return Container(
           width: width,
           height: height,
@@ -335,7 +336,7 @@ class HomeScreen extends GetView<HomeController> {
                   icon: SvgPicture.asset(Assets.icons.location),
                 ),
                 Text(
-                  'انتخاب‌محله',
+                  'تغییر شهر',
                   style: TextStyle(color: SolidColors.textColor4),
                 ),
               ],
@@ -358,6 +359,9 @@ class HomeScreen extends GetView<HomeController> {
     return showModalBottomSheet(
         isScrollControlled: true,
         context: context,
+        shape: const RoundedRectangleBorder(
+            borderRadius:
+                BorderRadiusDirectional.vertical(top: Radius.circular(25.0))),
         builder: (context) => Container(
               width: width,
               height: MediaQuery.of(context).size.height / 1.3,
@@ -374,7 +378,7 @@ class HomeScreen extends GetView<HomeController> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
+                      padding: EdgeInsets.symmetric(vertical: 18),
                       child: InkWell(
                         onTap: () {
                           // TODO IMPL THE AUTOMATIC LOCATION
@@ -495,8 +499,7 @@ class HomeScreen extends GetView<HomeController> {
           // ),
           IconButton(
             onPressed: () {
-              // Get.offNamed(rBookMarkedSalonsScreen);
-              Get.toNamed(rBookMarkedSalonsScreen);
+              showFavSalonBottomSheet(context, controller.bookMarkedSalons!);
             },
             icon: SvgPicture.asset(Assets.icons.heart),
           ),
@@ -533,7 +536,6 @@ class HomeScreen extends GetView<HomeController> {
                           padding: EdgeInsets.symmetric(vertical: 10),
                           child: InkWell(
                             onTap: () {
-                              // TODO IMPL THE AUTOMATIC LOCATION
                             },
                             child: Container(
                               child: Row(

@@ -550,14 +550,12 @@ class CommentScreen extends StatelessWidget {
                     ),
 
                     ///[other users comments section ]
-                    // TODO SHOULD GET FROM SERVER
                     Container(
                       child: ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: 4,
                         itemBuilder: ((context, index) {
-                          // TODO LOAD MORE BUTTON SHOULD IMPL
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -590,13 +588,11 @@ class CommentScreen extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          ///TODO [userName get from server]
                                           Text(
                                             'ابوالفضل مشهدی',
                                             style: AppTextTheme.captionBold,
                                           ),
                                           Row(
-                                            // TODO SHOULD GET FROM SERVER
                                             children: [
                                               RatingStars(
                                                 iconSize: 18,
@@ -607,7 +603,6 @@ class CommentScreen extends StatelessWidget {
                                               SizedBox(
                                                 width: 10,
                                               ),
-                                              // TODO SHOULD GET FORM SERVER BASED USER RATING COUNT
                                               Text('متوسط')
                                             ],
                                           )

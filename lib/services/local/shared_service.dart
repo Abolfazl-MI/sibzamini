@@ -1,10 +1,11 @@
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedStorageService {
-   late SharedPreferences _pref;
+  SharedPreferences ? pref;
 
   Future<void> init()async{
-   _pref= await SharedPreferences.getInstance();
+   pref= await SharedPreferences.getInstance();
   }
   final String _token = 'token';
   final String _city = 'city';
@@ -16,22 +17,22 @@ class SharedStorageService {
 
   // saves user token to shared db
   Future<void> saveUserToken(String value) async {
-    await _pref.setString(_token, value);
+    await pref!.setString(_token, value);
   }
 
 // deletes user id form db
   Future<void> deleteUserToken() async {
-    await _pref.remove(_token);
+    await pref!.remove(_token);
   }
 
 // return userId
   Future<String?> getuserToken() async {
-    return _pref.getString(_token);
+    return pref!.getString(_token);
   }
 
   // cheecks if user  had logedin before or not
   Future<bool> checkLogin() async {
-    String? token = _pref.getString(_token);
+    String? token = pref!.getString(_token);
     if (token == null) {
       return false;
     }
@@ -42,22 +43,22 @@ class SharedStorageService {
   }
   // saves user city
   Future<void> saveUserCity(String city) async {
-    await _pref.setString(_city, city);
+    await pref!.setString(_city, city);
   }
   //deletes user city
   Future<void> deleteUserCity() async {
-    await _pref.remove(_city);
+    await pref!.remove(_city);
   }
   // returns the user city
   Future<String?> getUserCity() async {
-    return _pref.getString(_city);
+    return pref!.getString(_city);
   }
   // saves user id
   Future<void> saveUserId(int id)async{
-    await _pref.setInt(_userId, id);
+    await pref!.setInt(_userId, id);
   }
   // returns user id 
   Future<int?>getUserId()async{
-    return _pref.getInt(_userId);
+    return pref!.getInt(_userId);
   }
 }

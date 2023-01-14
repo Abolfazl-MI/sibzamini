@@ -13,8 +13,13 @@ class InternetConnectivityService {
       return DataFailState(NO_INTERNET_CONNECTION);
     } else if (result == ConnectivityResult.vpn) {
       return DataFailState(VPN_CONNCETION_DETECTED);
+    } else if (result == ConnectivityResult.mobile ||
+        result == ConnectivityResult.wifi ||
+        result == ConnectivityResult.ethernet ||
+        result == ConnectivityResult.bluetooth) {
+      return DataSuccesState(true);
     }
-    return DataSuccesState(true);
+    return DataFailState(SOMETHING_WENT_WRONG);
   }
 
   Stream<ConnectivityStatus> connectivityResultStream() async* {
@@ -29,3 +34,7 @@ class InternetConnectivityService {
     });
   }
 }
+/* 
+
+
+ */

@@ -471,7 +471,6 @@ class DetailScreen extends GetView<DetailController> {
                 style: AppTextTheme.captionBold,
               ),
             ),
-            // TODO FETCHE FROM SERVER
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
               child: Text(

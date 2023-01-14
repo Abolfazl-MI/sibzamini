@@ -32,6 +32,7 @@ class HomeController extends GetxController {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   bool isLoading = false;
   bool isCategoryLoadign = false;
+  String ? currentCity;
   ConnectivityStatus connectivityStatus = ConnectivityStatus.disconnected;
   late final StreamSubscription<ConnectivityStatus> _subscription;
   //methods
@@ -58,7 +59,12 @@ class HomeController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
-
+  // gets user current cityName from shared 
+  getUserCityLocationName()async{
+    var result=await _storageService.getUserCity();
+      currentCity=result;
+      update();
+  }
   // get news Salons
   Future<void> getNewesSalons({required String cityName}) async {
     DataState<List<Salon>> resualt =
@@ -187,6 +193,7 @@ class HomeController extends GetxController {
         .listen((event) => updateInternetConnection(event));
     String ? cityName=Get.arguments['city'];
     getHomeFeedSalons(cityName??'Tehran');
+    getUserCityLocationName();
   }
 
   @override
