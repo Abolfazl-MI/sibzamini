@@ -56,6 +56,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/comments_outline.svg
   String get commentsOutline => 'assets/icons/comments_outline.svg';
 
+  /// File path: assets/icons/emptyBox.svg
+  String get emptyBox => 'assets/icons/emptyBox.svg';
+
   /// File path: assets/icons/heart .svg
   String get heart => 'assets/icons/heart .svg';
 
@@ -109,6 +112,7 @@ class $AssetsIconsGen {
         chat,
         commentsFill,
         commentsOutline,
+        emptyBox,
         heart,
         heart2,
         homeFill,

@@ -13,10 +13,6 @@ class SplashScreenController extends GetxController {
   final LocationServices _locationServices = LocationServices();
   final InternetConnectivityService _internetConnectivityService =
       InternetConnectivityService();
-
-  /// [splash screen checls for login or not]
-
-
   Future<void> _splashScreenDecition() async {
     await Future.delayed(const Duration(seconds: 1, milliseconds: 500));
     DataState<bool> isInterNetEnabled =
