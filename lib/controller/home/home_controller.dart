@@ -30,6 +30,7 @@ class HomeController extends GetxController {
   List<BookMarkedSalon> bookMarkedSalons = [];
   List<City>availableCities=[];
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState>allSalonsScaffoldKey=GlobalKey<ScaffoldState>();
   bool isLoading = false;
   bool isCategoryLoadign = false;
   String ? currentCity;
@@ -84,6 +85,7 @@ class HomeController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
+
 
   // search Salons
   Future<void> searchSalons({required String salonQuery}) async {}
@@ -179,7 +181,15 @@ class HomeController extends GetxController {
     connectivityStatus = status;
     update();
   }
-
+  doseSalonBookedMarked(List<Salon>normalSalons){
+    for(int index=0; index<normalSalons.length;index++){
+      if(bookMarkedSalons.contains(normalSalons[index])){
+        return true;
+      }else{
+        return false;
+      }
+    }
+  }
   // opens the home darwer
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();

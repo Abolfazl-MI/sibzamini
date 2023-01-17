@@ -1,4 +1,5 @@
-import 'dart:ui';
+
+import'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ import 'package:sibzamini/views/global/widgets/search_bar_widget.dart';
 import 'package:sibzamini/views/global/widgets/select_location_widget.dart';
 import 'package:sibzamini/views/screens/comment_screen/comment_screen.dart';
 import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
-
+import 'package:sibzamini/views/routes/app_route_names.dart';
 import '../../global/constants/constants.dart';
 
 class DetailScreen extends GetView<DetailController> {
@@ -41,7 +42,7 @@ class DetailScreen extends GetView<DetailController> {
           IconButton(
             icon:Icon(Icons.arrow_back_ios, color: Colors.grey,), 
             onPressed: (){
-              Get.back();
+              Get.offNamed(rHomeScreen);
             },
           )
         ],

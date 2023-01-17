@@ -13,6 +13,7 @@ import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/views/global/constants/app_drawer.dart';
 import 'package:sibzamini/views/global/widgets/loading_widget.dart';
+import 'package:sibzamini/views/screens/home/bottomshets/select_city_location_bottom_sheet.dart';
 import 'package:sibzamini/views/screens/home/carsol_widget.dart';
 import 'package:sibzamini/views/screens/home/slider_widgets/slider_list.dart';
 import 'package:sibzamini/views/views.dart';
@@ -108,6 +109,7 @@ class HomeScreen extends GetView<HomeController> {
                         leftText: 'نمایش‌ همه',
                         onTap: () {
                           // TODO Show all salons
+                          Get.toNamed(rAllSalonsScreen, arguments: {'salons':controller.bestSalonsList});
                         }),
                   ),
                   SizedBox(
@@ -306,13 +308,10 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  _selectLocationSection(
-    double width,
-    BuildContext context,
-  ) {
+  _selectLocationSection(double width, BuildContext context,) {
     return InkWell(
       onTap: () {
-        _showCityLocationBottemSheet(
+        showCityLocationBottemSheet(
             context, width, Get.find<HomeController>().availableCities);
       },
       child: Container(
@@ -354,100 +353,6 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  Future<dynamic> _showCityLocationBottemSheet(
-      BuildContext context, double width, List<City> cities) {
-    return showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        shape: const RoundedRectangleBorder(
-            borderRadius:
-                BorderRadiusDirectional.vertical(top: Radius.circular(25.0))),
-        builder: (context) => Container(
-              width: width,
-              height: MediaQuery.of(context).size.height / 1.3,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              )),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20))),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 18),
-                      child: InkWell(
-                        onTap: () {
-                          // TODO IMPL THE AUTOMATIC LOCATION
-                        },
-                        child: Container(
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(Assets.icons.locationSearch),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                'مکان‌یا‌بی‌خودکار',
-                                style: AppTextTheme.caption
-                                    .copyWith(color: SolidColors.primaryBlue),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    cities.isNotEmpty
-                        ? Expanded(
-                            child: ListView.builder(
-                              itemCount: cities.length,
-                              physics: BouncingScrollPhysics(),
-                              itemBuilder: ((context, index) => Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color:
-                                                    SolidColors.textColor4))),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 12),
-                                      child: TextButton(
-                                        onPressed: () {
-                                          Get.back();
-                                          Get.find<HomeController>()
-                                              .getHomeFeedSalons(
-                                                  cities[index].slug!);
-                                        },
-                                        child: Text(cities[index].name ?? '',
-                                            style: AppTextTheme.caption
-                                                .copyWith(
-                                                    color: SolidColors
-                                                        .textColor4)),
-                                      ),
-                                    ),
-                                  )),
-                            ),
-                          )
-                        : Expanded(
-                            // width:width,
-                            child: Column(children: [
-                              Transform.scale(
-                                  scale: 0.5,
-                                  child:
-                                      SvgPicture.asset(Assets.icons.notFind)),
-                              Text('موردی پیدا نشد بعدا تلاش کنید')
-                            ]),
-                          )
-                  ],
-                ),
-              ),
-            ));
-  }
 
   _searchBar(
       {required double width,

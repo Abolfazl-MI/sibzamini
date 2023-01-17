@@ -8,6 +8,8 @@ import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
 import 'package:sibzamini/views/screens/registration/signup_screen.dart';
 import 'package:sibzamini/views/views.dart';
 
+import '../screens/show_all_salon_screen/show_all_salons.dart';
+
 class AppPages {
   static List<GetPage> pages = [
     GetPage(
@@ -40,9 +42,14 @@ class AppPages {
       name: rLocationScreen,
       page: () => LocationScreen(),
     ),
-    GetPage(name: rErrorScreen, page: () => const ErrorScreen()),
     GetPage(
-        name: rBookMarkedSalonsScreen,
-        page: () => const BookMarkedSalonsScreen())
+      name: rErrorScreen,
+      page: () => const ErrorScreen(),
+    ),
+    GetPage(
+      name: rAllSalonsScreen,
+      page: () => AllSalonsScreen(),
+      binding: HomeBinding()
+    )
   ];
 }
