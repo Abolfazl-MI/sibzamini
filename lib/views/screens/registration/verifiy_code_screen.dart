@@ -72,6 +72,7 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                                         otpCode:
                                             otpController.text.toEnglishDigit(),
                                         phoneNumber: Get.arguments['mobile']);
+                                    otpController.clear();
                                   }
                                 },
                                 validator: (value) =>
