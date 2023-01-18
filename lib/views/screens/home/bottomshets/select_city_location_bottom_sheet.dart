@@ -8,14 +8,9 @@ import 'package:sibzamini/views/global/colors/solid_colors.dart';
 import 'package:sibzamini/views/global/constants/app_text_themes.dart';
 
 Future<dynamic> showCityLocationBottemSheet(
-    BuildContext context, double width, List<City> cities) {
-  return showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      shape: const RoundedRectangleBorder(
-          borderRadius:
-              BorderRadiusDirectional.vertical(top: Radius.circular(25.0))),
-      builder: (context) => Container(
+    BuildContext context, double width, List<City> cities)
+{
+  return showModalBottomSheet(isScrollControlled: true,context: context, shape: const RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(25.0))), builder: (context) => Container(
             width: width,
             height: MediaQuery.of(context).size.height / 1.3,
             decoration: BoxDecoration(

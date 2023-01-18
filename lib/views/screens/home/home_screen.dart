@@ -109,7 +109,8 @@ class HomeScreen extends GetView<HomeController> {
                         leftText: 'نمایش‌ همه',
                         onTap: () {
                           // TODO Show all salons
-                          Get.toNamed(rAllSalonsScreen, arguments: {'salons':controller.bestSalonsList});
+                          Get.toNamed(rAllSalonsScreen,
+                              arguments: {'salons': controller.bestSalonsList});
                         }),
                   ),
                   SizedBox(
@@ -308,7 +309,10 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  _selectLocationSection(double width, BuildContext context,) {
+  _selectLocationSection(
+    double width,
+    BuildContext context,
+  ) {
     return InkWell(
       onTap: () {
         showCityLocationBottemSheet(
@@ -353,11 +357,7 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-
-  _searchBar(
-      {required double width,
-      required double height,
-      required BuildContext context}) {
+  _searchBar({required double width, required double height, required BuildContext context}) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -374,26 +374,32 @@ class HomeScreen extends GetView<HomeController> {
           Flexible(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                // height: 32,
-                child: TextFormField(
-                  textAlign: TextAlign.justify,
-                  decoration: InputDecoration(
-                      filled: true,
-                      fillColor: SolidColors.borderColor,
-                      hintStyle: TextStyle(
-                          fontSize: 12, color: SolidColors.textColor4),
-                      hintText: 'دنبال‌چی‌میگردی؟',
-                      enabledBorder: genralInputDecoration,
-                      disabledBorder: genralInputDecoration,
-                      focusedBorder: genralInputDecoration,
-                      prefixIcon: IconButton(
-                        icon: SvgPicture.asset(
-                          Assets.icons.search,
-                          color: SolidColors.textColor4,
-                        ),
-                        onPressed: () => null,
-                      )),
+              child: InkWell(
+                onTap: (){
+                  Get.offNamed(rSrarchSalons);
+                },
+                child: SizedBox(
+                  // height: 32,
+                  child: TextFormField(
+                    textAlign: TextAlign.justify,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: SolidColors.borderColor,
+                        hintStyle: TextStyle(
+                            fontSize: 12, color: SolidColors.textColor4),
+                        hintText: 'دنبال‌چی‌میگردی؟',
+                        enabledBorder: genralInputDecoration,
+                        enabled: false,
+                        disabledBorder: genralInputDecoration,
+                        focusedBorder: genralInputDecoration,
+                        prefixIcon: IconButton(
+                          icon: SvgPicture.asset(
+                            Assets.icons.search,
+                            color: SolidColors.textColor4,
+                          ),
+                          onPressed: () => null,
+                        )),
+                  ),
                 ),
               ),
             ),

@@ -2,10 +2,12 @@ import 'package:get/route_manager.dart';
 
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/controller/detail/detail_biding.dart';
+import 'package:sibzamini/controller/searchSalon/search_salon_binding.dart';
 import 'package:sibzamini/controller/splash/splash_binding.dart';
 import 'package:sibzamini/views/screens/book_marked_salons/book_marked_salons.dart';
 import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
 import 'package:sibzamini/views/screens/registration/signup_screen.dart';
+import 'package:sibzamini/views/screens/search_salon/search_salons.dart';
 import 'package:sibzamini/views/views.dart';
 
 import '../screens/show_all_salon_screen/show_all_salons.dart';
@@ -47,9 +49,13 @@ class AppPages {
       page: () => const ErrorScreen(),
     ),
     GetPage(
-      name: rAllSalonsScreen,
-      page: () => AllSalonsScreen(),
-      binding: HomeBinding()
+        name: rAllSalonsScreen,
+        page: () => AllSalonsScreen(),
+        binding: HomeBinding()),
+    GetPage(
+      name: rSrarchSalons,
+      page: () => SearchSalonsScreen(),
+      binding: SearchSalonBinding()
     )
   ];
 }
