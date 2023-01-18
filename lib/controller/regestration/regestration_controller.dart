@@ -27,6 +27,9 @@ class RegistrationController extends GetxController {
     if (value == null || value.isEmpty) {
       errorMessage.value = PHONE_NUMBER_REQUIRED;
       return PHONE_NUMBER_REQUIRED;
+    }if(value.length<11){
+      errorMessage.value='شماره وارد شده صحیح نمیباشد';
+      return 'شماره وارد شده صحیح نمیباشد';
     }
     return null;
   }
