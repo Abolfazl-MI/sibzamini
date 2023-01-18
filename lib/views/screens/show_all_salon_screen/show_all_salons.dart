@@ -182,7 +182,7 @@ class AllSalonsScreen extends GetView<HomeController> {
           ),
           IconButton(
             onPressed: () {
-              showFavSalonBottomSheet(context, controller.bookMarkedSalons!);
+              showFavSalonBottomSheet(context,);
             },
             icon: SvgPicture.asset(Assets.icons.heart),
           ),
@@ -224,6 +224,7 @@ class AllSalonsScreen extends GetView<HomeController> {
                     width: width,
                     height: MediaQuery.of(context).size.height * 0.4,
                     child: Card(
+                      
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
                       elevation: 5,

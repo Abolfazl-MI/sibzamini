@@ -21,21 +21,25 @@ class HomeController extends GetxController {
   // dependencies
   final ApiServices _apiServices = ApiServices();
   final SharedStorageService _storageService = SharedStorageService();
-  final LocationServices _locationServices=LocationServices();
+  final LocationServices _locationServices = LocationServices();
+
   // variables
   List<Salon> bestSalonsList = [];
   List<Salon> newestSalonList = [];
   List<Salon> salonsBasedOnCategory = [];
   List<ServiceCategory> salonCategories = [];
   List<BookMarkedSalon> bookMarkedSalons = [];
-  List<City>availableCities=[];
+  List<City> availableCities = [];
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  GlobalKey<ScaffoldState>allSalonsScaffoldKey=GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> allSalonsScaffoldKey = GlobalKey<ScaffoldState>();
   bool isLoading = false;
   bool isCategoryLoadign = false;
-  String ? currentCity;
+  bool isFavSalonLoading = false;
+  bool isDeleteFavLoading = false;
+  String? currentCity;
   ConnectivityStatus connectivityStatus = ConnectivityStatus.disconnected;
   late final StreamSubscription<ConnectivityStatus> _subscription;
+
   //methods
   // get best Salons
   Future<void> getBestSalons({required String cityName}) async {
@@ -60,12 +64,14 @@ class HomeController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
-  // gets user current cityName from shared 
-  getUserCityLocationName()async{
-    var result=await _storageService.getUserCity();
-      currentCity=result;
-      update();
+
+  // gets user current cityName from shared
+  getUserCityLocationName() async {
+    var result = await _storageService.getUserCity();
+    currentCity = result;
+    update();
   }
+
   // get news Salons
   Future<void> getNewesSalons({required String cityName}) async {
     DataState<List<Salon>> resualt =
@@ -86,18 +92,17 @@ class HomeController extends GetxController {
     }
   }
 
-
   // search Salons
   Future<void> searchSalons({required String salonQuery}) async {}
-
 
   // get salon base on categories
   Future<void> getSalonByCategories({required ServiceCategory category}) async {
     String? userCity = await _storageService.getUserCity();
     if (userCity == null) {
-      DataState<String> cityState=await _locationServices.getUserCityLocation();
-      if(cityState is DataSuccesState){
-        userCity=cityState.data;
+      DataState<String> cityState =
+          await _locationServices.getUserCityLocation();
+      if (cityState is DataSuccesState) {
+        userCity = cityState.data;
         update();
       }
     }
@@ -111,6 +116,51 @@ class HomeController extends GetxController {
     if (result is DataFailState) {
       print(result.error);
       // Get.offNamed(rErrorScreen, arguments: {'error': result.error});
+    }
+  }
+
+  // refreshes the favorite list
+  Future<void> refreshFavSalons() async {
+    isFavSalonLoading = true;
+    update();
+    String? token = await _storageService.getuserToken();
+    if (token != null) {
+      await _apiServices
+          .getBookMarkedSalons(userToken: token)
+          .then((DataState dataState) {
+        if (dataState is DataSuccesState) {
+          bookMarkedSalons = dataState.data;
+          isFavSalonLoading = false;
+          update();
+        } else if (dataState is DataFailState) {
+          Get.back();
+          Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', dataState.error!,
+              backgroundColor: Colors.red);
+        }
+      });
+    } else {
+      Get.offNamed(rHomeScreen);
+    }
+  }
+
+  // delete salon from favorites
+  Future<void> deleteSalonFromFavorites(int salonIndex, int salonId) async {
+    isDeleteFavLoading = true;
+    update();
+    String? token = await _storageService.getuserToken();
+    if (token != null) {
+      await _apiServices
+          .deleteSalonFromBookMarkList(userToken: token, salonId: salonId)
+          .then((DataState dataState) {
+        if (dataState is DataSuccesState) {
+          bookMarkedSalons.removeAt(salonIndex);
+          isDeleteFavLoading = false;
+          update();
+        } else {
+          Get.snackbar('مشکلی پیش آمده',
+              "خطا درانجام عملیات لطفا در زمان دیگر دوباره تلاش کنید");
+        }
+      });
     }
   }
 
@@ -152,17 +202,16 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> _getCitySalonsAvailable()async{
-    DataState<List<City>>cities=await _apiServices.getAvailableCities();
-    if(cities is DataSuccesState){
-      availableCities=cities.data!;
+  Future<void> _getCitySalonsAvailable() async {
+    DataState<List<City>> cities = await _apiServices.getAvailableCities();
+    if (cities is DataSuccesState) {
+      availableCities = cities.data!;
       update();
-    }else{
-      availableCities=[];
+    } else {
+      availableCities = [];
       update();
     }
-
-  } 
+  }
 
   Future<void> getHomeFeedSalons(String citylocation) async {
     log('============Fetchig Home Iteams============');
@@ -181,15 +230,17 @@ class HomeController extends GetxController {
     connectivityStatus = status;
     update();
   }
-  doseSalonBookedMarked(List<Salon>normalSalons){
-    for(int index=0; index<normalSalons.length;index++){
-      if(bookMarkedSalons.contains(normalSalons[index])){
+
+  doseSalonBookedMarked(List<Salon> normalSalons) {
+    for (int index = 0; index < normalSalons.length; index++) {
+      if (bookMarkedSalons.contains(normalSalons[index])) {
         return true;
-      }else{
+      } else {
         return false;
       }
     }
   }
+
   // opens the home darwer
   void openDrawer() {
     scaffoldKey.currentState!.openDrawer();
@@ -201,14 +252,14 @@ class HomeController extends GetxController {
     _subscription = InternetConnectivityService()
         .connectivityResultStream()
         .listen((event) => updateInternetConnection(event));
-    String ? cityName=Get.arguments['city'];
-    getHomeFeedSalons(cityName??'Tehran');
+    String? cityName = Get.arguments['city'];
+    getHomeFeedSalons(cityName ?? 'Tehran');
     getUserCityLocationName();
   }
 
   @override
-  void onClose() async{
-   await _subscription.cancel();
+  void onClose() async {
+    await _subscription.cancel();
     super.onClose();
   }
 }
