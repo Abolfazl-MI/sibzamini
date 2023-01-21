@@ -11,6 +11,8 @@ import 'package:lottie/lottie.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:rate_in_stars/rate_in_stars.dart';
 import 'package:sibzamini/controller/detail/detail_controller.dart';
+import 'package:sibzamini/controller/home/home_controller.dart';
+import 'package:sibzamini/core/error_code.dart';
 
 import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/views/global/colors/solid_colors.dart';
@@ -22,7 +24,7 @@ import 'package:sibzamini/views/screens/comment_screen/comment_screen.dart';
 import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
 import '../../global/constants/constants.dart';
-
+import 'package:sibzamini/services/local/connectivity_service.dart';
 class DetailScreen extends GetView<DetailController> {
   // final scaffoldKey = GlobalKey<ScaffoldState>();
   final PageController imageSliderController = PageController();
@@ -60,26 +62,51 @@ class DetailScreen extends GetView<DetailController> {
         elevation: 1,
       ),
       // drawer: AppDrawer(),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: GetBuilder<DetailController>(
-              builder: (controller) => IndexedStack(
-                index: controller.selectedIndex,
-                children: [
-                  _detailScreen(context),
-                  LocationScreen(),
-                  CommentScreen(),
-                ],
-              ),
+      body: GetBuilder<HomeController>(
+        builder:(builderController){
+          if(builderController.connectivityStatus==ConnectivityStatus.connected){
+            return _bodySection(context);
+          }
+          return Container(
+            width: width,
+            height: height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Transform.scale(
+                    scale: 0.5,
+                    child: Lottie.asset(Assets.lotties.noInternet),
+                  ),
+                ),
+                Text(NO_INTERNET_CONNECTION, style: AppTextTheme.caption)
+              ],
+            ),
+          );
+        }
+      ),
+    );
+  }
+  _bodySection(context){
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: GetBuilder<DetailController>(
+            builder: (controller) => IndexedStack(
+              index: controller.selectedIndex,
+              children: [
+                _detailScreen(context),
+                LocationScreen(),
+                CommentScreen(),
+              ],
             ),
           ),
-          BottomNavigation(
-            bodyMargin: 50,
-            size: MediaQuery.of(context).size,
-          )
-        ],
-      ),
+        ),
+        BottomNavigation(
+          bodyMargin: 50,
+          size: MediaQuery.of(context).size,
+        )
+      ],
     );
   }
 
