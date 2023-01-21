@@ -15,7 +15,7 @@ import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/services/remote/request_monitoring.dart';
 import 'package:sibzamini/views/global/constants/map_token.dart';
 
-class ApiServices extends Interceptor {
+class ApiServices {
   // DIO CONFIGURATION
   final Dio _dio = Dio(
     BaseOptions(
@@ -28,7 +28,7 @@ class ApiServices extends Interceptor {
     ),
   )..interceptors.add(ApiInterCeptor());
 
-  // sends name and user phone number to create account
+  /// sends name and user phone number to create account
   Future<DataState<User>> createUserAccount(
       {required String name,
       required String phoneNumber,

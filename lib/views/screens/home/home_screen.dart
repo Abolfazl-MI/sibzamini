@@ -376,7 +376,7 @@ class HomeScreen extends GetView<HomeController> {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: (){
-                  Get.offNamed(rSrarchSalons);
+                  Get.toNamed(rSrarchSalons);
                 },
                 child: SizedBox(
                   // height: 32,

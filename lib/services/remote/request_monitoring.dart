@@ -3,9 +3,11 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-
+import 'package:logger/logger.dart';
 class ApiInterCeptor extends Interceptor{
-
+  Logger _logger=Logger(
+    printer: PrettyPrinter()
+  );
   @override
   Future onRequest(RequestOptions options, RequestInterceptorHandler handler)async {
     log('REQUEST [${options.method}]=> PATH: ${options.path}');
@@ -19,6 +21,7 @@ class ApiInterCeptor extends Interceptor{
   @override
   Future onError(DioError err, ErrorInterceptorHandler handler)async {
     log('ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
+    _logger.e('ERROR MESSAGE: ${err.message}');
     return super.onError(err, handler);
   }
 
