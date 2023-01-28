@@ -12,15 +12,13 @@ import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/views/global/colors/solid_colors.dart';
 import 'package:sibzamini/views/global/global.dart';
 
-
 ButtonStyle _style = ButtonStyle(
   overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
 );
 
 class AppDrawer extends GetView<HomeController> {
-  
-   AppDrawer({Key? key}) : super(key: key);
-  
+  AppDrawer({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -28,37 +26,122 @@ class AppDrawer extends GetView<HomeController> {
 
     return SafeArea(
       child: Container(
-        width: width / 1.5,
-        height: height / 1.001,
-        child: Card(
-          elevation: 0,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              bottomLeft: Radius.circular(20),
-            ),
-          ),
-          child:  ListView.builder(
-            itemCount: controller.salonCategories.length,
-
-            itemBuilder: ((context, index) {
-              ServiceCategory category=controller.salonCategories[index];
-              return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: TextButton(
-                  style: _style,
-                  onPressed: () {
-                      controller.getSalonByCategories(category: category);
-                  },
-                  child: Text(controller.salonCategories[index].name??'test',
-                      style: AppTextTheme.caption.copyWith(
-                          color: SolidColors.textColor4, fontSize: 17)),
+          width: width / 1.5,
+          height: height / 1.001,
+          child: Card(
+              elevation: 0,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
                 ),
-              );
-            }),
-          )),
-      ),
+              ),
+              child: Column(
+                // mainAxisAlignment: Main,
+                children: [
+                  Center(
+                      child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Transform.scale(
+                      scale: 1,
+                      child: Image.asset(Assets.icons.logo.path),
+                    ),
+                  )),
+                  Divider(color: SolidColors.textColor4),
+                  // SizedBox(height: 5),
+                  Container(
+                    height: 80,
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.groups_outlined,
+                                size: 28, color: SolidColors.textColor4),
+                            SizedBox(width: 10),
+                            Text(
+                              'پربازدید ترین سالن ها',
+                              style: AppTextTheme.caption,
+                            ),
+                          ],
+                        ),
+                        // SizedBox(width: 40),
+
+                        Row(
+                          children: [
+                            Icon(Icons.discount_outlined,
+                                size: 28, color: SolidColors.textColor4),
+                            SizedBox(width: 10),
+                            Text(
+                              'سالن های پر تخفیف',
+                              style: AppTextTheme.caption,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    // color: Colors.yellow,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Divider(color: SolidColors.textColor4),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            'دسته بندی خدمات',
+                            style: AppTextTheme.captionBold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: ListView.builder(
+                      itemCount: controller.salonCategories.length + 1,
+                      shrinkWrap: true,
+                      itemBuilder: ((contex, index) {
+                        if (index == controller.salonCategories.length) {
+                          return Container(
+                            child:Row(
+                              children: [
+                                TextButton(
+                            onPressed: () {},
+                            child: Text('همه',
+                                style: AppTextTheme.caption.copyWith(
+                                    color: SolidColors.textColor4,
+                                    fontSize: 17)),
+                          )
+                              ],
+                            )
+                          );
+                        }
+                        return Row(
+                          children: [
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                  controller.salonCategories[index].name!,
+                                  style: AppTextTheme.caption.copyWith(
+                                      color: SolidColors.textColor4,
+                                      fontSize: 17)),
+                            )
+                          ],
+                        );
+                      }),
+                    ),
+                  )
+                ],
+              ))),
     );
   }
 }
