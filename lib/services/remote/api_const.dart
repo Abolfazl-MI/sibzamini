@@ -18,3 +18,5 @@ const String bookMarkList='/bookmarks/list';
 const String bookMarkSalon='/bookmarks/add';
 const String deleteSalonBookMark='/bookmarks/delete';
 const String cities='/cities';
+// adds
+const String adds='/banners';
