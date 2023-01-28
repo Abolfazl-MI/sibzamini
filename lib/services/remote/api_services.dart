@@ -16,10 +16,10 @@ import 'package:sibzamini/services/remote/request_monitoring.dart';
 import 'package:sibzamini/views/global/constants/map_token.dart';
 
 class ApiServices {
-  // DIO CONFIGURATION
+  /// DIO CONFIGURATION
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'http://sunict.ir/api/v1',
+      baseUrl: 'http:///sunict.ir/api/v1',
       headers: {
         'Accept': 'application/json',
         'Content-Type': "application/json",
@@ -173,13 +173,13 @@ class ApiServices {
         return DataSuccesState(salons);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
-      // if(response.statusCode==)
+      /// if(response.statusCode==)
     } catch (e) {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
 
-  // returns list of salon base on user search
+  /// returns list of salon base on user search
   Future<DataState<List<Salon>>> getSalonBySearch(
       {required String query, required String city}) async {
     try {
@@ -205,14 +205,13 @@ class ApiServices {
     }
   }
 
-  // adds comments for salon with id given
+  /// adds comments for salon with id given
   Future <DataState<bool>> sendComment(
       {required int salonId,
       required String userToken,
       required String comment,
       required int rate}) async {
     try {
-      // BUG: COMPLTE THE IMPLENETATION
       FormData data = FormData.fromMap(
           {'user': userToken, 'salon': salonId, 'comment': comment, 'rate': rate, 'parent':''});
       Response response = await _dio.post(newSalonComment, data: data);
@@ -226,7 +225,7 @@ class ApiServices {
     }
   }
 
-// returns Salon services based on salon id passed
+/// returns Salon services based on salon id passed
   Future<DataState<List<SalonService>>> getSingleSalonServices(
       {required int salonId}) async {
     try {
@@ -251,7 +250,7 @@ class ApiServices {
     }
   }
 
-  // added coresponding salon to user bookmark list
+  /// added coresponding salon to user bookmark list
   Future<DataState<bool>> addSalonToBookMarks(
       {required String token, required int salonId}) async {
     try {
@@ -275,7 +274,7 @@ class ApiServices {
     }
   }
 
-  // returns list of user bookmarked salons
+  /// returns list of user bookmarked salons
   Future<DataState<List<BookMarkedSalon>>> getBookMarkedSalons(
       {required String userToken}) async {
     try {
@@ -293,7 +292,7 @@ class ApiServices {
     }
   }
 
-  // deletes salon from user bookmarked salons base on the id of salon
+  /// deletes salon from user bookmarked salons base on the id of salon
   Future<DataState<bool>> deleteSalonFromBookMarkList(
       {required String userToken, required int salonId}) async {
     try {
@@ -308,7 +307,7 @@ class ApiServices {
     }
   }
 
-  // returns list of Services categories
+  /// returns list of Services categories
   Future<DataState<List<ServiceCategory>>> getCategoriesList() async {
     try {
       Response response = await _dio.get(categories);
@@ -323,11 +322,11 @@ class ApiServices {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
-// gets user city name base on lat and long passed
+/// gets user city name base on lat and long passed
   Future<DataState<String>> getUserCityLocation(
       {required double lat, required double lon}) async {
     try {
-      _dio.options.baseUrl='https://map.ir';
+      _dio.options.baseUrl='https:///map.ir';
       _dio.options.headers.addAll({'x-api-key': map_token});
       Response response =
           await _dio.get('/fast-reverse', queryParameters: {
@@ -343,6 +342,13 @@ class ApiServices {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
+  /// gets salons adds banner
+  Future getSalonsAddsBanner()async{
+
+  }
+  /// gets salons avilable cities list 
+  /// if response 200 would return `List<City>`
+  /// else would return `SOME THING WENT wrong`
   Future<DataState<List<City>>>getAvailableCities()async{
     try{
     Response response = await _dio.get(cities);
