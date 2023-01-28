@@ -183,8 +183,7 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> addSalonToBookMarkList(
-      {required int salonId, required String userToken}) async {
+  Future<void> addSalonToBookMarkList({required int salonId, required String userToken}) async {
     await _apiServices.addSalonToBookMarks(token: userToken, salonId: salonId);
   }
 
