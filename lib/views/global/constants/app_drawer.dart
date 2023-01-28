@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/models/category_model/category_model.dart';
@@ -128,7 +126,11 @@ class AppDrawer extends GetView<HomeController> {
                         return Row(
                           children: [
                             TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                controller.getSalonByCategories(category: controller.salonCategories[index]);
+                                // controller.getSalonByCategories(category: category)
+                                // controller.getSalonByCategories(category: controller.salonsBasedOnCategory);
+                              },
                               child: Text(
                                   controller.salonCategories[index].name!,
                                   style: AppTextTheme.caption.copyWith(

@@ -97,26 +97,36 @@ class HomeController extends GetxController {
 
   // get salon base on categories
   Future<void> getSalonByCategories({required ServiceCategory category}) async {
+    print(category.name);
     String? userCity = await _storageService.getUserCity();
     if (userCity == null) {
       DataState<String> cityState =
           await _locationServices.getUserCityLocation();
       if (cityState is DataSuccesState) {
         userCity = cityState.data;
+        _storageService.saveUserCity(cityState.data!);
         update();
       }
     }
-    DataState<List<Salon>> result = await _apiServices.getSalonByCategories(
-        city: userCity!, category: category);
-    if (result is DataSuccesState) {
-      print(result.data);
-      salonsBasedOnCategory = result.data!;
-      update();
-    }
-    if (result is DataFailState) {
-      print(result.error);
-      // Get.offNamed(rErrorScreen, arguments: {'error': result.error});
-    }
+    print(userCity);
+    scaffoldKey.currentState!.closeDrawer();
+    isLoading=true;
+    update();
+    await _apiServices.getSalonByCategories(city: userCity!, category: category).then(
+        (DataState dataState){
+          if( dataState is DataSuccesState){
+            isLoading=false;
+            update();
+            Get.toNamed(rAllSalonsScreen, arguments: {'salons':dataState.data});
+          }else{
+            scaffoldKey.currentState!.closeDrawer();
+            isLoading=false;
+            update();
+            Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', dataState.error!,
+                backgroundColor: Colors.red);
+          }
+        }
+    );
   }
 
   // refreshes the favorite list

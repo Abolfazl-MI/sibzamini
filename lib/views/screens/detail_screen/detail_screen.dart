@@ -38,7 +38,6 @@ class DetailScreen extends GetView<DetailController> {
     return Scaffold(
       backgroundColor: const Color(0xffF5F7FB),
       // key: scaffoldKey,
-      
       appBar: AppBar(
         actions: [
           IconButton(
