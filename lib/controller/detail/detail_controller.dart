@@ -148,7 +148,6 @@ class DetailController extends GetxController {
       }
     }
   }
-// BUG bookmarked salon model need to change
   Future<void> isBookedMarkedSalon() async {
     String? token = await _storageService.getuserToken();
     print(token);

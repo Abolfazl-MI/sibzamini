@@ -108,7 +108,6 @@ class HomeScreen extends GetView<HomeController> {
                         rightText: 'بهترین‌سالن‌های‌اطراف‌شما',
                         leftText: 'نمایش‌ همه',
                         onTap: () {
-                          // TODO Show all salons
                           Get.toNamed(rAllSalonsScreen,
                               arguments: {'salons': controller.bestSalonsList});
                         }),

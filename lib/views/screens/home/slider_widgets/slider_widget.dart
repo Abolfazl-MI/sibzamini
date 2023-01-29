@@ -84,7 +84,7 @@ class SliderWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Transform.scale(
-                        scale: 0.9,
+                        scale: 0.7,
                         child: CircleAvatar(
                           backgroundColor: Color(0xffF5F7FB),
                           child: SvgPicture.asset(Assets.icons.logos),
@@ -95,7 +95,12 @@ class SliderWidget extends StatelessWidget {
                         children: [
                           Text(
                             title,
-                            style: AppTextTheme.caption,
+                            textAlign: TextAlign.justify,
+                            style: AppTextTheme.caption.copyWith(
+                              fontSize: 18,
+
+                            ),
+
                           ),
                           RatingStars(
                               iconSize: 20,

@@ -140,53 +140,59 @@ class AllSalonsScreen extends GetView<HomeController> {
       {required double width,
       required double height,
       required BuildContext context}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(
-            color: SolidColors.borderColor,
+    return InkWell(
+      onTap: (){
+        Get.offNamed(rSrarchSalons);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              color: SolidColors.borderColor,
+            ),
           ),
         ),
-      ),
-      width: width,
-      height: 56,
-      child: Row(
-        children: [
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                // height: 32,
-                child: TextFormField(
-                  textAlign: TextAlign.justify,
-                  decoration: InputDecoration(
-                      filled: true,
-                      fillColor: SolidColors.borderColor,
-                      hintStyle: TextStyle(
-                          fontSize: 12, color: SolidColors.textColor4),
-                      hintText: 'دنبال‌چی‌میگردی؟',
-                      enabledBorder: genralInputDecoration,
-                      disabledBorder: genralInputDecoration,
-                      focusedBorder: genralInputDecoration,
-                      prefixIcon: IconButton(
-                        icon: SvgPicture.asset(
-                          Assets.icons.search,
-                          color: SolidColors.textColor4,
-                        ),
-                        onPressed: () => null,
-                      )),
+        width: width,
+        height: 56,
+        child: Row(
+          children: [
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  // height: 32,
+                  child: TextFormField(
+                  enabled: false,
+                    textAlign: TextAlign.justify,
+                    decoration: InputDecoration(
+                        filled: true,
+                        fillColor: SolidColors.borderColor,
+                        hintStyle: TextStyle(
+                            fontSize: 12, color: SolidColors.textColor4),
+                        hintText: 'دنبال‌چی‌میگردی؟',
+                        enabledBorder: genralInputDecoration,
+                        disabledBorder: genralInputDecoration,
+                        focusedBorder: genralInputDecoration,
+                        prefixIcon: IconButton(
+                          icon: SvgPicture.asset(
+                            Assets.icons.search,
+                            color: SolidColors.textColor4,
+                          ),
+                          onPressed: () => null,
+                        )),
+                  ),
                 ),
               ),
             ),
-          ),
-          IconButton(
-            onPressed: () {
-              showFavSalonBottomSheet(context,);
-            },
-            icon: SvgPicture.asset(Assets.icons.heart),
-          ),
-        ],
+            IconButton(
+              onPressed: () {
+                showFavSalonBottomSheet(context,);
+              },
+              icon: SvgPicture.asset(Assets.icons.heart),
+            ),
+          ],
+        ),
       ),
     );
   }

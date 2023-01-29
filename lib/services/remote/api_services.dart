@@ -36,7 +36,7 @@ class ApiServices {
     try {
       FormData data =
           FormData.fromMap({'name': name, 'mobile': phoneNumber, 'city': city});
-      Response response = await _dio.post(register, data: data);
+      Response response = await _dio.post(ApiUrls.register, data: data);
       // print(response.data);
 
       if (response.statusCode == 200) {
@@ -63,7 +63,7 @@ class ApiServices {
     try {
       FormData data =
           FormData.fromMap({'mobile': phoneNumber, 'token': otpCode});
-      Response response = await _dio.post(loginCheck, data: data);
+      Response response = await _dio.post(ApiUrls.loginCheck, data: data);
       if (response.statusCode == 200) {
         User user = User.fromJson(response.data);
         return DataSuccesState(user);
@@ -83,7 +83,7 @@ class ApiServices {
     try {
       FormData data = FormData.fromMap({'mobile': phoneNumber});
 
-      Response response = await _dio.post(login, data: data);
+      Response response = await _dio.post(ApiUrls.login, data: data);
       // print(response.data);
       if (response.statusCode == 200) {
         return DataSuccesState(true);
@@ -121,7 +121,7 @@ class ApiServices {
   // returns corsponding salon detail based on id passed
   Future<DataState<Salon>> getSalonDetail({required int id}) async {
     try {
-      Response response = await _dio.get('$salonInfo/$id');
+      Response response = await _dio.get('${ApiUrls.salonInfo}/$id');
       if (response.statusCode == 200) {
         Salon salon = Salon.fromJson(response.data);
         return DataSuccesState(salon);
@@ -139,7 +139,7 @@ class ApiServices {
   Future<DataState<List<Comment>>> getSalonComments({required int id}) async {
     try {
       FormData data = FormData.fromMap({'salon': id});
-      Response response = await _dio.post(salonComments, data: data);
+      Response response = await _dio.post(ApiUrls.salonComments, data: data);
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
         List<Comment> comments =
@@ -166,7 +166,7 @@ class ApiServices {
         'category': category.slug,
         'query':''
       });
-      Response response = await _dio.post(searchSalon, data: data);
+      Response response = await _dio.post(ApiUrls.searchSalon, data: data);
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
         List<Salon> salons = rawData.map((e) => Salon.fromJson(e)).toList();
@@ -184,7 +184,7 @@ class ApiServices {
       {required String query, required String city}) async {
     try {
       FormData data = FormData.fromMap({'city': city, 'query': query});
-      Response response = await _dio.post(searchSalon, data: data);
+      Response response = await _dio.post(ApiUrls.searchSalon, data: data);
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
         List<Salon> searchedSalons =
@@ -214,7 +214,7 @@ class ApiServices {
     try {
       FormData data = FormData.fromMap(
           {'user': userToken, 'salon': salonId, 'comment': comment, 'rate': rate, 'parent':''});
-      Response response = await _dio.post(newSalonComment, data: data);
+      Response response = await _dio.post(ApiUrls.newSalonComment, data: data);
         if(response.statusCode==200){
             return DataSuccesState(true);
         }
@@ -229,7 +229,7 @@ class ApiServices {
   Future<DataState<List<SalonService>>> getSingleSalonServices(
       {required int salonId}) async {
     try {
-      Response response = await _dio.get('$salonServices/$salonId');
+      Response response = await _dio.get('${ApiUrls.salonServices}/$salonId');
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
         List<SalonService> salonServices =
@@ -258,7 +258,7 @@ class ApiServices {
         'user': token,
         'salon': salonId,
       });
-      Response response = await _dio.post(bookMarkSalon, data: data);
+      Response response = await _dio.post(ApiUrls.bookMarkSalon, data: data);
       if (response.statusCode == 200) {
         return DataSuccesState(true);
       }
@@ -279,7 +279,7 @@ class ApiServices {
       {required String userToken}) async {
     try {
       FormData data = FormData.fromMap({'user': userToken});
-      Response response = await _dio.post(bookMarkList, data: data);
+      Response response = await _dio.post(ApiUrls.bookMarkList, data: data);
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
         List<BookMarkedSalon> bookMarkedSalons =
@@ -297,7 +297,7 @@ class ApiServices {
       {required String userToken, required int salonId}) async {
     try {
       FormData data = FormData.fromMap({'user': userToken, 'salon': salonId});
-      Response response = await _dio.post(deleteSalonBookMark, data: data);
+      Response response = await _dio.post(ApiUrls.deleteSalonBookMark, data: data);
       if(response.statusCode==200){
         return DataSuccesState(true);
       }
@@ -310,7 +310,7 @@ class ApiServices {
   /// returns list of Services categories
   Future<DataState<List<ServiceCategory>>> getCategoriesList() async {
     try {
-      Response response = await _dio.get(categories);
+      Response response = await _dio.get(ApiUrls.categories);
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
         List<ServiceCategory> categories =
@@ -351,7 +351,7 @@ class ApiServices {
   /// else would return `SOME THING WENT wrong`
   Future<DataState<List<City>>>getAvailableCities()async{
     try{
-    Response response = await _dio.get(cities);
+    Response response = await _dio.get(ApiUrls.cities);
     if(response.statusCode==200){
       List<dynamic>rawData=response.data;
       List<City>cities=rawData.map((data)=>City.fromJson(data)).toList();
@@ -363,4 +363,9 @@ class ApiServices {
     return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
+
+  Future getSalonAddsBanner()async{
+    await _dio.get(ApiUrls.adds);
+  }
+
 }

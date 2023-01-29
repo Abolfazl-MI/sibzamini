@@ -60,15 +60,15 @@ class LocationScreen extends GetView<DetailController> {
                           apiKey: map_token,
                           options: MapOptions(
                             center: LatLng(
-                                detailController.salonDetail?.lat ?? 35.7219,
-                                detailController.salonDetail?.lng ?? 51.3347),
+                                detailController.salonDetail!.lat!,
+                                detailController.salonDetail!.lng! ),
                           ),
                           layers: [
                             MarkerLayerOptions(
                               markers: [
                                 Marker(point: LatLng(
-                                detailController.salonDetail?.lat ?? 59.00,
-                                detailController.salonDetail?.lng ?? 51.3347),
+                                detailController.salonDetail!.lat!, 
+                                detailController.salonDetail!.lng!),
                                  builder: (ctx)=> Icon(
                                   Icons.location_on_outlined, 
                                   size: 50,

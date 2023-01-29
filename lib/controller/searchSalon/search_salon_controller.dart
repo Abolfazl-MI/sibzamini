@@ -67,29 +67,28 @@ class SearchSalonsController extends GetxController {
     update();
   }
 
-  // TODO:ROUTE CHANGES
-  // TODO: change rx to normal
+  
 
   Future<void> _searchSalon(String query) async {
     isSearchLoading = true;
     update();
     print(userCityLocation);
     if (userCityLocation == null) _getUserCityLocation();
-    // if(query.isNotEmpty){
-    //   await _apiServices
-    //     .getSalonBySearch(query: query.trim(), city: userCityLocation ?? 'تهران')
-    //     .then((DataState dataState) {
-    //       if(dataState is DataSuccesState){
-    //         searchResult=dataState.data;
-    //         isSearchLoading=false;
-    //         update();
-    //       }else{
-    //         isSearchLoading=false;
-    //         searchResult=[];
-    //         update();
-    //       }
-    // });
-    // }
+    if(query.isNotEmpty){
+      await _apiServices
+        .getSalonBySearch(query: query.trim(), city: userCityLocation ?? 'تهران')
+        .then((DataState dataState) {
+          if(dataState is DataSuccesState){
+            searchResult=dataState.data;
+            isSearchLoading=false;
+            update();
+          }else{
+            isSearchLoading=false;
+            searchResult=[];
+            update();
+          }
+    });
+    }
     // await Future.delayed(Duration(seconds: 3));
     // searchResult = [
     //   Salon(

@@ -71,13 +71,13 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
             height: height,
             // color:Colors.red,
             child: Column(children: [
-              _mostSeachedTitle(width),
-              GetBuilder<SearchSalonsController>(
-                builder: (builderController) => ShimmerLoading(
-                    isLoading: builderController.isSearchLoading,
-                    child: Container(
-                        width: width, height: 200, color: Colors.green)),
-              ),
+              // _mostSeachedTitle(width),
+              // GetBuilder<SearchSalonsController>(
+              //   builder: (builderController) => ShimmerLoading(
+              //       isLoading: builderController.isSearchLoading,
+              //       child: Container(
+              //           width: width, height: 200, color: Colors.green)),
+              // ),
               SizedBox(
                 height: 30,
               ),

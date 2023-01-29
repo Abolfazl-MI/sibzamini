@@ -1,22 +1,25 @@
+class ApiUrls{
  // AUTH
-const String register = '/register';
-const String login = '/login';
-const String loginCheck = '/logincheck';
+static const String register = '/register';
+static const String login = '/login';
+static const String loginCheck = '/logincheck';
 //salons path
-const String bestSalons = '/best';
-const String newestSalon = '/new';
-const String salonServices = '/services'; //! id should added
-const String salonInfo = '/salon'; //! id shold added
-const String searchSalon='/search';
+static const String bestSalons = '/best';
+static const String newestSalon = '/new';
+static const String salonServices = '/services'; //! id should added
+static const String salonInfo = '/salon'; //! id shold added
+static const String searchSalon='/search';
 //  CATEGOTRY
-const String categories='/cats';
+static const String categories='/cats';
 // COMMENTS
-const String salonComments='/comments/list';
-const String newSalonComment='/comments/new';
+static const String salonComments='/comments/list';
+static const String newSalonComment='/comments/new';
 // BOOK MARK 
-const String bookMarkList='/bookmarks/list';
-const String bookMarkSalon='/bookmarks/add';
-const String deleteSalonBookMark='/bookmarks/delete';
-const String cities='/cities';
+static const String bookMarkList='/bookmarks/list';
+static const String bookMarkSalon='/bookmarks/add';
+static const String deleteSalonBookMark='/bookmarks/delete';
+static const String cities='/cities';
 // adds
-const String adds='/banners';
+static const String adds='/banners';
+
+}

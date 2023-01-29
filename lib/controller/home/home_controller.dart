@@ -46,7 +46,7 @@ class HomeController extends GetxController {
     // isLoading = true;
     // update();
     DataState<List<Salon>> result =
-        await _apiServices.getSalonList(cityName: cityName, path: bestSalons);
+        await _apiServices.getSalonList(cityName: cityName, path: ApiUrls.bestSalons);
     if (result is DataSuccesState) {
       // print(result.data);
       if (result.data != null) {
@@ -75,7 +75,7 @@ class HomeController extends GetxController {
   // get news Salons
   Future<void> getNewesSalons({required String cityName}) async {
     DataState<List<Salon>> resualt =
-        await _apiServices.getSalonList(cityName: cityName, path: newestSalon);
+        await _apiServices.getSalonList(cityName: cityName, path: ApiUrls.newestSalon);
     // print('{data:$}');
 
     if (resualt is DataSuccesState) {
