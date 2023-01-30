@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
+import 'package:sibzamini/models/add_banner_model/add_banner_model.dart';
 import 'package:sibzamini/models/cities_model/cities_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
@@ -97,8 +98,9 @@ class HomeScreen extends GetView<HomeController> {
               child: Column(
                 children: [
                   ShimmerLoading(
-                      isLoading: builderController.isLoading,
-                      child: _carsol_section(width)),
+                    isLoading: builderController.isLoading,
+                    child: _carsol_section(width,builderController.salonAddBanners),
+                  ),
                   SizedBox(
                     height: 12,
                   ),
@@ -124,10 +126,11 @@ class HomeScreen extends GetView<HomeController> {
                   SizedBox(
                     height: 20,
                   ),
-                  ShimmerLoading(
-                    isLoading: builderController.isLoading,
-                    child: _addSection(width),
-                  ),
+                  // ShimmerLoading(
+                  //   isLoading: builderController.isLoading,
+                  //   child: _addSection(width),
+                  // ),
+                  // سالن 
                   SizedBox(
                     height: 12,
                   ),
@@ -288,23 +291,31 @@ class HomeScreen extends GetView<HomeController> {
         ));
   }
 
-  Padding _carsol_section(double width) {
+  _carsol_section(double width, List<SalonAddBanner> adds) {
     return Padding(
       padding: EdgeInsets.symmetric(
         // horizontal: 5,
         vertical: 16,
       ),
-      child: CarouselSlider.builder(
-        itemCount: 5,
-        itemBuilder: ((context, index, realIndex) => CarsolWidget(
-            imgSrc: Assets.images.modernBeautySalonInterior2.path,
-            width: width)),
-        options: CarouselOptions(
-          height: 120,
-          autoPlay: true,
-          autoPlayCurve: Curves.decelerate,
-        ),
-      ),
+      // TODO check for empty or 0
+      child: adds == null || adds.isEmpty
+          ? null
+          : CarouselSlider.builder(
+              itemCount: adds.length,
+              itemBuilder: ((context, index, realIndex) => InkWell(
+                    onTap: () {
+                      Get.toNamed(rDetailScreen,
+                          arguments: {'id': adds[index].salon});
+                    },
+                    child:
+                        CarsolWidget(imgSrc: adds[index].image!, width: width),
+                  )),
+              options: CarouselOptions(
+                height: 120,
+                autoPlay: true,
+                autoPlayCurve: Curves.easeIn,
+              ),
+            ),
     );
   }
 
@@ -356,7 +367,10 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  _searchBar({required double width, required double height, required BuildContext context}) {
+  _searchBar(
+      {required double width,
+      required double height,
+      required BuildContext context}) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,
@@ -374,7 +388,7 @@ class HomeScreen extends GetView<HomeController> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   Get.toNamed(rSrarchSalons);
                 },
                 child: SizedBox(

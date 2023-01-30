@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:sibzamini/core/data_staes.dart';
+import 'package:sibzamini/models/add_banner_model/add_banner_model.dart';
 import 'package:sibzamini/models/bookmarked_salon_model/book_marked_salon_model.dart';
 import 'package:sibzamini/models/category_model/category_model.dart';
 import 'package:sibzamini/models/cities_model/cities_model.dart';
@@ -38,31 +39,37 @@ class HomeController extends GetxController {
   bool isDeleteFavLoading = false;
   String? currentCity;
   ConnectivityStatus connectivityStatus = ConnectivityStatus.disconnected;
+  List<SalonAddBanner> salonAddBanners = [];
   late final StreamSubscription<ConnectivityStatus> _subscription;
 
   //methods
-  // get best Salons
+  /// get best Salons from server
+  /// if response is 200 `List<Salon>` wolld returned
   Future<void> getBestSalons({required String cityName}) async {
-    // isLoading = true;
-    // update();
-    DataState<List<Salon>> result =
-        await _apiServices.getSalonList(cityName: cityName, path: ApiUrls.bestSalons);
+    DataState<List<Salon>> result = await _apiServices.getSalonList(
+        cityName: cityName, path: ApiUrls.bestSalons);
     if (result is DataSuccesState) {
-      // print(result.data);
       if (result.data != null) {
         bestSalonsList = result.data!;
-        // isLoading = false;
         update();
       }
     }
     if (result is DataFailState) {
-      // print(result.error);
-
-      // isLoading = false;
-      // update();
       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', result.error!,
           backgroundColor: Colors.red);
     }
+  }
+
+  _getSallonAddsBanner() async {
+    _apiServices.getSalonAddsBanner().then((DataState result) {
+      if (result is DataSuccesState) {
+        salonAddBanners = result.data;
+        update();
+      } else {
+        salonAddBanners = [];
+        update();
+      }
+    });
   }
 
   // gets user current cityName from shared
@@ -74,8 +81,8 @@ class HomeController extends GetxController {
 
   // get news Salons
   Future<void> getNewesSalons({required String cityName}) async {
-    DataState<List<Salon>> resualt =
-        await _apiServices.getSalonList(cityName: cityName, path: ApiUrls.newestSalon);
+    DataState<List<Salon>> resualt = await _apiServices.getSalonList(
+        cityName: cityName, path: ApiUrls.newestSalon);
     // print('{data:$}');
 
     if (resualt is DataSuccesState) {
@@ -110,23 +117,23 @@ class HomeController extends GetxController {
     }
     print(userCity);
     scaffoldKey.currentState!.closeDrawer();
-    isLoading=true;
+    isLoading = true;
     update();
-    await _apiServices.getSalonByCategories(city: userCity!, category: category).then(
-        (DataState dataState){
-          if( dataState is DataSuccesState){
-            isLoading=false;
-            update();
-            Get.toNamed(rAllSalonsScreen, arguments: {'salons':dataState.data});
-          }else{
-            scaffoldKey.currentState!.closeDrawer();
-            isLoading=false;
-            update();
-            Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', dataState.error!,
-                backgroundColor: Colors.red);
-          }
-        }
-    );
+    await _apiServices
+        .getSalonByCategories(city: userCity!, category: category)
+        .then((DataState dataState) {
+      if (dataState is DataSuccesState) {
+        isLoading = false;
+        update();
+        Get.toNamed(rAllSalonsScreen, arguments: {'salons': dataState.data});
+      } else {
+        scaffoldKey.currentState!.closeDrawer();
+        isLoading = false;
+        update();
+        Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', dataState.error!,
+            backgroundColor: Colors.red);
+      }
+    });
   }
 
   // refreshes the favorite list
@@ -193,7 +200,8 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> addSalonToBookMarkList({required int salonId, required String userToken}) async {
+  Future<void> addSalonToBookMarkList(
+      {required int salonId, required String userToken}) async {
     await _apiServices.addSalonToBookMarks(token: userToken, salonId: salonId);
   }
 
@@ -231,6 +239,7 @@ class HomeController extends GetxController {
     await getSalonCategories();
     await _getBookMarkedSalons();
     await _getCitySalonsAvailable();
+    await _getSallonAddsBanner();
     isLoading = false;
     update();
   }
