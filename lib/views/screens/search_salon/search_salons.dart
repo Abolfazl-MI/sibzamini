@@ -38,7 +38,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
               color: Colors.grey,
             ),
             onPressed: () {
-              Get.offNamed(rHomeScreen);
+              Get.back();
             },
           ),
         ],
@@ -201,30 +201,29 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
                         )
                       : Padding(
                           padding: const EdgeInsets.all(18.0),
-                          child: builderController.isSearchLoading?
-                          Transform.scale(
-                            scale:0.8, 
-                            child:Lottie.asset(Assets.lotties.loading)
-                          )
-                          :Container(
-                            width: width,
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Transform.scale(
-                                    scale: 1.5,
-                                    child:
-                                        SvgPicture.asset(Assets.icons.notFind),
+                          child: builderController.isSearchLoading
+                              ? Transform.scale(
+                                  scale: 0.8,
+                                  child: Lottie.asset(Assets.lotties.loading))
+                              : Container(
+                                  width: width,
+                                  child: Center(
+                                    child: Column(
+                                      children: [
+                                        Transform.scale(
+                                          scale: 1.5,
+                                          child: SvgPicture.asset(
+                                              Assets.icons.notFind),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(28.0),
+                                          child: Text('موردی پیدا نشد',
+                                              style: AppTextTheme.captionBold),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(28.0),
-                                    child: Text('موردی پیدا نشد',
-                                        style: AppTextTheme.captionBold),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                                ),
                         ),
                 )),
               ),
@@ -268,21 +267,20 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
                         textAlign: TextAlign.justify,
                         autofocus: true,
                         decoration: InputDecoration(
-                          filled: true,
-                          fillColor: SolidColors.borderColor,
-                          hintStyle: TextStyle(
-                              fontSize: 12, color: SolidColors.textColor4),
-                          hintText: 'دنبال‌چی‌میگردی؟',
-                          enabledBorder: genralInputDecoration,
-                          // enabled: false,
-                          disabledBorder: genralInputDecoration,
-                          focusedBorder: genralInputDecoration,
-                          prefixIcon: controller.isSearchLoading?
-                          Transform.scale(
-                            scale: 0.8,
-                            child:Lottie.asset(Assets.lotties.loading)
-                          ):Icon(Icons.search)
-                        )),
+                            filled: true,
+                            fillColor: SolidColors.borderColor,
+                            hintStyle: TextStyle(
+                                fontSize: 12, color: SolidColors.textColor4),
+                            hintText: 'دنبال‌چی‌میگردی؟',
+                            enabledBorder: genralInputDecoration,
+                            // enabled: false,
+                            disabledBorder: genralInputDecoration,
+                            focusedBorder: genralInputDecoration,
+                            prefixIcon: controller.isSearchLoading
+                                ? Transform.scale(
+                                    scale: 0.8,
+                                    child: Lottie.asset(Assets.lotties.loading))
+                                : Icon(Icons.search))),
                   ),
                 ),
               ),
@@ -309,8 +307,11 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
   ) {
     return InkWell(
       onTap: () {
-        // showCityLocationBottemSheet(
-        //     context, width, Get.find<HomeController>().availableCities);
+        showCityLocationBottemSheet(
+            context,
+            width,
+            Get.find<HomeController>().availableCities,
+            Get.find<SearchSalonsController>().autoSelectLocation);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -349,99 +350,6 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
         ),
       ),
     );
-  }
-
-  _changeCityLoacation(
-    double width,
-    BuildContext context,
-    List<City> cities,
-  ) {
-    return showModalBottomSheet(
-        isScrollControlled: true,
-        context: context,
-        shape: const RoundedRectangleBorder(
-            borderRadius:
-                BorderRadiusDirectional.vertical(top: Radius.circular(25.0))),
-        builder: (context) => Container(
-              width: width,
-              height: MediaQuery.of(context).size.height / 1.3,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
-              )),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20))),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 18),
-                      child: InkWell(
-                        onTap: () {
-                          // TODO IMPL THE AUTOMATIC LOCATION
-                        },
-                        child: Container(
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(Assets.icons.locationSearch),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                'مکان‌یا‌بی‌خودکار',
-                                style: AppTextTheme.caption
-                                    .copyWith(color: SolidColors.primaryBlue),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    cities.isNotEmpty
-                        ? Expanded(
-                            child: ListView.builder(
-                              itemCount: cities.length,
-                              physics: BouncingScrollPhysics(),
-                              itemBuilder: ((context, index) => Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color:
-                                                    SolidColors.textColor4))),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 12),
-                                      child: TextButton(
-                                        onPressed: () {},
-                                        child: Text(cities[index].name ?? '',
-                                            style: AppTextTheme.caption
-                                                .copyWith(
-                                                    color: SolidColors
-                                                        .textColor4)),
-                                      ),
-                                    ),
-                                  )),
-                            ),
-                          )
-                        : Expanded(
-                            // width:width,
-                            child: Column(children: [
-                              Transform.scale(
-                                  scale: 0.5,
-                                  child:
-                                      SvgPicture.asset(Assets.icons.notFind)),
-                              Text('موردی پیدا نشد بعدا تلاش کنید')
-                            ]),
-                          )
-                  ],
-                ),
-              ),
-            ));
   }
 
   _mostSeachedTitle(double width) {

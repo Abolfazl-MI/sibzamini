@@ -47,45 +47,45 @@ class AppDrawer extends GetView<HomeController> {
                   )),
                   Divider(color: SolidColors.textColor4),
                   // SizedBox(height: 5),
-                  Container(
-                    height: 80,
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(Icons.groups_outlined,
-                                size: 28, color: SolidColors.textColor4),
-                            SizedBox(width: 10),
-                            Text(
-                              'پربازدید ترین سالن ها',
-                              style: AppTextTheme.caption,
-                            ),
-                          ],
-                        ),
-                        // SizedBox(width: 40),
+                  // Container(
+                  //   height: 80,
+                  //   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  //   width: MediaQuery.of(context).size.width,
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Row(
+                  //         children: [
+                  //           Icon(Icons.groups_outlined,
+                  //               size: 28, color: SolidColors.textColor4),
+                  //           SizedBox(width: 10),
+                  //           Text(
+                  //             'پربازدید ترین سالن ها',
+                  //             style: AppTextTheme.caption,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       // SizedBox(width: 40),
 
-                        Row(
-                          children: [
-                            Icon(Icons.discount_outlined,
-                                size: 28, color: SolidColors.textColor4),
-                            SizedBox(width: 10),
-                            Text(
-                              'سالن های پر تخفیف',
-                              style: AppTextTheme.caption,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    // color: Colors.yellow,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Divider(color: SolidColors.textColor4),
+                  //       Row(
+                  //         children: [
+                  //           Icon(Icons.discount_outlined,
+                  //               size: 28, color: SolidColors.textColor4),
+                  //           SizedBox(width: 10),
+                  //           Text(
+                  //             'سالن های پر تخفیف',
+                  //             style: AppTextTheme.caption,
+                  //           ),
+                  //         ],
+                  //       )
+                  //     ],
+                  //   ),
+                  //   // color: Colors.yellow,
+                  // ),
+                  // SizedBox(
+                  //   height: 10,
+                  // ),
+                  // Divider(color: SolidColors.textColor4),
                   SizedBox(
                     height: 8,
                   ),

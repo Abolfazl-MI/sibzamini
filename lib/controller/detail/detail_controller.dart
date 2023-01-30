@@ -23,7 +23,7 @@ class DetailController extends GetxController {
   bool isLoading = false;
   bool isCommentLoading = false;
   bool isBookedMarked = false;
-  Salon? salondetail;
+  Salon salondetail=Salon();
   int ? salonId;
   List<Comment>? salonComments;
   List<SalonService>? salonServices;
@@ -125,6 +125,8 @@ class DetailController extends GetxController {
           rate: rate);
       if (result is DataSuccesState) {
         isCommentLoading = false;
+        commentController.clear();
+        rateToSalon=0;
         update();
         AwesomeDialog(
           context:context, 
@@ -142,6 +144,8 @@ class DetailController extends GetxController {
       }
       if (result is DataFailState) {
         isCommentLoading=false;
+        commentController.clear();
+        rateToSalon=0;
         update();
         Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', result.error!,
             backgroundColor: Colors.red);

@@ -67,7 +67,18 @@ class SearchSalonsController extends GetxController {
     update();
   }
 
-  
+  autoSelectLocation()async{
+    await LocationServices().getUserCityLocation().then((DataState dataState) {
+      if(dataState is DataSuccesState){
+        userCityLocation=dataState.data;
+        update();
+      }
+      if(dataState is DataFailState){
+        userCityLocation='Tehran';
+        update();
+      }
+    });
+  }
 
   Future<void> _searchSalon(String query) async {
     isSearchLoading = true;
@@ -89,43 +100,7 @@ class SearchSalonsController extends GetxController {
           }
     });
     }
-    // await Future.delayed(Duration(seconds: 3));
-    // searchResult = [
-    //   Salon(
-    //       id: 0,
-    //       name: 'abolfazl',
-    //       about: 'this is about',
-    //       address: 'this is address',
-    //       city: 'Tehran',
-    //       rate: 5,
-    //       pic: 'http://dl.hom.ir/browseir2/iran/IRAN8.png'),
-    //   Salon(
-    //       id: 23,
-    //       name: 'ARIANA',
-    //       about: 'this is about',
-    //       address: 'this is address',
-    //       city: 'Tehran',
-    //       rate: 3,
-    //       pic: 'http://dl.hom.ir/browseir2/iran/IRAN8.png'),
-    //   Salon(
-    //       name: 'MOSTAFA',
-    //       id: 32,
-    //       about: 'this is about',
-    //       address: 'this is address',
-    //       city: 'Tehran',
-    //       rate: 4,
-    //       pic: 'http://dl.hom.ir/browseir2/iran/IRAN8.png'),
-    //   Salon(
-    //       name: 'fatemeh',
-    //       id: 12,
-    //       about: 'this is about',
-    //       address: 'this is address',
-    //       city: 'Tehran',
-    //       rate: 1,
-    //       pic: 'http://dl.hom.ir/browseir2/iran/IRAN8.png')
-    // ];
-    // isSearchLoading = false;
-    // update();
+    
   }
 
   clearSrarchResult(){

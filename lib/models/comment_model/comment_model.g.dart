@@ -11,7 +11,7 @@ Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
       comment: json['comment'] as String?,
       score: json['score'] as int?,
       parent: json['parent'] as String?,
-      user: json['user'] as String?,
+      user: json['user'] as int?,
       name: json['name'] as String?,
     );
 

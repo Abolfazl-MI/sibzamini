@@ -140,6 +140,7 @@ class ApiServices {
       FormData data = FormData.fromMap({'salon': id});
       Response response = await _dio.post(ApiUrls.salonComments, data: data);
       if (response.statusCode == 200) {
+        print(response.data);
         List<dynamic> rawData = response.data;
         List<Comment> comments =
             rawData.map((e) => Comment.fromJson(e)).toList();

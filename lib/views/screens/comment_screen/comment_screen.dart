@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:persian_number_utility/persian_number_utility.dart' ;
 import 'package:rate_in_stars/rate_in_stars.dart';
 import 'package:sibzamini/controller/detail/detail_controller.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
@@ -31,13 +31,14 @@ class CommentScreen extends StatelessWidget {
           child: ShimmerLoading(
             isLoading: dController.isCommentLoading,
             child: CustomScrollView(
+              physics: BouncingScrollPhysics(),
               slivers: [
                 SliverToBoxAdapter(
                   child: SearchBarWidget(),
                 ),
-                SliverToBoxAdapter(
-                  child: SelectLocationWidget(),
-                ),
+                // SliverToBoxAdapter(
+                //   child: SelectLocationWidget(),
+                // ),
                 // Salain name
                 SliverToBoxAdapter(
                     child: Container(
@@ -206,6 +207,7 @@ class CommentScreen extends StatelessWidget {
                               controller.sendComment(
                                   comment: controller.commentController.text.trim(),
                                   rate: dController.rateToSalon.toInt(),context: context);
+                              
                             }
                           },
                           child: SizedBox(
@@ -278,8 +280,8 @@ class CommentScreen extends StatelessWidget {
                                   children: [
                                     /// [comment count should get from server]
                                     TextSpan(
-                                        text: dController.salonDetail!.rate
-                                            .toString(),
+                                        text: dController.salonComments!.length.toString()
+                                            ,
                                         style: AppTextTheme.captionBold
                                             .copyWith(
                                                 color: SolidColors.primaryBlue))
@@ -290,7 +292,7 @@ class CommentScreen extends StatelessWidget {
                                 ///[salon all comments  gets from server]
                                 Text(
                                   dController.getOpinionBasedRatingCount(
-                                      dController.salonDetail!.id!),
+                                      dController.salonDetail!.rate??0),
                                   style: AppTextTheme.captionBold,
                                 ),
                                 SizedBox(
@@ -313,7 +315,7 @@ class CommentScreen extends StatelessWidget {
                                       RatingStars(
                                         editable: false,
                                         iconSize: 18,
-                                        rating: 3,
+                                        rating: dController.salonDetail!.rateToDouble,
                                         color: SolidColors.yellow,
                                       ),
                                       Container(
@@ -325,7 +327,8 @@ class CommentScreen extends StatelessWidget {
                                                 BorderRadius.circular(5)),
                                         child: Center(
                                           child: Text(
-                                            '3'.toPersianDigit(),
+                                            // dController.salonDetail!.rate
+                                            '${dController.salonDetail!.rate}'.toPersianDigit(),
                                             style: AppTextTheme.captionBold
                                                 .copyWith(color: Colors.white),
                                           ),
@@ -343,7 +346,11 @@ class CommentScreen extends StatelessWidget {
                     ),
                   ),
                   SliverList(
+                      
                     delegate: SliverChildBuilderDelegate(
+                      
+                      semanticIndexOffset: 20,
+
                         childCount: dController.salonComments!.length,
                         (context, index) {
                       Comment indexComment = dController.salonComments![index];
@@ -426,6 +433,11 @@ class CommentScreen extends StatelessWidget {
                         ),
                       );
                     }),
+                  ), 
+                  SliverToBoxAdapter(
+                    child:SizedBox(
+                      height: height/12,
+                    )
                   )
                 ],
               ],

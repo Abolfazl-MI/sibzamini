@@ -99,7 +99,8 @@ class HomeScreen extends GetView<HomeController> {
                 children: [
                   ShimmerLoading(
                     isLoading: builderController.isLoading,
-                    child: _carsol_section(width,builderController.salonAddBanners),
+                    child: _carsol_section(
+                        width, builderController.salonAddBanners),
                   ),
                   SizedBox(
                     height: 12,
@@ -130,7 +131,7 @@ class HomeScreen extends GetView<HomeController> {
                   //   isLoading: builderController.isLoading,
                   //   child: _addSection(width),
                   // ),
-                  // سالن 
+                  // سالن
                   SizedBox(
                     height: 12,
                   ),
@@ -140,7 +141,9 @@ class HomeScreen extends GetView<HomeController> {
                         rightText: 'جدید‌ترین‌سالن‌ها',
                         leftText: 'نمایش‌ همه',
                         onTap: () {
-                          // TODO Show all salons
+                          Get.toNamed(rAllSalonsScreen, arguments: {
+                            'salons': controller.newestSalonList
+                          });
                         }),
                   ),
                   SizedBox(
@@ -297,7 +300,6 @@ class HomeScreen extends GetView<HomeController> {
         // horizontal: 5,
         vertical: 16,
       ),
-      // TODO check for empty or 0
       child: adds == null || adds.isEmpty
           ? null
           : CarouselSlider.builder(
@@ -326,7 +328,10 @@ class HomeScreen extends GetView<HomeController> {
     return InkWell(
       onTap: () {
         showCityLocationBottemSheet(
-            context, width, Get.find<HomeController>().availableCities);
+            context,
+            width,
+            Get.find<HomeController>().availableCities,
+            Get.find<HomeController>().autoSelectLocation());
       },
       child: Container(
         decoration: BoxDecoration(

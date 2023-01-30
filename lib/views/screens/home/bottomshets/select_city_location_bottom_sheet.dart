@@ -8,7 +8,7 @@ import 'package:sibzamini/views/global/colors/solid_colors.dart';
 import 'package:sibzamini/views/global/constants/app_text_themes.dart';
 
 Future<dynamic> showCityLocationBottemSheet(
-    BuildContext context, double width, List<City> cities)
+    BuildContext context, double width, List<City> cities,VoidCallback onTap)
 {
   return showModalBottomSheet(isScrollControlled: true,context: context, shape: const RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.vertical(top: Radius.circular(25.0))), builder: (context) => Container(
             width: width,
@@ -28,9 +28,7 @@ Future<dynamic> showCityLocationBottemSheet(
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 18),
                     child: InkWell(
-                      onTap: () {
-                        // TODO IMPL THE AUTOMATIC LOCATION
-                      },
+                      onTap:onTap,
                       child: Container(
                         child: Row(
                           children: [

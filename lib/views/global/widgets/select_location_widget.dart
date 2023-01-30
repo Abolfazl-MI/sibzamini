@@ -78,7 +78,6 @@ class SelectLocationWidget extends StatelessWidget{
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: InkWell(
                         onTap: () {
-                          // TODO IMPL THE AUTOMATIC LOCATION
                         },
                         child: Container(
                           child: Row(

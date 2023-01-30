@@ -43,7 +43,7 @@ class DetailScreen extends GetView<DetailController> {
           IconButton(
             icon:Icon(Icons.arrow_back_ios, color: Colors.grey,), 
             onPressed: (){
-              Get.offNamed(rHomeScreen);
+              Get.back();
             },
           )
         ],
@@ -102,7 +102,7 @@ class DetailScreen extends GetView<DetailController> {
           ),
         ),
         BottomNavigation(
-          bodyMargin: 50,
+          bodyMargin: 40,
           size: MediaQuery.of(context).size,
         )
       ],
@@ -121,7 +121,7 @@ class DetailScreen extends GetView<DetailController> {
             builder: (builderController) => Column(
               children: [
                 SearchBarWidget(),
-                SelectLocationWidget(),
+                // SelectLocationWidget(),
                 _body(width, height, builderController)
               ],
             ),

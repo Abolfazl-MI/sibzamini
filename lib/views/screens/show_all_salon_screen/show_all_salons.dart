@@ -95,7 +95,7 @@ class AllSalonsScreen extends GetView<HomeController> {
     return InkWell(
       onTap: () {
         showCityLocationBottemSheet(
-            context, width, Get.find<HomeController>().availableCities);
+            context, width, Get.find<HomeController>().availableCities, Get.find<HomeController>().autoSelectLocation);
       },
       child: Container(
         decoration: BoxDecoration(

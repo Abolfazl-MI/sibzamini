@@ -275,6 +275,19 @@ class HomeController extends GetxController {
     getUserCityLocationName();
   }
 
+  autoSelectLocation()async{
+    await _locationServices.getUserCityLocation().then((DataState dataState) {
+      if(dataState is DataSuccesState){
+        currentCity=dataState.data;
+        update();
+      }
+      if(dataState is DataFailState){
+        currentCity='Tehran';
+        update();
+      }
+    });
+  }
+
   @override
   void onClose() async {
     await _subscription.cancel();

@@ -8,7 +8,7 @@ class Comment extends Equatable {
   final String? comment;
   final int? score;
   final String? parent;
-  final String? user;
+  final int ? user;
   final String? name;
   const Comment({
     this.id,
