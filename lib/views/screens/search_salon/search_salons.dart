@@ -30,7 +30,19 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
     return Scaffold(
       backgroundColor: SolidColors.backGroundColor,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey,
+            ),
+            onPressed: () {
+              Get.offNamed(rHomeScreen);
+            },
+          ),
+        ],
+        //
         // leading: IconButton(
         //   icon: SvgPicture.asset(Assets.icons.menu),
         centerTitle: true,
@@ -96,109 +108,124 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
                             return Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 10),
-                              child: Card(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    ShimmerLoading(
-                                        isLoading:
-                                            builderController.isSearchLoading,
-                                        child: CachedNetworkImage(
-                                          imageUrl: indexedSalon.pic ?? 'ssd',
-                                          placeholder: (_, __) {
-                                            return Container(
+                              child: InkWell(
+                                onTap: () {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                  Get.toNamed(rDetailScreen,
+                                      arguments: {'id': indexedSalon.id});
+                                  builderController.clearSrarchResult();
+                                },
+                                child: Card(
+                                    child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      ShimmerLoading(
+                                          isLoading:
+                                              builderController.isSearchLoading,
+                                          child: CachedNetworkImage(
+                                            imageUrl: indexedSalon.pic ?? 'ssd',
+                                            placeholder: (_, __) {
+                                              return Container(
+                                                  width: 130,
+                                                  height: 100,
+                                                  child: Center(
+                                                      child: Transform.scale(
+                                                          scale: 0.5,
+                                                          child: Lottie.asset(
+                                                              Assets.lotties
+                                                                  .loading))));
+                                            },
+                                            errorWidget: (___, __, _) {
+                                              return Container(
+                                                  width: 130,
+                                                  height: 100,
+                                                  color: Colors.grey,
+                                                  child: Center(
+                                                      child: Icon(
+                                                          Icons
+                                                              .image_not_supported_outlined,
+                                                          color:
+                                                              Colors.white)));
+                                            },
+                                            imageBuilder:
+                                                (context, imageProvider) {
+                                              return Container(
                                                 width: 130,
                                                 height: 100,
-                                                child: Center(
-                                                    child: Transform.scale(
-                                                        scale: 0.5,
-                                                        child: Lottie.asset(
-                                                            Assets.lotties
-                                                                .loading))));
-                                          },
-                                          errorWidget: (___, __, _) {
-                                            return Container(
-                                                width: 130,
-                                                height: 100,
-                                                color: Colors.grey,
-                                                child: Center(
-                                                    child: Icon(
-                                                        Icons
-                                                            .image_not_supported_outlined,
-                                                        color: Colors.white)));
-                                          },
-                                          imageBuilder:
-                                              (context, imageProvider) {
-                                            return Container(
-                                              width: 130,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: imageProvider)),
-                                            );
-                                          },
-                                        )),
-                                    SizedBox(width: 20),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        ShimmerLoading(
-                                          isLoading:
-                                              builderController.isSearchLoading,
-                                          child: Text(
-                                            indexedSalon.name!,
-                                            style: AppTextTheme.captionBold,
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                        image: imageProvider)),
+                                              );
+                                            },
+                                          )),
+                                      SizedBox(width: 20),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ShimmerLoading(
+                                            isLoading: builderController
+                                                .isSearchLoading,
+                                            child: Text(
+                                              indexedSalon.name!,
+                                              style: AppTextTheme.captionBold,
+                                            ),
                                           ),
-                                        ),
-                                        ShimmerLoading(
-                                          isLoading:
-                                              builderController.isSearchLoading,
-                                          child: RatingStars(
-                                            iconSize: 20,
-                                            editable: false,
-                                            rating: indexedSalon.rateToDouble,
-                                            color: SolidColors.yellow,
+                                          ShimmerLoading(
+                                            isLoading: builderController
+                                                .isSearchLoading,
+                                            child: RatingStars(
+                                              iconSize: 20,
+                                              editable: false,
+                                              rating: indexedSalon.rateToDouble,
+                                              color: SolidColors.yellow,
+                                            ),
                                           ),
-                                        ),
-                                        ShimmerLoading(
-                                          isLoading:
-                                              builderController.isSearchLoading,
-                                          child: Text(
-                                            'ادرس:' '${indexedSalon.address}',
-                                            style: AppTextTheme.subCaption,
+                                          ShimmerLoading(
+                                            isLoading: builderController
+                                                .isSearchLoading,
+                                            child: Text(
+                                              'ادرس:' '${indexedSalon.address}',
+                                              style: AppTextTheme.subCaption,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              )),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                )),
+                              ),
                             );
                           },
                         )
                       : Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Container(
-                    width:width,
+                          padding: const EdgeInsets.all(18.0),
+                          child: builderController.isSearchLoading?
+                          Transform.scale(
+                            scale:0.8, 
+                            child:Lottie.asset(Assets.lotties.loading)
+                          )
+                          :Container(
+                            width: width,
                             child: Center(
                               child: Column(
                                 children: [
                                   Transform.scale(
                                     scale: 1.5,
-                                    child: SvgPicture.asset(Assets.icons.notFind),
+                                    child:
+                                        SvgPicture.asset(Assets.icons.notFind),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(18.0),
-                                    child: Text('موردی پیدا نشد', style:AppTextTheme.captionBold),
+                                    padding: const EdgeInsets.all(28.0),
+                                    child: Text('موردی پیدا نشد',
+                                        style: AppTextTheme.captionBold),
                                   ),
-
                                 ],
                               ),
                             ),
                           ),
-                      ),
+                        ),
                 )),
               ),
               SizedBox(
@@ -235,26 +262,26 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
                 },
                 child: SizedBox(
                   // height: 32,
-                  child: TextFormField(
-                    onChanged: onchange,
-                    textAlign: TextAlign.justify,
-                    autofocus: true,
-                    decoration: InputDecoration(
-                        filled: true,
-                        fillColor: SolidColors.borderColor,
-                        hintStyle: TextStyle(
-                            fontSize: 12, color: SolidColors.textColor4),
-                        hintText: 'دنبال‌چی‌میگردی؟',
-                        enabledBorder: genralInputDecoration,
-                        // enabled: false,
-                        disabledBorder: genralInputDecoration,
-                        focusedBorder: genralInputDecoration,
-                        prefixIcon: IconButton(
-                          icon: SvgPicture.asset(
-                            Assets.icons.search,
-                            color: SolidColors.textColor4,
-                          ),
-                          onPressed: () => null,
+                  child: GetBuilder<SearchSalonsController>(
+                    builder: (controller) => TextFormField(
+                        onChanged: onchange,
+                        textAlign: TextAlign.justify,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: SolidColors.borderColor,
+                          hintStyle: TextStyle(
+                              fontSize: 12, color: SolidColors.textColor4),
+                          hintText: 'دنبال‌چی‌میگردی؟',
+                          enabledBorder: genralInputDecoration,
+                          // enabled: false,
+                          disabledBorder: genralInputDecoration,
+                          focusedBorder: genralInputDecoration,
+                          prefixIcon: controller.isSearchLoading?
+                          Transform.scale(
+                            scale: 0.8,
+                            child:Lottie.asset(Assets.lotties.loading)
+                          ):Icon(Icons.search)
                         )),
                   ),
                 ),

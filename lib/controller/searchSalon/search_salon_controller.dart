@@ -128,6 +128,11 @@ class SearchSalonsController extends GetxController {
     // update();
   }
 
+  clearSrarchResult(){
+    searchResult.clear();
+    update();
+  }
+
   updateSerchQuery(String query) {
     _searchQuery.value = query;
   }
