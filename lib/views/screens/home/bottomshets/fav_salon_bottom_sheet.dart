@@ -39,18 +39,18 @@ Future<dynamic> showFavSalonBottomSheet(BuildContext context) {
             ),
           );
         }
-        if(controller.isDeleteFavLoading){
-          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-            showDialog(
-                barrierDismissible: false,
-                context: context, builder: (context)=>Transform.scale(
-                scale: 0.2,
-                child: Container(
-                    padding:EdgeInsets.all(4),
-                    child: Lottie.asset(Assets.lotties.loading))
-            ));
-          });
-        }
+        // if(controller.isDeleteFavLoading){
+        //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        //     showDialog(
+        //         barrierDismissible: false,
+        //         context: context, builder: (context)=>Transform.scale(
+        //         scale: 0.2,
+        //         child: Container(
+        //             padding:EdgeInsets.all(4),
+        //             child: Lottie.asset(Assets.lotties.loading))
+        //     ));
+        //   });
+        // }
         return Padding(
           padding: EdgeInsets.all(0),
           child: Column(

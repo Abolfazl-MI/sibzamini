@@ -428,7 +428,8 @@ class HomeScreen extends GetView<HomeController> {
           // ),
           IconButton(
             onPressed: () {
-              showFavSalonBottomSheet(context);
+              Get.toNamed(rFavSalonsScreen, arguments: {'salons':controller.bookMarkedSalons});
+              // showFavSalonBottomSheet(context);
             },
             icon: SvgPicture.asset(Assets.icons.heart),
           ),

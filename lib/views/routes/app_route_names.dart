@@ -9,3 +9,4 @@ const String rCommentsScreen = '/commentsScreen';
 const String rErrorScreen = '/errorScreen';
 const String rAllSalonsScreen='/allSalonsScreen';
 const String rSrarchSalons='/searchSalons';
+const String rFavSalonsScreen='/favSalonsScren';
