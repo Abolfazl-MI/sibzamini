@@ -4,6 +4,7 @@ import "package:dio/dio.dart";
 
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/core/error_code.dart';
+import 'package:sibzamini/models/add_banner_model/add_banner_model.dart';
 import 'package:sibzamini/models/bookmarked_salon_model/book_marked_salon_model.dart';
 import 'package:sibzamini/models/category_model/category_model.dart';
 import 'package:sibzamini/models/cities_model/cities_model.dart';
@@ -87,16 +88,14 @@ class ApiServices {
       // print(response.data);
       if (response.statusCode == 200) {
         return DataSuccesState(true);
-      } 
+      }
       return DataFailState(SOMETHING_WENT_WRONG);
-    } on DioError catch(e){
+    } on DioError catch (e) {
       if (e.response!.statusCode == 404) {
         return DataFailState(USER_NOT_FOUND);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
-
-    }
-     catch (e) {
+    } catch (e) {
       return DataFailState(e.toString());
     }
   }
@@ -161,11 +160,8 @@ class ApiServices {
     required ServiceCategory category,
   }) async {
     try {
-      FormData data = FormData.fromMap({
-        'city': city,
-        'category': category.slug,
-        'query':''
-      });
+      FormData data = FormData.fromMap(
+          {'city': city, 'category': category.slug, 'query': ''});
       Response response = await _dio.post(ApiUrls.searchSalon, data: data);
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
@@ -173,6 +169,7 @@ class ApiServices {
         return DataSuccesState(salons);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
+
       /// if(response.statusCode==)
     } catch (e) {
       return DataFailState(SOMETHING_WENT_WRONG);
@@ -183,7 +180,7 @@ class ApiServices {
   Future<DataState<List<Salon>>> getSalonBySearch(
       {required String query, required String city}) async {
     try {
-      FormData data = FormData.fromMap({'city': city, 'query': query});
+      FormData data = FormData.fromMap({'city': city, 'query': query,'category':''});
       Response response = await _dio.post(ApiUrls.searchSalon, data: data);
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
@@ -204,28 +201,32 @@ class ApiServices {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
-
   /// adds comments for salon with id given
-  Future <DataState<bool>> sendComment(
+  Future<DataState<bool>> sendComment(
       {required int salonId,
       required String userToken,
       required String comment,
       required int rate}) async {
     try {
-      FormData data = FormData.fromMap(
-          {'user': userToken, 'salon': salonId, 'comment': comment, 'rate': rate, 'parent':''});
+      FormData data = FormData.fromMap({
+        'user': userToken,
+        'salon': salonId,
+        'comment': comment,
+        'rate': rate,
+        'parent': ''
+      });
       Response response = await _dio.post(ApiUrls.newSalonComment, data: data);
-        if(response.statusCode==200){
-            return DataSuccesState(true);
-        }
-        return DataFailState(SOMETHING_WENT_WRONG);
+      if (response.statusCode == 200) {
+        return DataSuccesState(true);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
     } catch (e) {
       log(e.toString());
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
 
-/// returns Salon services based on salon id passed
+  /// returns Salon services based on salon id passed
   Future<DataState<List<SalonService>>> getSingleSalonServices(
       {required int salonId}) async {
     try {
@@ -263,13 +264,12 @@ class ApiServices {
         return DataSuccesState(true);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
-    } on DioError catch(e){
-      if(e.response?.statusCode==401){
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
         return DataFailState('این سالن از قبل اضافه شده است');
       }
       return DataFailState(SOMETHING_WENT_WRONG);
-    }
-    catch (e) {
+    } catch (e) {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
@@ -297,8 +297,9 @@ class ApiServices {
       {required String userToken, required int salonId}) async {
     try {
       FormData data = FormData.fromMap({'user': userToken, 'salon': salonId});
-      Response response = await _dio.post(ApiUrls.deleteSalonBookMark, data: data);
-      if(response.statusCode==200){
+      Response response =
+          await _dio.post(ApiUrls.deleteSalonBookMark, data: data);
+      if (response.statusCode == 200) {
         return DataSuccesState(true);
       }
       return DataSuccesState(false);
@@ -322,14 +323,15 @@ class ApiServices {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
-/// gets user city name base on lat and long passed
+
+  /// gets user city name base on lat and long passed
+  /// would return city name in english like Tehran
   Future<DataState<String>> getUserCityLocation(
       {required double lat, required double lon}) async {
     try {
-      _dio.options.baseUrl='https:///map.ir';
+      _dio.options.baseUrl = 'https:///map.ir';
       _dio.options.headers.addAll({'x-api-key': map_token});
-      Response response =
-          await _dio.get('/fast-reverse', queryParameters: {
+      Response response = await _dio.get('/fast-reverse', queryParameters: {
         'lat': lat,
         'lon': lon,
       });
@@ -342,30 +344,44 @@ class ApiServices {
       return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
-  /// gets salons adds banner
-  Future getSalonsAddsBanner()async{
 
-  }
-  /// gets salons avilable cities list 
+  /// gets salons adds banner
+  Future getSalonsAddsBanner() async {}
+
+  /// gets salons avilable cities list
   /// if response 200 would return `List<City>`
   /// else would return `SOME THING WENT wrong`
-  Future<DataState<List<City>>>getAvailableCities()async{
-    try{
-    Response response = await _dio.get(ApiUrls.cities);
-    if(response.statusCode==200){
-      List<dynamic>rawData=response.data;
-      List<City>cities=rawData.map((data)=>City.fromJson(data)).toList();
-      return DataSuccesState(cities);
-    }
-    return DataFailState(SOMETHING_WENT_WRONG);
-    }
-    catch(e){
-    return DataFailState(SOMETHING_WENT_WRONG);
+  Future<DataState<List<City>>> getAvailableCities() async {
+    try {
+      Response response = await _dio.get(ApiUrls.cities);
+      if (response.statusCode == 200) {
+        List<dynamic> rawData = response.data;
+        List<City> cities = rawData.map((data) => City.fromJson(data)).toList();
+        return DataSuccesState(cities);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
 
-  Future getSalonAddsBanner()async{
-    await _dio.get(ApiUrls.adds);
+  /// gets application banner adds from server
+  /// if response 200 would return `List<SalonAddBanner>`
+  /// else whoul return `SOME THING WENT WONG `
+  Future<DataState<List<SalonAddBanner>>> getSalonAddsBanner() async {
+    try {
+      Response response = await _dio.get(ApiUrls.adds);
+      if (response.statusCode == 200) {
+        List<dynamic> rawData = response.data;
+        List<SalonAddBanner> salonAddBanner =
+            rawData.map((e) => SalonAddBanner.fromJson(e)).toList();
+        return DataSuccesState(salonAddBanner);
+      }
+      return DataFailState(SOMETHING_WENT_WRONG);
+    } on DioError catch (e) {
+      return DataFailState(e.message);
+    } catch (e) {
+      return DataFailState(SOMETHING_WENT_WRONG);
+    }
   }
-
 }
