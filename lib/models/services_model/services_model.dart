@@ -10,7 +10,7 @@ class SalonService extends Equatable {
   final double? amount;
   final String? photo;
   final String? content;
-  final String? cat;
+  final int? cat;
 
   const SalonService({
     this.id,

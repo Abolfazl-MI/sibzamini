@@ -1,5 +1,4 @@
-
-import'dart:ui';
+import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +24,7 @@ import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
 import '../../global/constants/constants.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
+
 class DetailScreen extends GetView<DetailController> {
   // final scaffoldKey = GlobalKey<ScaffoldState>();
   final PageController imageSliderController = PageController();
@@ -41,8 +41,11 @@ class DetailScreen extends GetView<DetailController> {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon:Icon(Icons.arrow_back_ios, color: Colors.grey,), 
-            onPressed: (){
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.grey,
+            ),
+            onPressed: () {
               Get.back();
             },
           )
@@ -61,32 +64,32 @@ class DetailScreen extends GetView<DetailController> {
         elevation: 1,
       ),
       // drawer: AppDrawer(),
-      body: GetBuilder<HomeController>(
-        builder:(builderController){
-          if(builderController.connectivityStatus==ConnectivityStatus.connected){
-            return _bodySection(context);
-          }
-          return Container(
-            width: width,
-            height: height,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Center(
-                  child: Transform.scale(
-                    scale: 0.5,
-                    child: Lottie.asset(Assets.lotties.noInternet),
-                  ),
-                ),
-                Text(NO_INTERNET_CONNECTION, style: AppTextTheme.caption)
-              ],
-            ),
-          );
+      body: GetBuilder<HomeController>(builder: (builderController) {
+        if (builderController.connectivityStatus ==
+            ConnectivityStatus.connected) {
+          return _bodySection(context);
         }
-      ),
+        return Container(
+          width: width,
+          height: height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Transform.scale(
+                  scale: 0.5,
+                  child: Lottie.asset(Assets.lotties.noInternet),
+                ),
+              ),
+              Text(NO_INTERNET_CONNECTION, style: AppTextTheme.caption)
+            ],
+          ),
+        );
+      }),
     );
   }
-  _bodySection(context){
+
+  _bodySection(context) {
     return Stack(
       children: [
         Positioned.fill(
@@ -112,7 +115,6 @@ class DetailScreen extends GetView<DetailController> {
   _detailScreen(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    final PageController sliderController = PageController();
     return Shimmer(
       linearGradient: shimmerGradient,
       child: Scaffold(
@@ -135,14 +137,6 @@ class DetailScreen extends GetView<DetailController> {
       physics: BouncingScrollPhysics(),
       child: Column(
         children: [
-          /// [BrandName]
-          Container(
-            color: SolidColors.darkGrey,
-            padding: const EdgeInsets.all(10),
-            width: width,
-            height: height * 0.05,
-          ),
-
           /// [Brand header realted]
           _brandHeader(builderController, width, height),
 
@@ -160,9 +154,13 @@ class DetailScreen extends GetView<DetailController> {
           /// [Services of salon]
           GetBuilder<DetailController>(builder: (dController) {
             // print(dController.salonServices);
-            if (dController.salonServices == null || dController.salonServices!.isEmpty) {
+            if (dController.salonServices == null ||
+                dController.salonServices!.isEmpty) {
               return Container();
             }
+            // TODO : should implement the services slider and image 
+            // TODO: should complete this section
+            
             if (dController.salonServices != null) {
               return Container(
                 width: width,
@@ -307,9 +305,8 @@ class DetailScreen extends GetView<DetailController> {
                 ),
               );
             }
-          return Container();
-          }
-          ),
+            return Container();
+          }),
           const SizedBox(
             height: 20,
           ),
@@ -326,7 +323,7 @@ class DetailScreen extends GetView<DetailController> {
         // color: Colors.green,
         // padding: EdgeInsets.all(10),
         width: width,
-        height: height * 0.4,
+        height: height * 0.45,
         child: Card(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -451,15 +448,16 @@ class DetailScreen extends GetView<DetailController> {
                                 SvgPicture.asset(Assets.icons.commentsOutline)),
                         IconButton(
                             onPressed: () {
-                              if(builderController.isBookedMarked){
+                              if (builderController.isBookedMarked) {
                                 builderController.deleteSalonBookMark();
                               }
-                              if(!builderController.isBookedMarked){
+                              if (!builderController.isBookedMarked) {
                                 builderController.addSalonToBookMarks();
                               }
                             },
-                            icon: builderController.isBookedMarked?Icon(Icons.favorite, color:Colors.red): Icon(Icons.favorite_border)
-                        ),
+                            icon: builderController.isBookedMarked
+                                ? Icon(Icons.favorite, color: Colors.red)
+                                : Icon(Icons.favorite_border)),
                       ],
                     )
                   ],
@@ -478,33 +476,43 @@ class DetailScreen extends GetView<DetailController> {
       child: Container(
         padding: const EdgeInsets.all(10),
         width: width,
-        color: Colors.white,
+        color: builderController.salonDetail?.about!=null?Colors.white:null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-              child: Text(
-                'درباره ما',
-                style: AppTextTheme.captionBold.copyWith(
-                  color: SolidColors.primaryBlue,
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 2),
-              child: Text(
-                'خدمات ما چیست؟',
-                style: AppTextTheme.captionBold,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
-              child: Text(
-                  builderController.salonDetail?.about ??
-                      "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. ",
-                  style: AppTextTheme.caption
-                      .copyWith(fontSize: 18, color: SolidColors.textColor4)),
+            Container(
+              width: width,
+              child: builderController.salonDetail?.about != null
+                  ? Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14, vertical: 5),
+                          child: Text(
+                            'درباره ما',
+                            style: AppTextTheme.captionBold.copyWith(
+                              color: SolidColors.primaryBlue,
+                            ),
+                          ),
+                        ),
+                        const Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+                          child: Text(
+                            'خدمات ما چیست؟',
+                            style: AppTextTheme.captionBold,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 14),
+                          child: Text(builderController.salonDetail!.about!,
+                              style: AppTextTheme.caption.copyWith(
+                                  fontSize: 18, color: SolidColors.textColor4)),
+                        ),
+                      ],
+                    )
+                  : Container(),
             ),
             const SizedBox(
               height: 30,
@@ -514,7 +522,6 @@ class DetailScreen extends GetView<DetailController> {
       ),
     );
   }
-
 }
 
 class BottomNavigation extends GetView<DetailController> {

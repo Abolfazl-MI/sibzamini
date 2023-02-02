@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 
@@ -17,7 +18,7 @@ class SliderList extends StatelessWidget {
       width: width,
       height: 240,
       // color: Colors.amber,
-      child: ListView.builder(
+      child: salons.isNotEmpty?ListView.builder(
         physics: BouncingScrollPhysics(),
         itemCount: salons.length,
         scrollDirection: Axis.horizontal,
@@ -31,6 +32,16 @@ class SliderList extends StatelessWidget {
             },
           );
         },
+      ):Center(
+        child: Column(
+          children: [
+            Transform.scale(
+              scale: 0.6,
+              child: SvgPicture.asset(Assets.icons.notFind),
+            ), 
+            Text('مشکلی در اتصال به سرور پیش امده', style: AppTextTheme.captionBold,)
+          ],
+        ),
       ),
     );
   }

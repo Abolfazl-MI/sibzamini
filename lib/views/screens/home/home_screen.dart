@@ -107,13 +107,13 @@ class HomeScreen extends GetView<HomeController> {
                   ),
                   ShimmerLoading(
                     isLoading: builderController.isLoading,
-                    child: SliderHeader(
+                    child: builderController.bestSalonsList.isNotEmpty?SliderHeader(
                         rightText: 'بهترین‌سالن‌های‌اطراف‌شما',
                         leftText: 'نمایش‌ همه',
                         onTap: () {
                           Get.toNamed(rAllSalonsScreen,
                               arguments: {'type': 'best'});
-                        }),
+                        }):Container(),
                   ),
                   SizedBox(
                     height: 12,
@@ -137,13 +137,15 @@ class HomeScreen extends GetView<HomeController> {
                   ),
                   ShimmerLoading(
                     isLoading: builderController.isLoading,
-                    child: SliderHeader(
+                    child: builderController.newestSalonList.isNotEmpty?
+                    SliderHeader(
                         rightText: 'جدید‌ترین‌سالن‌ها',
                         leftText: 'نمایش‌ همه',
                         onTap: () {
                           Get.toNamed(rAllSalonsScreen,
                               arguments: {'type': 'newest'});
-                        }),
+                        }):Container()
+                    ,
                   ),
                   SizedBox(
                     height: 10,

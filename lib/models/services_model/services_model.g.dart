@@ -12,7 +12,7 @@ SalonService _$SalonServiceFromJson(Map<String, dynamic> json) => SalonService(
       amount: (json['amount'] as num?)?.toDouble(),
       photo: json['photo'] as String?,
       content: json['content'] as String?,
-      cat: json['cat'] as String?,
+      cat: json['cat'] as int?,
     );
 
 Map<String, dynamic> _$SalonServiceToJson(SalonService instance) =>

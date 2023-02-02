@@ -59,6 +59,8 @@ class HomeController extends GetxController {
       }
     }
     if (result is DataFailState) {
+      bestSalonsList=[];
+      update();
       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', result.error!,
           backgroundColor: Colors.red);
     }
@@ -97,6 +99,8 @@ class HomeController extends GetxController {
       }
     }
     if (resualt is DataFailState) {
+      newestSalonList=[];
+      update();
       // print(resualt);
       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', resualt.error!,
           backgroundColor: Colors.red);
@@ -198,56 +202,6 @@ class HomeController extends GetxController {
       update();
       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', resualt.error!,
           backgroundColor: Colors.red);
-    }
-  }
-
-  //load more best salons
-
-  Future<void> loadMoreSalon(String typeSalons) async {
-    isLoadMoreLoading = true;
-    _pageCount++;
-    update();
-    if(typeSalons=='best'){
-      print(bestSalonsList.length);
-      await _apiServices
-        .getSalonList(
-      cityName: currentCity!,
-      path: ApiUrls.bestSalons,
-      pageCount: _pageCount,
-    )
-        .then((DataState dataState) {
-      if (dataState is DataSuccesState) {
-        bestSalonsList+=dataState.data!;
-        print(bestSalonsList.length);
-        isLoadMoreLoading=false;
-        update();
-      }
-      if (dataState is DataFailState) {
-        isLoadMoreLoading=false;
-        isLoadMoreSalonsEnd=true;
-        update();
-      }
-    });
-    }
-    if(typeSalons=='newest'){
-      await _apiServices
-        .getSalonList(
-      cityName: currentCity!,
-      path: ApiUrls.newestSalon,
-      pageCount: _pageCount,
-    )
-        .then((DataState dataState) {
-      if (dataState is DataSuccesState) {
-        newestSalonList+=dataState.data!;
-        isLoadMoreLoading=false;
-        update();
-      }
-      if (dataState is DataFailState) {
-        isLoadMoreLoading=false;
-        isLoadMoreSalonsEnd=true;
-        update();
-      }
-    });
     }
   }
 
