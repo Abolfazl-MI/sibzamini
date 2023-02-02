@@ -124,14 +124,14 @@ class DetailScreen extends GetView<DetailController> {
               children: [
                 SearchBarWidget(),
                 // SelectLocationWidget(),
-                _body(width, height, builderController)
+                _body(width, height, builderController,context)
               ],
             ),
           )),
     );
   }
 
-  _body(double width, double height, DetailController builderController) {
+  _body(double width, double height, DetailController builderController, BuildContext context){
     return Expanded(
         child: SingleChildScrollView(
       physics: BouncingScrollPhysics(),
@@ -164,7 +164,7 @@ class DetailScreen extends GetView<DetailController> {
             if (dController.salonServices != null) {
               return Container(
                 width: width,
-                height: height * 0.3,
+                height: height * 0.4,
                 // color: Colors.red,
                 child: PageView.builder(
                   itemCount: dController.salonServices!.length,
@@ -172,19 +172,19 @@ class DetailScreen extends GetView<DetailController> {
                     return Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 8, horizontal: 40),
-                      width: 150,
-                      height: 150,
+                      // width: 150,
+                      // height: 150,
                       child: Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 8,
+                                  horizontal: 10,
+                                  vertical: 5,
                                 ),
 
                                 ///[service picture]
@@ -307,8 +307,8 @@ class DetailScreen extends GetView<DetailController> {
             }
             return Container();
           }),
-          const SizedBox(
-            height: 20,
+           SizedBox(
+            height: MediaQuery.of(context).size.height/10,
           ),
         ],
       ),
