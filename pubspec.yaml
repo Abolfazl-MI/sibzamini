@@ -25,7 +25,6 @@ dependencies:
   flutter_rating_bar: 
   json_annotation: ^4.0.1
   geolocator: ^9.0.2
-  geocoding: ^2.0.5
   shared_preferences: ^2.0.15
   equatable: ^2.0.5
   lottie: ^2.0.0

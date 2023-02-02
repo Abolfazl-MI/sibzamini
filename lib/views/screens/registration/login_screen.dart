@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -5,7 +6,9 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:lottie/lottie.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:sibzamini/controller/controller.dart';
+import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
+import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/views/global/widgets/loading_widget.dart';
 import 'package:sibzamini/views/screens/registration/regestration_inputs_widget.dart';
 import 'package:sibzamini/views/views.dart';
@@ -28,9 +31,9 @@ class RegistrationScreen extends GetView<RegistrationController> {
             Center(
               child: SizedBox(
                 width: width,
-                height: height / 1.6,
+                // height: height / 1.6,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(0),
                   child: Card(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -79,11 +82,38 @@ class RegistrationScreen extends GetView<RegistrationController> {
                               height: 62,
                             ),
                             InkWell(
-                              onTap: () {
-                                if(formKey.currentState!.validate()){
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                  controller.requestLoginUser(phoneNumber: phoneNumberController.text.toEnglishDigit());
-                                }
+                              onTap: () async{
+                                await InternetConnectivityService()
+                                    .isInterNetEnabled()
+                                    .then((DataState dataState) {
+                                      print('ok!');
+                                  if (dataState is DataSuccesState) {
+                                    if (formKey.currentState!.validate()) {
+                                      FocusManager.instance.primaryFocus
+                                          ?.unfocus();
+                                      controller.requestLoginUser(
+                                          phoneNumber: phoneNumberController
+                                              .text
+                                              .toEnglishDigit());
+                                    }
+                                    print(dataState.data);
+                                  }
+                                  if (dataState is DataFailState) {
+                                    AwesomeDialog(
+                                      context: context,
+                                      showCloseIcon: true, 
+                                      dialogType: DialogType.error, 
+                                      borderSide: BorderSide(color:Colors.red), 
+                                      dismissOnBackKeyPress: false, 
+                                      dismissOnTouchOutside: false,
+                                      headerAnimationLoop: false,
+                                      title: 'مشکل پیش اومده', 
+                                      desc: dataState.error, 
+                                      animType: AnimType.leftSlide, 
+
+                                    ).show();
+                                  }
+                                });
                               },
                               child: Container(
                                 width: width,
@@ -137,8 +167,7 @@ class RegistrationScreen extends GetView<RegistrationController> {
                 ),
               ),
             ),
-            if (controller.isLoading)
-              const LoadingWidget()
+            if (controller.isLoading) const LoadingWidget()
           ],
         );
       }),

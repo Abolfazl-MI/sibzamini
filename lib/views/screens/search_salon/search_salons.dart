@@ -15,7 +15,6 @@ import 'package:sibzamini/views/global/colors/solid_colors.dart';
 import 'package:sibzamini/views/global/constants/app_text_themes.dart';
 import 'package:sibzamini/views/global/constants/genral_input_decoration.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
-import 'package:sibzamini/views/screens/home/bottomshets/fav_salon_bottom_sheet.dart';
 import 'package:sibzamini/views/screens/home/bottomshets/select_city_location_bottom_sheet.dart';
 import 'package:sibzamini/views/global/widgets/custome_shimmerh_loading.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -292,7 +291,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
           // ),
           IconButton(
             onPressed: () {
-              showFavSalonBottomSheet(context);
+              // TODO:bookmarksalons controlle impl
             },
             icon: SvgPicture.asset(Assets.icons.heart),
           ),

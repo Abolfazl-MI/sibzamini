@@ -23,11 +23,16 @@ class RegistrationController extends GetxController {
   Rx<bool> hadSendCodeBefore = false.obs;
   bool isLoading = false;
   // used for validating phone number
-  String? validatePhoneNumber(String? value) {
+  String? validatePhoneNumber(String? value) { 
+  String pattern = '^(\\+98|0)?9\\d{9}\$';
+  RegExp regExp = new RegExp(pattern);
     if (value == null || value.isEmpty) {
       errorMessage.value = PHONE_NUMBER_REQUIRED;
       return PHONE_NUMBER_REQUIRED;
     }if(value.length<11){
+      errorMessage.value='شماره وارد شده صحیح نمیباشد';
+      return 'شماره وارد شده صحیح نمیباشد';
+    }else if(!regExp.hasMatch(value)){
       errorMessage.value='شماره وارد شده صحیح نمیباشد';
       return 'شماره وارد شده صحیح نمیباشد';
     }

@@ -19,7 +19,6 @@ import 'package:sibzamini/views/screens/home/carsol_widget.dart';
 import 'package:sibzamini/views/screens/home/slider_widgets/slider_list.dart';
 import 'package:sibzamini/views/views.dart';
 
-import 'bottomshets/fav_salon_bottom_sheet.dart';
 import 'slider_widgets/slider_header.dart';
 
 import 'package:sibzamini/views/global/widgets/custome_shimmerh_loading.dart';
