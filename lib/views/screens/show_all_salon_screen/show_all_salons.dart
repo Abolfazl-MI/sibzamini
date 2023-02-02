@@ -15,7 +15,6 @@ import 'package:sibzamini/views/global/constants/app_drawer.dart';
 import 'package:sibzamini/views/global/constants/app_text_themes.dart';
 import 'package:sibzamini/views/global/constants/genral_input_decoration.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
-import 'package:sibzamini/views/screens/home/bottomshets/fav_salon_bottom_sheet.dart';
 import 'package:sibzamini/views/screens/home/bottomshets/select_city_location_bottom_sheet.dart';
 
 class AllSalonsScreen extends GetView<AllSalonsController> {
@@ -195,9 +194,8 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
             ),
             IconButton(
               onPressed: () {
-                showFavSalonBottomSheet(
-                  context,
-                );
+                Get.toNamed(rFavSalonsScreen,
+                  arguments: {'salons': controller.bookMarkedSalons});
               },
               icon: SvgPicture.asset(Assets.icons.heart),
             ),
