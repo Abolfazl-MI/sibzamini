@@ -30,7 +30,6 @@ class ErrorScreen extends StatelessWidget {
               error_code,
               style: AppTextTheme.caption.copyWith(fontWeight: FontWeight.bold),
             ),
-            if (error_code == NO_INTERNET_CONNECTION)
               InkWell(
                 onTap: (){
                   Get.offAllNamed(rSplashScreen);

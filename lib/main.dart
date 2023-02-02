@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
       ],
       locale: Locale("fa", "IR"),
       getPages: AppPages.pages, 
-      initialRoute: AppPages.pages[1].name,
     );
   }
 }

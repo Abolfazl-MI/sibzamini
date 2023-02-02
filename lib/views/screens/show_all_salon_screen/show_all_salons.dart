@@ -194,8 +194,9 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
             ),
             IconButton(
               onPressed: () {
-                Get.toNamed(rFavSalonsScreen,
-                  arguments: {'salons': controller.bookMarkedSalons});
+                Get.toNamed(
+                  rFavSalonsScreen,
+                );
               },
               icon: SvgPicture.asset(Assets.icons.heart),
             ),

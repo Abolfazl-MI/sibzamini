@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sibzamini/controller/bookMark_controller/bookMark_controller.dart';
 import 'package:sibzamini/controller/home/home_controller.dart';
 import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
@@ -12,7 +13,7 @@ import 'package:sibzamini/views/global/constants/app_text_themes.dart';
 import 'package:sibzamini/views/global/constants/genral_input_decoration.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
 
-class FavoriteSalonScreen extends StatelessWidget {
+class FavoriteSalonScreen extends GetView<BookMarkedSalonController> {
   const FavoriteSalonScreen({super.key});
   @override
   Widget build(BuildContext context) {
@@ -147,17 +148,17 @@ class FavoriteSalonScreen extends StatelessWidget {
     BuildContext context,
   ) {
     return Expanded(
-        child: GetBuilder<HomeController>(
+        child: GetBuilder<BookMarkedSalonController>(
       builder: (buildercontroller) => (ListView.builder(
           physics: BouncingScrollPhysics(),
-          itemCount: buildercontroller.bookMarkedSalons.length,
+          itemCount: buildercontroller.salons.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
               child: InkWell(
                 onTap: () {
                   Get.toNamed(rDetailScreen, arguments: {
-                    'id': buildercontroller.bookMarkedSalons[index].shop
+                    'id': buildercontroller.salons[index].shop
                   });
                 },
                 child: SizedBox(
@@ -188,7 +189,7 @@ class FavoriteSalonScreen extends StatelessWidget {
                                                   Assets.lotties.loading))),
                                     )),
                                 imageUrl: buildercontroller
-                                        .bookMarkedSalons[index].imgurl,
+                                        .salons[index].imgurl,
                                 imageBuilder: ((context, imageProvider) =>
                                     Container(
                                       decoration: BoxDecoration(
@@ -239,7 +240,7 @@ class FavoriteSalonScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     buildercontroller
-                                            .bookMarkedSalons[index].name ??
+                                            .salons[index].name ??
                                         'abolfzl',
                                     style: AppTextTheme.caption.copyWith(),
                                   ),
@@ -296,7 +297,7 @@ class FavoriteSalonScreen extends StatelessWidget {
                                       onPressed: () {
                                         Get.toNamed(rDetailScreen, arguments: {
                                           'id': buildercontroller
-                                              .bookMarkedSalons[index].shop
+                                              .salons[index].shop
                                         });
                                       },
                                       icon: SvgPicture.asset(
@@ -307,7 +308,7 @@ class FavoriteSalonScreen extends StatelessWidget {
                                             .deleteSalonFromFavorites(
                                                 index,
                                                 buildercontroller
-                                                    .bookMarkedSalons[index]
+                                                    .salons[index]
                                                     .shop!);
                                       },
                                       icon: Icon(

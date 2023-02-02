@@ -291,7 +291,9 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
           // ),
           IconButton(
             onPressed: () {
-              // TODO:bookmarksalons controlle impl
+              Get.toNamed(
+                rFavSalonsScreen,
+              );
             },
             icon: SvgPicture.asset(Assets.icons.heart),
           ),

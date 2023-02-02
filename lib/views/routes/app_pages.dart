@@ -1,5 +1,6 @@
 import 'package:get/route_manager.dart';
 import 'package:sibzamini/controller/all_salons_controller/all_salons_binding.dart';
+import 'package:sibzamini/controller/bookMark_controller/bookMark_binding.dart';
 
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/controller/detail/detail_biding.dart';
@@ -55,13 +56,12 @@ class AppPages {
         page: () => AllSalonsScreen(),
         binding: AllSalonsBinding()),
     GetPage(
-      name: rSrarchSalons,
-      page: () => SearchSalonsScreen(),
-      binding: SearchSalonBinding()
-    ), 
+        name: rSrarchSalons,
+        page: () => SearchSalonsScreen(),
+        binding: SearchSalonBinding()),
     GetPage(
-      name:rFavSalonsScreen, 
-      page: ()=>FavoriteSalonScreen()
-    )
+        name: rFavSalonsScreen,
+        page: () => FavoriteSalonScreen(),
+        binding: BookMarkedSalonsBinding())
   ];
 }
