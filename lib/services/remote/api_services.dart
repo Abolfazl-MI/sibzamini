@@ -28,7 +28,8 @@ class ApiServices {
       },
     ),
   )..interceptors.add(ApiInterCeptor());
-
+  // for pagenation of salons
+  final int _pageCount=1;
   /// sends name and user phone number to create account
   Future<DataState<User>> createUserAccount(
       {required String name,
@@ -102,8 +103,14 @@ class ApiServices {
 
   // returns list of salons based on type of salons[best,newest] wirh corsponding city
   Future<DataState<List<Salon>>> getSalonList(
-      {required String cityName, required String path}) async {
+      {required String cityName, required String path,int?pageCount}) async {
     try {
+      if(pageCount!=null){
+          _dio.options.queryParameters={
+            'page':pageCount
+          };
+          
+      }
       FormData data = FormData.fromMap({'city': cityName});
       Response response = await _dio.post(path, data: data);
       if (response.statusCode == 200) {

@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:rate_in_stars/rate_in_stars.dart';
 import 'package:sibzamini/controller/home/home_controller.dart';
 import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
-import 'package:sibzamini/models/bookmarked_salon_model/book_marked_salon_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/views/global/colors/solid_colors.dart';
 import 'package:sibzamini/views/global/constants/app_text_themes.dart';
@@ -24,7 +22,7 @@ class FavoriteSalonScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               color: Colors.grey,
             ),
@@ -47,13 +45,11 @@ class FavoriteSalonScreen extends StatelessWidget {
       body: GetBuilder<HomeController>(
         builder: (controller) {
           if (controller.isDeleteFavLoading) {
-            return Container(
-              child: Center(
-                  child: Transform.scale(
-                scale: 0.8,
-                child: Lottie.asset(Assets.lotties.loading),
-              )),
-            );
+            return Center(
+                child: Transform.scale(
+              scale: 0.8,
+              child: Lottie.asset(Assets.lotties.loading),
+            ));
           }
           if (controller.connectivityStatus == ConnectivityStatus.connected) {
             return Column(
@@ -67,7 +63,7 @@ class FavoriteSalonScreen extends StatelessWidget {
               ],
             );
           }
-          return Container(
+          return SizedBox(
             width: width,
             height: height,
             child: Column(
@@ -79,7 +75,7 @@ class FavoriteSalonScreen extends StatelessWidget {
                     child: Lottie.asset(Assets.lotties.noInternet),
                   ),
                 ),
-                Text(
+                const Text(
                   NO_INTERNET_CONNECTION,
                   style: AppTextTheme.caption,
                 )
@@ -100,7 +96,7 @@ class FavoriteSalonScreen extends StatelessWidget {
         Get.toNamed(rSrarchSalons);
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           border: Border(
             bottom: BorderSide(
@@ -192,8 +188,7 @@ class FavoriteSalonScreen extends StatelessWidget {
                                                   Assets.lotties.loading))),
                                     )),
                                 imageUrl: buildercontroller
-                                        .bookMarkedSalons[index].imgurl ??
-                                    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shana.ir%2Fnews%2F462102%2F%25D8%25B1%25D9%2588%25D8%25A7%25D8%25A8%25D8%25B7-%25D8%25A7%25DB%258C%25D8%25B1%25D8%25A7%25D9%2586-%25D9%2588-%25DA%2586%25DB%258C%25D9%2586-%25D8%25B1%25D8%25A7%25D9%2587%25D8%25A8%25D8%25B1%25D8%25AF%25DB%258C-%25D8%25A7%25D8%25B3%25D8%25AA&psig=AOvVaw2NvlbKFHu40kX6ieFbwuEp&ust=1670824676692000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMCqtJDx8PsCFQAAAAAdAAAAABAZ',
+                                        .bookMarkedSalons[index].imgurl,
                                 imageBuilder: ((context, imageProvider) =>
                                     Container(
                                       decoration: BoxDecoration(

@@ -37,6 +37,10 @@ class HomeController extends GetxController {
   bool isCategoryLoadign = false;
   bool isFavSalonLoading = false;
   bool isDeleteFavLoading = false;
+  bool isLoadMoreLoading = false;
+  bool isLoadMoreSalonsEnd = false;
+  // pagenation counter
+  int _pageCount = 1;
   String? currentCity;
   ConnectivityStatus connectivityStatus = ConnectivityStatus.disconnected;
   List<SalonAddBanner> salonAddBanners = [];
@@ -98,9 +102,6 @@ class HomeController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
-
-  // search Salons
-  Future<void> searchSalons({required String salonQuery}) async {}
 
   // get salon base on categories
   Future<void> getSalonByCategories({required ServiceCategory category}) async {
@@ -200,6 +201,56 @@ class HomeController extends GetxController {
     }
   }
 
+  //load more best salons
+
+  Future<void> loadMoreSalon(String typeSalons) async {
+    isLoadMoreLoading = true;
+    _pageCount++;
+    update();
+    if(typeSalons=='best'){
+      print(bestSalonsList.length);
+      await _apiServices
+        .getSalonList(
+      cityName: currentCity!,
+      path: ApiUrls.bestSalons,
+      pageCount: _pageCount,
+    )
+        .then((DataState dataState) {
+      if (dataState is DataSuccesState) {
+        bestSalonsList+=dataState.data!;
+        print(bestSalonsList.length);
+        isLoadMoreLoading=false;
+        update();
+      }
+      if (dataState is DataFailState) {
+        isLoadMoreLoading=false;
+        isLoadMoreSalonsEnd=true;
+        update();
+      }
+    });
+    }
+    if(typeSalons=='newest'){
+      await _apiServices
+        .getSalonList(
+      cityName: currentCity!,
+      path: ApiUrls.newestSalon,
+      pageCount: _pageCount,
+    )
+        .then((DataState dataState) {
+      if (dataState is DataSuccesState) {
+        newestSalonList+=dataState.data!;
+        isLoadMoreLoading=false;
+        update();
+      }
+      if (dataState is DataFailState) {
+        isLoadMoreLoading=false;
+        isLoadMoreSalonsEnd=true;
+        update();
+      }
+    });
+    }
+  }
+
   Future<void> addSalonToBookMarkList(
       {required int salonId, required String userToken}) async {
     await _apiServices.addSalonToBookMarks(token: userToken, salonId: salonId);
@@ -275,14 +326,14 @@ class HomeController extends GetxController {
     getUserCityLocationName();
   }
 
-  autoSelectLocation()async{
+  autoSelectLocation() async {
     await _locationServices.getUserCityLocation().then((DataState dataState) {
-      if(dataState is DataSuccesState){
-        currentCity=dataState.data;
+      if (dataState is DataSuccesState) {
+        currentCity = dataState.data;
         update();
       }
-      if(dataState is DataFailState){
-        currentCity='Tehran';
+      if (dataState is DataFailState) {
+        currentCity = 'Tehran';
         update();
       }
     });

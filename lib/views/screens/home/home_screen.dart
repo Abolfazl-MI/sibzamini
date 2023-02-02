@@ -112,7 +112,7 @@ class HomeScreen extends GetView<HomeController> {
                         leftText: 'نمایش‌ همه',
                         onTap: () {
                           Get.toNamed(rAllSalonsScreen,
-                              arguments: {'salons': controller.bestSalonsList});
+                              arguments: {'type': 'best'});
                         }),
                   ),
                   SizedBox(
@@ -141,9 +141,8 @@ class HomeScreen extends GetView<HomeController> {
                         rightText: 'جدید‌ترین‌سالن‌ها',
                         leftText: 'نمایش‌ همه',
                         onTap: () {
-                          Get.toNamed(rAllSalonsScreen, arguments: {
-                            'salons': controller.newestSalonList
-                          });
+                          Get.toNamed(rAllSalonsScreen,
+                              arguments: {'type': 'newest'});
                         }),
                   ),
                   SizedBox(
@@ -331,7 +330,7 @@ class HomeScreen extends GetView<HomeController> {
             context,
             width,
             Get.find<HomeController>().availableCities,
-            Get.find<HomeController>().autoSelectLocation());
+            Get.find<HomeController>().autoSelectLocation);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -428,7 +427,8 @@ class HomeScreen extends GetView<HomeController> {
           // ),
           IconButton(
             onPressed: () {
-              Get.toNamed(rFavSalonsScreen, arguments: {'salons':controller.bookMarkedSalons});
+              Get.toNamed(rFavSalonsScreen,
+                  arguments: {'salons': controller.bookMarkedSalons});
               // showFavSalonBottomSheet(context);
             },
             icon: SvgPicture.asset(Assets.icons.heart),

@@ -1,4 +1,5 @@
 import 'package:get/route_manager.dart';
+import 'package:sibzamini/controller/all_salons_controller/all_salons_binding.dart';
 
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/controller/detail/detail_biding.dart';
@@ -52,7 +53,7 @@ class AppPages {
     GetPage(
         name: rAllSalonsScreen,
         page: () => AllSalonsScreen(),
-        binding: HomeBinding()),
+        binding: AllSalonsBinding()),
     GetPage(
       name: rSrarchSalons,
       page: () => SearchSalonsScreen(),
