@@ -66,7 +66,7 @@ class SliderWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  placeholder: (context, url) => Container(
+                  placeholder: (context, url) => SizedBox(
                     width: 180,
                     height: 120,
                     child: Center(

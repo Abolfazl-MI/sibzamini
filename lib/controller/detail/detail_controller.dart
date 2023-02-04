@@ -23,7 +23,7 @@ class DetailController extends GetxController {
   bool isLoading = false;
   bool isCommentLoading = false;
   bool isBookedMarked = false;
-  Salon salondetail=Salon();
+  Salon salondetail=const Salon();
   int ? salonId;
   List<Comment>? salonComments;
   List<SalonService>? salonServices;
@@ -88,7 +88,7 @@ class DetailController extends GetxController {
     await _getSalonDeatail(id: id);
     await _getSalonServices(id: id);
     await _getSalonComments(id: id);
-    Future.delayed(Duration(seconds: 5));
+    Future.delayed(const Duration(seconds: 5));
     await isBookedMarkedSalon();
     isLoading = false;
     update();
@@ -132,7 +132,7 @@ class DetailController extends GetxController {
           context:context, 
           showCloseIcon: true,
           dialogType: DialogType.success, 
-          borderSide: BorderSide(color:Colors.green), 
+          borderSide: const BorderSide(color:Colors.green), 
           dismissOnBackKeyPress: false, 
           dismissOnTouchOutside: true, 
           title: 'کامنت شما ثبت شد', 

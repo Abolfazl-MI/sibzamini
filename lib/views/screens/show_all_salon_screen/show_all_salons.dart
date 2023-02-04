@@ -3,19 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:rate_in_stars/rate_in_stars.dart';
 import 'package:sibzamini/controller/all_salons_controller/all_salons_controller.dart';
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
-import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/views/global/colors/solid_colors.dart';
 import 'package:sibzamini/views/global/constants/app_drawer.dart';
 import 'package:sibzamini/views/global/constants/app_text_themes.dart';
 import 'package:sibzamini/views/global/constants/genral_input_decoration.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
-import 'package:sibzamini/views/screens/home/bottomshets/select_city_location_bottom_sheet.dart';
 
 class AllSalonsScreen extends GetView<AllSalonsController> {
   const AllSalonsScreen({Key? key}) : super(key: key);
@@ -29,7 +26,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios,
               color: Colors.grey,
             ),
@@ -68,7 +65,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
               ],
             );
           }
-          return Container(
+          return SizedBox(
             width: width,
             height: height,
             child: Column(
@@ -80,7 +77,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                     child: Lottie.asset(Assets.lotties.noInternet),
                   ),
                 ),
-                Text(
+                const Text(
                   NO_INTERNET_CONNECTION,
                   style: AppTextTheme.caption,
                 )
@@ -92,56 +89,6 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
     );
   }
 
-  _selectLocationSection(
-    double width,
-    BuildContext context,
-  ) {
-    return InkWell(
-      onTap: () {
-        showCityLocationBottemSheet(
-            context,
-            width,
-            Get.find<HomeController>().availableCities,
-            Get.find<HomeController>().autoSelectLocation);
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            bottom: BorderSide(
-              color: SolidColors.borderColor,
-            ),
-          ),
-        ),
-        width: width,
-        height: 36,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  onPressed: null,
-                  icon: SvgPicture.asset(Assets.icons.location),
-                ),
-                Text(
-                  'تغییر شهر',
-                  style: TextStyle(color: SolidColors.textColor4),
-                ),
-              ],
-            ),
-            IconButton(
-              onPressed: null,
-              icon: SvgPicture.asset(
-                Assets.icons.arrowBackFiiled,
-                color: SolidColors.textColor4,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
 
   _searchBar(
       {required double width,
@@ -152,7 +99,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
         Get.offNamed(rSrarchSalons);
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration:const BoxDecoration(
           color: Colors.white,
           border: Border(
             bottom: BorderSide(
@@ -175,7 +122,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: SolidColors.borderColor,
-                        hintStyle: TextStyle(
+                        hintStyle:const TextStyle(
                             fontSize: 12, color: SolidColors.textColor4),
                         hintText: 'دنبال‌چی‌میگردی؟',
                         enabledBorder: genralInputDecoration,
@@ -218,7 +165,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(Assets.icons.notFind),
-                SizedBox(
+              const  SizedBox(
                   height: 5,
                 ),
                 Text(
@@ -234,7 +181,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
           );
         }
         return ListView.builder(
-            physics: BouncingScrollPhysics(),
+            physics:const BouncingScrollPhysics(),
             itemCount: !builderController.isMoreLoadingEnd
                 ? builderController.salons.length + 1
                 : builderController.salons.length,
@@ -244,20 +191,18 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
               if (index == builderController.salons.length) {
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    child: Center(
-                      child: TextButton(
-                        child: Text('نمایش بیشتر'),
-                        onPressed: () {
-                          builderController.loadMoreSalons();
-                        },
-                      ),
+                  child: Center(
+                    child: TextButton(
+                      child:const Text('نمایش بیشتر'),
+                      onPressed: () {
+                        builderController.loadMoreSalons();
+                      },
                     ),
                   ),
                 );
               }
               return Padding(
-                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                 child: InkWell(
                     onTap: () {
                       Get.toNamed(rDetailScreen, arguments: {
@@ -268,7 +213,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                         width: width,
                         child: Card(
                             child: Padding(
-                          padding: EdgeInsets.all(8),
+                          padding:const EdgeInsets.all(8),
                           child: Column(
                             children: [
                               SizedBox(
@@ -279,13 +224,11 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                                           horizontal: 14, vertical: 10),
                                       child: CachedNetworkImage(
                                         placeholder: ((context, url) =>
-                                            Container(
-                                              child: Center(
-                                                  child: Transform.scale(
-                                                      scale: 0.5,
-                                                      child: Lottie.asset(Assets
-                                                          .lotties.loading))),
-                                            )),
+                                            Center(
+                                                child: Transform.scale(
+                                                    scale: 0.5,
+                                                    child: Lottie.asset(Assets
+                                                        .lotties.loading)))),
                                         imageUrl: builderController
                                             .salons[index].imgurl,
                                         imageBuilder: ((context,
@@ -313,81 +256,78 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                                             )),
                                       ))),
                               Padding(
-                                padding: EdgeInsets.all(8),
+                                padding:const EdgeInsets.all(8),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                        child: Row(
+                                    Row(
                                       children: [
-                                        CircleAvatar(
-                                          backgroundColor:
-                                              SolidColors.backGroundColor,
-                                          child: Center(
-                                            child: Transform.scale(
-                                                scale: 0.7,
-                                                child: SvgPicture.asset(
-                                                    Assets.icons.logos)),
-                                          ),
+                                    CircleAvatar(
+                                      backgroundColor:
+                                          SolidColors.backGroundColor,
+                                      child: Center(
+                                        child: Transform.scale(
+                                            scale: 0.7,
+                                            child: SvgPicture.asset(
+                                                Assets.icons.logos)),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Column(
+                                      // mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          builderController
+                                                  .salons[index].name ??
+                                              'abolfzl',
+                                          style: AppTextTheme.caption
+                                              .copyWith(),
                                         ),
                                         const SizedBox(
-                                          width: 5,
+                                          height: 5,
                                         ),
-                                        Column(
-                                          // mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              builderController
-                                                      .salons[index].name ??
-                                                  'abolfzl',
-                                              style: AppTextTheme.caption
-                                                  .copyWith(),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            // should get from server
-                                            // RatingStars(
-                                            //   rating:
-                                            //       allSalons[index].rateToDouble ?? 0.0,
-                                            //   editable: false,
-                                            //   color: SolidColors.yellow,
-                                            //   iconSize: 15,
-                                            // )
-                                          ],
-                                        )
+                                        // should get from server
+                                        // RatingStars(
+                                        //   rating:
+                                        //       allSalons[index].rateToDouble ?? 0.0,
+                                        //   editable: false,
+                                        //   color: SolidColors.yellow,
+                                        //   iconSize: 15,
+                                        // )
                                       ],
-                                    )),
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          IconButton(
-                                              onPressed: () {
-                                                Get.toNamed(rDetailScreen,
-                                                    arguments: {
-                                                      'id': builderController
-                                                          .salons[index].id
-                                                    });
-                                              },
-                                              icon: SvgPicture.asset(Assets
-                                                  .icons.commentsOutline)),
-                                          IconButton(
-                                              onPressed: () {
-                                                Get.toNamed(rDetailScreen,
-                                                    arguments: {
-                                                      'id': builderController
-                                                          .salons[index].id
-                                                    });
-                                              },
-                                              icon: Icon(
-                                                Icons.favorite,
-                                                color: Colors.red,
-                                              )),
-                                        ],
-                                      ),
+                                    )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {
+                                              Get.toNamed(rDetailScreen,
+                                                  arguments: {
+                                                    'id': builderController
+                                                        .salons[index].id
+                                                  });
+                                            },
+                                            icon: SvgPicture.asset(Assets
+                                                .icons.commentsOutline)),
+                                        IconButton(
+                                            onPressed: () {
+                                              Get.toNamed(rDetailScreen,
+                                                  arguments: {
+                                                    'id': builderController
+                                                        .salons[index].id
+                                                  });
+                                            },
+                                            icon: const Icon(
+                                              Icons.favorite,
+                                              color: Colors.red,
+                                            )),
+                                      ],
                                     )
                                   ],
                                 ),

@@ -4,8 +4,6 @@ import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/services/local/location_service.dart';
 import 'package:sibzamini/services/local/shared_service.dart';
-import 'package:sibzamini/services/remote/api_services.dart';
-import 'package:sibzamini/views/global/constants/iran_cities_names.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
 
 class SplashScreenController extends GetxController {

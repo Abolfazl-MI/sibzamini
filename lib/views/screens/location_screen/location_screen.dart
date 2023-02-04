@@ -1,14 +1,9 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:mapir_raster/mapir_raster.dart';
 import 'package:sibzamini/controller/detail/detail_controller.dart';
-import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/views/global/colors/colors.dart';
 import 'package:sibzamini/views/global/constants/app_text_themes.dart';
 import 'package:sibzamini/views/global/constants/map_token.dart';
@@ -52,7 +47,7 @@ class LocationScreen extends GetView<DetailController> {
                           // print(detailController.salonDetail!.lat);
                           // print(detailController.salonDetail!.lng);
 
-                        return  Container(
+                        return  SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.4,
                         // color: Colors.amber,
@@ -99,7 +94,7 @@ class LocationScreen extends GetView<DetailController> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  'آدرس' + ':',
+                                  'آدرس' ':',
                                   style: AppTextTheme.captionBold,
                                 ),
                                 GetBuilder<DetailController>(

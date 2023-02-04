@@ -6,7 +6,6 @@ import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/controller/detail/detail_biding.dart';
 import 'package:sibzamini/controller/searchSalon/search_salon_binding.dart';
 import 'package:sibzamini/controller/splash/splash_binding.dart';
-import 'package:sibzamini/views/screens/book_marked_salons/book_marked_salons.dart';
 import 'package:sibzamini/views/screens/favorite_salon/favorite_salons_screen.dart';
 import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
 import 'package:sibzamini/views/screens/registration/signup_screen.dart';

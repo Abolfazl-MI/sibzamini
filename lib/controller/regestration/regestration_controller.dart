@@ -23,17 +23,13 @@ class RegistrationController extends GetxController {
   Rx<bool> hadSendCodeBefore = false.obs;
   bool isLoading = false;
   // used for validating phone number
-  String? validatePhoneNumber(String? value) { 
-  String pattern = '^(\\+98|0)?9\\d{9}\$';
-  RegExp regExp = new RegExp(pattern);
+  String? validatePhoneNumber(String? value) {
     if (value == null || value.isEmpty) {
       errorMessage.value = PHONE_NUMBER_REQUIRED;
       return PHONE_NUMBER_REQUIRED;
-    }if(value.length<11){
-      errorMessage.value='شماره وارد شده صحیح نمیباشد';
-      return 'شماره وارد شده صحیح نمیباشد';
-    }else if(!regExp.hasMatch(value)){
-      errorMessage.value='شماره وارد شده صحیح نمیباشد';
+    }
+    if (value.length < 11) {
+      errorMessage.value = 'شماره وارد شده صحیح نمیباشد';
       return 'شماره وارد شده صحیح نمیباشد';
     }
     return null;
@@ -92,7 +88,10 @@ class RegistrationController extends GetxController {
   }
 
   // registerUser
-  Future<void> createUserAccount({required String name,required String phoneNumber,}) async {
+  Future<void> createUserAccount({
+    required String name,
+    required String phoneNumber,
+  }) async {
     isLoading = true;
     update();
     DataState<User> result = await _apiServices.createUserAccount(
@@ -139,8 +138,6 @@ class RegistrationController extends GetxController {
     }
   }
 
-
-
   Future<void> confirmOtpCode(
       {required String otpCode, required String phoneNumber}) async {
     isLoading = true;
@@ -149,18 +146,21 @@ class RegistrationController extends GetxController {
         otpCode: otpCode, phoneNumber: phoneNumber);
     if (resualt is DataSuccesState) {
       await _sharedStorageService.saveUserToken(resualt.data!.token!);
-      isLoading = false;
-      update();
-       Get.snackbar('\u{1F642}' 'موفقیت امیز بود', 'شما وارد شدید،خوش آمدید',
+
+      Get.snackbar('\u{1F642}' 'موفقیت امیز بود', 'شما وارد شدید،خوش آمدید',
           backgroundColor: Colors.green);
-      await Future.delayed(Duration(seconds: 3));
-      DataState<String> cityState=await _locationServices.getUserCityLocation();
-      if(cityState is DataSuccesState){
+      // await Future.delayed(Duration(seconds: 3));
+      DataState<String> cityState =
+          await _locationServices.getUserCityLocation();
+      if (cityState is DataSuccesState) {
+        isLoading = false;
+        update();
         await _sharedStorageService.saveUserCity(cityState.data!);
-      Get.offNamed(rHomeScreen,arguments: {'city':cityState.data});
-      }else{
-        Get.snackbar('مشکلی پیش آمده', 'مشکلی در تشخیص مکان شما پیش امده لطفا دستی خودتان انتخاب کنید ');
-        Get.offNamed(rHomeScreen, arguments: {'city':'Tehran'}); 
+        Get.offNamed(rHomeScreen, arguments: {'city': cityState.data});
+      } else {
+        Get.snackbar('مشکلی پیش آمده',
+            'مشکلی در تشخیص مکان شما پیش امده لطفا دستی خودتان انتخاب کنید ');
+        Get.offNamed(rHomeScreen, arguments: {'city': 'Tehran'});
       }
     }
     if (resualt is DataFailState) {

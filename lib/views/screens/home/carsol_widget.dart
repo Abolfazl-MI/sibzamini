@@ -16,6 +16,11 @@ class CarsolWidget extends StatelessWidget {
       imageUrl: imgSrc,
       imageBuilder: (((context, imageProvider) => Container(
             width: width,
+            margin: EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), image: DecorationImage(
+              image: imageProvider, 
+              fit: BoxFit.fill
+            )),
             child: Stack(
               children: [
                 Positioned(
@@ -24,6 +29,10 @@ class CarsolWidget extends StatelessWidget {
                   child: Container(
                     width: 96,
                     height: 36,
+                    decoration: BoxDecoration(
+                      color: Color(0xff343434),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -37,28 +46,19 @@ class CarsolWidget extends StatelessWidget {
                         Container(
                           width: 40,
                           height: 36,
-                          child: Transform.scale(
-                              scale: 0.6,
-                              child: SvgPicture.asset(Assets.icons.arrowLeft)),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(18),
                               color: Colors.white),
+                          child: Transform.scale(
+                              scale: 0.6,
+                              child: SvgPicture.asset(Assets.icons.arrowLeft)),
                         )
                       ],
-                    ),
-                    decoration: BoxDecoration(
-                      color: Color(0xff343434),
-                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 )
               ],
             ),
-            margin: EdgeInsets.symmetric(horizontal: 12),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), image: DecorationImage(
-              image: imageProvider, 
-              fit: BoxFit.fill
-            )),
           ))),
           errorWidget: (((context, url, error) => Container(
             width: width,
@@ -74,14 +74,14 @@ class CarsolWidget extends StatelessWidget {
           placeholder: (((context, url) => Container(
             width: width,
             margin: EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12), 
+            ),
             child: Center(
               child: Transform.scale(
                 scale: 0.4,
                 child: Lottie.asset(Assets.lotties.loading),
               ),
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12), 
             ),
           ))),
     );

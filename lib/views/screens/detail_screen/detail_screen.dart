@@ -1,8 +1,6 @@
-import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -15,13 +13,10 @@ import 'package:sibzamini/core/error_code.dart';
 
 import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/views/global/colors/solid_colors.dart';
-import 'package:sibzamini/views/global/constants/app_drawer.dart';
 import 'package:sibzamini/views/global/widgets/custome_shimmerh_loading.dart';
 import 'package:sibzamini/views/global/widgets/search_bar_widget.dart';
-import 'package:sibzamini/views/global/widgets/select_location_widget.dart';
 import 'package:sibzamini/views/screens/comment_screen/comment_screen.dart';
 import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
-import 'package:sibzamini/views/routes/app_route_names.dart';
 import '../../global/constants/constants.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 
@@ -69,7 +64,7 @@ class DetailScreen extends GetView<DetailController> {
             ConnectivityStatus.connected) {
           return _bodySection(context);
         }
-        return Container(
+        return SizedBox(
           width: width,
           height: height,
           child: Column(
@@ -124,14 +119,15 @@ class DetailScreen extends GetView<DetailController> {
               children: [
                 SearchBarWidget(),
                 // SelectLocationWidget(),
-                _body(width, height, builderController,context)
+                _body(width, height, builderController, context)
               ],
             ),
           )),
     );
   }
 
-  _body(double width, double height, DetailController builderController, BuildContext context){
+  _body(double width, double height, DetailController builderController,
+      BuildContext context) {
     return Expanded(
         child: SingleChildScrollView(
       physics: BouncingScrollPhysics(),
@@ -158,11 +154,9 @@ class DetailScreen extends GetView<DetailController> {
                 dController.salonServices!.isEmpty) {
               return Container();
             }
-            // TODO : should implement the services slider and image 
-            // TODO: should complete this section
-            
+
             if (dController.salonServices != null) {
-              return Container(
+              return SizedBox(
                 width: width,
                 height: height * 0.4,
                 // color: Colors.red,
@@ -193,18 +187,18 @@ class DetailScreen extends GetView<DetailController> {
                                       .salonServices![index].imgUrl,
                                   errorWidget: ((context, url, error) =>
                                       Container(
-                                        child: Center(
-                                          child: Icon(
-                                            Icons.image_not_supported_outlined,
-                                            color: Colors.white,
-                                          ),
-                                        ),
                                         width: width,
                                         height: height * 0.23,
                                         decoration: BoxDecoration(
                                           color: Colors.grey,
                                           borderRadius:
                                               BorderRadius.circular(12),
+                                        ),
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.image_not_supported_outlined,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       )),
                                   placeholder: (context, url) => Container(
@@ -307,8 +301,8 @@ class DetailScreen extends GetView<DetailController> {
             }
             return Container();
           }),
-           SizedBox(
-            height: MediaQuery.of(context).size.height/10,
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 10,
           ),
         ],
       ),
@@ -471,38 +465,46 @@ class DetailScreen extends GetView<DetailController> {
   }
 
   ShimmerLoading _aboutUs(DetailController builderController, double width) {
+    print(builderController.salonDetail?.about);
     return ShimmerLoading(
       isLoading: builderController.isLoading,
       child: Container(
         padding: const EdgeInsets.all(10),
         width: width,
-        color: builderController.salonDetail?.about!=null?Colors.white:null,
+        color:
+            builderController.salonDetail?.about != null ? Colors.white : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               width: width,
               child: builderController.salonDetail?.about != null
                   ? Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 14, vertical: 5),
-                          child: Text(
-                            'درباره ما',
-                            style: AppTextTheme.captionBold.copyWith(
-                              color: SolidColors.primaryBlue,
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 14, vertical: 2),
-                          child: Text(
-                            'خدمات ما چیست؟',
-                            style: AppTextTheme.captionBold,
-                          ),
-                        ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 5),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'درباره ما',
+                                  style: AppTextTheme.captionBold.copyWith(
+                                    color: SolidColors.primaryBlue,
+                                  ),
+                                ),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 2),
+                            child: Row(
+                              children: const [
+                                Text(
+                                  'خدمات ما چیست؟',
+                                  style: AppTextTheme.captionBold,
+                                ),
+                              ],
+                            )),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 14),

@@ -40,7 +40,7 @@ class HomeController extends GetxController {
   bool isLoadMoreLoading = false;
   bool isLoadMoreSalonsEnd = false;
   // pagenation counter
-  int _pageCount = 1;
+  final int _pageCount = 1;
   String? currentCity;
   ConnectivityStatus connectivityStatus = ConnectivityStatus.disconnected;
   List<SalonAddBanner> salonAddBanners = [];

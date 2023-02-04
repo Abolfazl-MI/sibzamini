@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_modle.g.dart';
@@ -11,7 +10,7 @@ class User extends Equatable {
   final String? mobile;
   final int? id;
   final String ? token;
-  User({this.city, this.id, this.mobile, this.name,this.token});
+  const User({this.city, this.id, this.mobile, this.name,this.token});
   @override
  
   List<Object?> get props => [

@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
-import 'package:sibzamini/models/category_model/category_model.dart';
-import 'package:sibzamini/services/remote/api_const.dart';
-import 'package:sibzamini/views/global/colors/solid_colors.dart';
 import 'package:sibzamini/views/global/global.dart';
 
 ButtonStyle _style = ButtonStyle(
@@ -15,7 +9,7 @@ ButtonStyle _style = ButtonStyle(
 );
 
 class AppDrawer extends GetView<HomeController> {
-  AppDrawer({Key? key}) : super(key: key);
+  const AppDrawer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +17,7 @@ class AppDrawer extends GetView<HomeController> {
     double height = MediaQuery.of(context).size.height;
 
     return SafeArea(
-      child: Container(
+      child: SizedBox(
           width: width / 1.5,
           height: height / 1.001,
           child: Card(
@@ -91,9 +85,9 @@ class AppDrawer extends GetView<HomeController> {
                   ),
                   Container(
                     child: Row(
-                      children: [
+                      children: const [
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          padding: EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
                             'دسته بندی خدمات',
                             style: AppTextTheme.captionBold,

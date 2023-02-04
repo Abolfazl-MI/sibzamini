@@ -4,11 +4,8 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rate_in_stars/rate_in_stars.dart';
 import 'package:sibzamini/controller/controller.dart';
-import 'package:sibzamini/core/error_code.dart';
-import 'package:sibzamini/models/cities_model/cities_model.dart';
 import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:sibzamini/controller/searchSalon/search_salon_controller.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/views/global/colors/solid_colors.dart';
@@ -78,7 +75,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
       linearGradient: shimmerGradient,
       child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        child: Container(
+        child: SizedBox(
             height: height,
             // color:Colors.red,
             child: Column(children: [
@@ -96,8 +93,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
                 builder: (builderController) => Expanded(
                     child: Container(
                   // color:Colors.yellow,
-                  child: builderController.searchResult.length != null &&
-                          builderController.searchResult.isNotEmpty
+                  child: builderController.searchResult.isNotEmpty
                       ? ListView.builder(
                           physics: BouncingScrollPhysics(),
                           itemCount: builderController.searchResult.length,
@@ -125,7 +121,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
                                           child: CachedNetworkImage(
                                             imageUrl: indexedSalon.pic ?? 'ssd',
                                             placeholder: (_, __) {
-                                              return Container(
+                                              return SizedBox(
                                                   width: 130,
                                                   height: 100,
                                                   child: Center(
@@ -204,7 +200,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
                               ? Transform.scale(
                                   scale: 0.8,
                                   child: Lottie.asset(Assets.lotties.loading))
-                              : Container(
+                              : SizedBox(
                                   width: width,
                                   child: Center(
                                     child: Column(
@@ -356,7 +352,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
   _mostSeachedTitle(double width) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      child: Row(children: [
+      child: Row(children: const [
         Icon(Icons.local_fire_department_outlined),
         Text('سالن های برتر', style: AppTextTheme.captionBold)
       ]),

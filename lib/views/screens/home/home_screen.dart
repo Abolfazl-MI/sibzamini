@@ -9,11 +9,8 @@ import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/models/add_banner_model/add_banner_model.dart';
-import 'package:sibzamini/models/cities_model/cities_model.dart';
-import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/views/global/constants/app_drawer.dart';
-import 'package:sibzamini/views/global/widgets/loading_widget.dart';
 import 'package:sibzamini/views/screens/home/bottomshets/select_city_location_bottom_sheet.dart';
 import 'package:sibzamini/views/screens/home/carsol_widget.dart';
 import 'package:sibzamini/views/screens/home/slider_widgets/slider_list.dart';
@@ -63,7 +60,7 @@ class HomeScreen extends GetView<HomeController> {
             ],
           );
         }
-        return Container(
+        return SizedBox(
           width: width,
           height: height,
           child: Column(
@@ -227,7 +224,7 @@ class HomeScreen extends GetView<HomeController> {
         ),
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: width / 3.5,
               height: 275,
               // color: Colors.amber,
@@ -300,7 +297,7 @@ class HomeScreen extends GetView<HomeController> {
         // horizontal: 5,
         vertical: 16,
       ),
-      child: adds == null || adds.isEmpty
+      child: adds.isEmpty
           ? null
           : CarouselSlider.builder(
               itemCount: adds.length,

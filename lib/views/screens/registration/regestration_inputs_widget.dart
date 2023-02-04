@@ -38,7 +38,7 @@ class AppInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       textAlign:TextAlign.center,
-      keyboardType: keyboardType ?? null,
+      keyboardType: keyboardType,
       validator: validator,
       controller: controller,
       onChanged: onchange,
@@ -52,7 +52,7 @@ class AppInput extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(horizontal: 25),
           filled: true,
           hintText: hintText,
-          hintStyle: hintTextstyle ?? null,
+          hintStyle: hintTextstyle,
           fillColor: fillColor ?? SolidColors.darkGrey,
           prefixIcon: icon ??
               Container(
@@ -116,7 +116,7 @@ class AppBigInput extends StatelessWidget {
             contentPadding: EdgeInsets.all(20),
             filled: true,
             hintText: hintText,
-            hintStyle: hintTextstyle ?? null,
+            hintStyle: hintTextstyle,
             fillColor: fillColor ?? SolidColors.darkGrey,
             // prefixIcon:icon?? Container(
             //   // margin:,
@@ -137,9 +137,9 @@ class AppBigInput extends StatelessWidget {
 
 Widget buildTextField(
     {required String hintText, required TextEditingController controller}) {
-  final maxLines = 5;
+  const maxLines = 5;
 
-  return Container(
+  return SizedBox(
     // margin: EdgeInsets.all(12),
     height: maxLines * 24.0,
     child: TextField(

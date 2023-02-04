@@ -5,7 +5,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 class ApiInterCeptor extends Interceptor{
-  Logger _logger=Logger(
+  final Logger _logger=Logger(
     printer: PrettyPrinter()
   );
   @override

@@ -16,10 +16,10 @@ class SplashScreen extends GetView<SplashScreenController> {
               scale: 1.5,
               child: Image.asset(Assets.icons.logo.path),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
-            CircularProgressIndicator()
+            const CircularProgressIndicator()
           ],
         ),
       ),

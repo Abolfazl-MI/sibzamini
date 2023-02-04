@@ -11,11 +11,9 @@ import 'package:sibzamini/views/global/colors/solid_colors.dart';
 import 'package:sibzamini/views/global/constants/app_text_themes.dart';
 import 'package:sibzamini/views/global/widgets/custome_shimmerh_loading.dart';
 import 'package:sibzamini/views/global/widgets/search_bar_widget.dart';
-import 'package:sibzamini/views/global/widgets/select_location_widget.dart';
-import 'package:sibzamini/views/screens/registration/regestration_inputs_widget.dart';
 
 class CommentScreen extends StatelessWidget {
-  CommentScreen({super.key});
+  const CommentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +154,7 @@ class CommentScreen extends StatelessWidget {
                         //   hintText: 'پیام خود را اینجا بنویسید ',
                         //   // fillColor: SolidColors.textColor4
                         // ),
-                        Container(
+                        SizedBox(
                           // margin: EdgeInsets.all(12),
                           height: 8 * 24.0,
                           child: TextField(
@@ -189,8 +187,7 @@ class CommentScreen extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            if (controller.commentController.text == null ||
-                                controller.commentController.text.isEmpty) {
+                            if (controller.commentController.text.isEmpty) {
                               Get.snackbar('\u{1F610}' 'مشکلی پیش آمده',
                                   'پر کردن بخش نظر الزامی است',
                                   backgroundColor: Colors.red);
@@ -200,9 +197,7 @@ class CommentScreen extends StatelessWidget {
                                   'حداقل یک ستاره برای امتیاز الزامی',
                                   backgroundColor: Colors.red);
                             }
-                            if (controller.commentController.text != null &&
-                                controller.commentController.text.isNotEmpty &&
-                                dController.rateToSalon != null &&
+                            if (controller.commentController.text.isNotEmpty &&
                                 dController.rateToSalon > 0) {
                               controller.sendComment(
                                   comment: controller.commentController.text.trim(),
@@ -236,7 +231,7 @@ class CommentScreen extends StatelessWidget {
                 if (dController.salonComments == null ||
                     dController.salonComments!.isEmpty) ...[
                   SliverToBoxAdapter(
-                      child: Container(
+                      child: SizedBox(
                           width: width,
                           // height:height*0.3,
                           // color:Colors.red,
@@ -413,6 +408,11 @@ class CommentScreen extends StatelessWidget {
                             Container(
                               width: width,
                               padding: EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                  color: SolidColors.darkGrey,
+                                  border: Border.all(
+                                      color: SolidColors.borderColor2),
+                                  borderRadius: BorderRadius.circular(10)),
                               child: Text(
                                 indexComment.comment!,
                                 // 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد کتابهای زیادی در شصت و سه درصد گذشته حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد ',
@@ -420,11 +420,6 @@ class CommentScreen extends StatelessWidget {
                                 style: AppTextTheme.baseStyle
                                     .copyWith(color: SolidColors.textColor5),
                               ),
-                              decoration: BoxDecoration(
-                                  color: SolidColors.darkGrey,
-                                  border: Border.all(
-                                      color: SolidColors.borderColor2),
-                                  borderRadius: BorderRadius.circular(10)),
                             ),
                             SizedBox(
                               height: 5,

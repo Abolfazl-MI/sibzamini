@@ -7,7 +7,6 @@ import 'package:sibzamini/models/salon_model/salon_model.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/services/local/location_service.dart';
 import 'package:sibzamini/services/local/shared_service.dart';
-import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
 
 class SearchSalonsController extends GetxController {
@@ -18,7 +17,7 @@ class SearchSalonsController extends GetxController {
   final ApiServices _apiServices = ApiServices();
   final SharedStorageService _storageService = SharedStorageService();
   String? userCityLocation;
-  Rx<String> _searchQuery = Rx<String>('');
+  final Rx<String> _searchQuery = Rx<String>('');
   bool isSearchLoading = false;
   List<Salon> searchResult = [];
 

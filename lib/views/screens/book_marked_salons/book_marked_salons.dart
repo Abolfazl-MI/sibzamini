@@ -15,7 +15,7 @@ class BookMarkedSalonsScreen extends StatefulWidget {
 }
 
 class _BookMarkedSalonsScreenState extends State<BookMarkedSalonsScreen> {
-  GlobalKey<ScaffoldState> _scaffoldKey=GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey=GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();

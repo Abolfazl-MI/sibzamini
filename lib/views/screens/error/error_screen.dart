@@ -4,7 +4,6 @@ import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:sibzamini/core/error_code.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/views/global/colors/colors.dart';
 import 'package:sibzamini/views/global/constants/app_text_themes.dart';
@@ -16,7 +15,7 @@ class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // String error_code=Get.argument['error'];
-    String error_code = Get.arguments['error'];
+    String errorCode = Get.arguments['error'];
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -27,7 +26,7 @@ class ErrorScreen extends StatelessWidget {
             Transform.scale(
                 scale: 0.87, child: Lottie.asset(Assets.lotties.error)),
             Text(
-              error_code,
+              errorCode,
               style: AppTextTheme.caption.copyWith(fontWeight: FontWeight.bold),
             ),
               InkWell(
