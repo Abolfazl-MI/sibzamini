@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
 import 'package:sibzamini/views/global/global.dart';
+import 'package:sibzamini/views/routes/app_route_names.dart';
 
 ButtonStyle _style = ButtonStyle(
   overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
@@ -99,29 +100,30 @@ class AppDrawer extends GetView<HomeController> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8),
                     child: ListView.builder(
-                      itemCount: controller.salonCategories.length + 1,
+                      itemCount: controller.salonCategories.length ,
                       shrinkWrap: true,
                       itemBuilder: ((contex, index) {
-                        if (index == controller.salonCategories.length) {
-                          return Container(
-                            child:Row(
-                              children: [
-                                TextButton(
-                            onPressed: () {},
-                            child: Text('همه',
-                                style: AppTextTheme.caption.copyWith(
-                                    color: SolidColors.textColor4,
-                                    fontSize: 17)),
-                          )
-                              ],
-                            )
-                          );
-                        }
+                        // if (index == controller.salonCategories.length) {
+                        //   return Container(
+                        //     child:Row(
+                        //       children: [
+                        //         TextButton(
+                        //     onPressed: () {},
+                        //     child: Text('همه',
+                        //         style: AppTextTheme.caption.copyWith(
+                        //             color: SolidColors.textColor4,
+                        //             fontSize: 17)),
+                        //   )
+                        //       ],
+                        //     )
+                        //   );
+                        // }
                         return Row(
                           children: [
                             TextButton(
                               onPressed: () {
-                                controller.getSalonByCategories(category: controller.salonCategories[index]);
+                                Get.toNamed(rAllSalonsScreen,arguments: {'salonCategory':controller.salonCategories[index]});
+                                // controller.getSalonByCategories(category: controller.salonCategories[index]);
                                 // controller.getSalonByCategories(category: category)
                                 // controller.getSalonByCategories(category: controller.salonsBasedOnCategory);
                               },

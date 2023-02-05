@@ -565,26 +565,24 @@ class BottomNavigation extends GetView<DetailController> {
                         ? () {}
                         : () => controller.updateSelectedIndex(0),
                     icon: controller.selectedIndex == 0
-                        ? SvgPicture.asset(Assets.icons.homeFill)
-                        : SvgPicture.asset(
-                            Assets.icons.homeOutline,
-                          ),
+                        ? Icon(Icons.house, color:SolidColors.primaryBlue,)
+                        : Icon(Icons.house_outlined, color: SolidColors.textColor2,),
                   ),
                   IconButton(
                       onPressed: controller.isLoading
                           ? () {}
                           : () => controller.updateSelectedIndex(1),
                       icon: controller.selectedIndex == 1
-                          ? SvgPicture.asset(Assets.icons.locationlocationFill)
-                          : SvgPicture.asset(
-                              Assets.icons.locationlocationOutline)),
+                          ? Icon(Icons.location_on,color: SolidColors.primaryBlue)
+                          : Icon(Icons.location_on_outlined,color: SolidColors.textColor2)
+                              ),
                   IconButton(
                     onPressed: controller.isLoading
                         ? () {}
                         : () => controller.updateSelectedIndex(2),
                     icon: controller.selectedIndex == 2
-                        ? SvgPicture.asset(Assets.icons.commentsFill)
-                        : SvgPicture.asset(Assets.icons.commentsOutline),
+                        ? Icon(Icons.mode_comment,color: SolidColors.primaryBlue)
+                        : Icon(Icons.mode_comment_outlined,color: SolidColors.textColor2),
                   )
                 ],
               ),

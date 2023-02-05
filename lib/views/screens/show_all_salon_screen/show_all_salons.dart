@@ -36,10 +36,10 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
           )
         ],
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: SvgPicture.asset(Assets.icons.menu),
-          onPressed: controller.openDrawer,
-        ),
+        // leading: IconButton(
+        //   icon: SvgPicture.asset(Assets.icons.menu),
+        //   onPressed: controller.openDrawer,
+        // ),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 1,
@@ -50,7 +50,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
           ),
         ),
       ),
-      drawer: AppDrawer(),
+      // drawer: AppDrawer(),
       body: GetBuilder<HomeController>(
         builder: (controller) {
           if (controller.connectivityStatus == ConnectivityStatus.connected) {
@@ -159,6 +159,13 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
   ) {
     return Expanded(child: GetBuilder<AllSalonsController>(
       builder: (builderController) {
+        if(builderController.isLoading){
+          return Center(
+            child: Transform.scale(
+              scale: 0.7,
+              child: Lottie.asset(Assets.lotties.loading)),
+          );
+        }
         if (builderController.salons.isEmpty) {
           return Center(
             child: Column(
