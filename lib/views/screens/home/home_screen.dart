@@ -107,7 +107,7 @@ class HomeScreen extends GetView<HomeController> {
                         rightText: 'بهترین‌سالن‌های‌اطراف‌شما',
                         leftText: 'نمایش‌ همه',
                         onTap: () {
-                          Get.toNamed(rAllSalonsScreen,
+                          Get.toNamed(AppRoutes.rAllSalonsScreen,
                               arguments: {'type': 'best'});
                         }):Container(),
                   ),
@@ -138,7 +138,7 @@ class HomeScreen extends GetView<HomeController> {
                         rightText: 'جدید‌ترین‌سالن‌ها',
                         leftText: 'نمایش‌ همه',
                         onTap: () {
-                          Get.toNamed(rAllSalonsScreen,
+                          Get.toNamed(AppRoutes.rAllSalonsScreen,
                               arguments: {'type': 'newest'});
                         }):Container()
                     ,
@@ -303,7 +303,7 @@ class HomeScreen extends GetView<HomeController> {
               itemCount: adds.length,
               itemBuilder: ((context, index, realIndex) => InkWell(
                     onTap: () {
-                      Get.toNamed(rDetailScreen,
+                      Get.toNamed(AppRoutes.rDetailScreen,
                           arguments: {'id': adds[index].salon});
                     },
                     child:
@@ -391,7 +391,7 @@ class HomeScreen extends GetView<HomeController> {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () {
-                  Get.toNamed(rSrarchSalons);
+                  Get.toNamed(AppRoutes.rSrarchSalons);
                 },
                 child: SizedBox(
                   // height: 32,
@@ -425,7 +425,7 @@ class HomeScreen extends GetView<HomeController> {
           // ),
           IconButton(
             onPressed: () {
-              Get.toNamed(rFavSalonsScreen,
+              Get.toNamed(AppRoutes.rFavSalonsScreen,
                   );
               // showFavSalonBottomSheet(context);
             },

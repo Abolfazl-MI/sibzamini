@@ -130,7 +130,7 @@ class HomeController extends GetxController {
       if (dataState is DataSuccesState) {
         isLoading = false;
         update();
-        Get.toNamed(rAllSalonsScreen, arguments: {'salons': dataState.data});
+        Get.toNamed(AppRoutes.rAllSalonsScreen, arguments: {'salons': dataState.data});
       } else {
         scaffoldKey.currentState!.closeDrawer();
         isLoading = false;
@@ -161,7 +161,7 @@ class HomeController extends GetxController {
         }
       });
     } else {
-      Get.offNamed(rHomeScreen);
+      Get.offNamed(AppRoutes.rHomeScreen);
     }
   }
 

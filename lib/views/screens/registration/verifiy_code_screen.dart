@@ -29,7 +29,7 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
             Center(
               child: SizedBox(
                 width: width,
-                height: height / 1.7,
+                // height: height / 1.7,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
@@ -60,7 +60,7 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                             ),
                             AppInput(
                               keyboardType: TextInputType.number,
-                                hintText: '2568'.toPersianDigit(),
+                                // hintText: '2568'.toPersianDigit(),
                                 controller: otpController,
                                 onchange: (value) {
                                   value.toPersianDigit();
@@ -159,7 +159,7 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      Get.offNamed(rLoginScreen);
+                                      Get.offNamed(AppRoutes.rSignUpScreen);
                                     },
                                     child: Text(
                                       'اصلاح شماره',

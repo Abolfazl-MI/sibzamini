@@ -104,7 +104,7 @@ class RegistrationController extends GetxController {
           '\u{1F642}' 'موفقیت آمیز بود', 'کد احراز هویت برای شما ارسال شد',
           backgroundColor: Colors.green);
       await _sharedStorageService.saveUserToken(result.data!.token!);
-      Get.offNamed(rVerifyCodeScreen, arguments: {'mobile': phoneNumber});
+      Get.offNamed(AppRoutes.rVerifyCodeScreen, arguments: {'mobile': phoneNumber});
     }
     if (result is DataFailState) {
       isLoading = false;
@@ -128,7 +128,7 @@ class RegistrationController extends GetxController {
           '\u{1F642}' 'موفقیت آمیز بود', 'کد احراز هویت برای شما ارسال شد',
           backgroundColor: Colors.green);
       await Future.delayed(const Duration(seconds: 3));
-      Get.offNamed(rVerifyCodeScreen, arguments: {'mobile': phoneNumber});
+      Get.offNamed(AppRoutes.rVerifyCodeScreen, arguments: {'mobile': phoneNumber});
     }
     if (result is DataFailState) {
       isLoading = false;
@@ -156,11 +156,11 @@ class RegistrationController extends GetxController {
         isLoading = false;
         update();
         await _sharedStorageService.saveUserCity(cityState.data!);
-        Get.offNamed(rHomeScreen, arguments: {'city': cityState.data});
+        Get.offNamed(AppRoutes.rHomeScreen, arguments: {'city': cityState.data});
       } else {
         Get.snackbar('مشکلی پیش آمده',
             'مشکلی در تشخیص مکان شما پیش امده لطفا دستی خودتان انتخاب کنید ');
-        Get.offNamed(rHomeScreen, arguments: {'city': 'Tehran'});
+        Get.offNamed(AppRoutes.rHomeScreen, arguments: {'city': 'Tehran'});
       }
     }
     if (resualt is DataFailState) {

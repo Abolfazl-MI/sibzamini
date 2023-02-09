@@ -50,7 +50,7 @@ class DetailController extends GetxController {
       update();
     }
     if (salonDetailResult is DataFailState) {
-      Get.offNamed(rErrorScreen, arguments: {'error': salonDetailResult.error});
+      Get.offNamed(AppRoutes.rErrorScreen, arguments: {'error': salonDetailResult.error});
     }
   }
 

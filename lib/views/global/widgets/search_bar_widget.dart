@@ -11,7 +11,7 @@ class SearchBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Get.toNamed(rSrarchSalons);
+        Get.toNamed(AppRoutes.rSrarchSalons);
       },
           child: Container(
         decoration: BoxDecoration(

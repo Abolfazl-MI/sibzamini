@@ -96,7 +96,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
       required BuildContext context}) {
     return InkWell(
       onTap: () {
-        Get.offNamed(rSrarchSalons);
+        Get.offNamed(AppRoutes.rSrarchSalons);
       },
       child: Container(
         decoration:const BoxDecoration(
@@ -142,7 +142,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
             IconButton(
               onPressed: () {
                 Get.toNamed(
-                  rFavSalonsScreen,
+                 AppRoutes. rFavSalonsScreen,
                 );
               },
               icon: SvgPicture.asset(Assets.icons.heart),
@@ -212,7 +212,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                 child: InkWell(
                     onTap: () {
-                      Get.toNamed(rDetailScreen, arguments: {
+                      Get.toNamed(AppRoutes.rDetailScreen, arguments: {
                         'id': builderController.salons[index].id
                       });
                     },
@@ -314,7 +314,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                                       children: [
                                         IconButton(
                                             onPressed: () {
-                                              Get.toNamed(rDetailScreen,
+                                              Get.toNamed(AppRoutes.rDetailScreen,
                                                   arguments: {
                                                     'id': builderController
                                                         .salons[index].id
@@ -324,7 +324,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                                                 .icons.commentsOutline)),
                                         IconButton(
                                             onPressed: () {
-                                              Get.toNamed(rDetailScreen,
+                                              Get.toNamed(AppRoutes.rDetailScreen,
                                                   arguments: {
                                                     'id': builderController
                                                         .salons[index].id

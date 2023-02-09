@@ -21,17 +21,17 @@ class SplashScreenController extends GetxController {
         // ! should get user currennt city location
         DataState<String> cityState=await _locationServices.getUserCityLocation();
         if(cityState is DataSuccesState){
-        Get.offNamed(rHomeScreen, arguments: {'city': cityState.data});
+        Get.offNamed(AppRoutes.rHomeScreen, arguments: {'city': cityState.data});
         }else{
         Get.snackbar('مشکلی پیش آمده', 'مشکلی در تشخیص مکان شما پیش امده لطفا دستی خودتان انتخاب کنید ');
-        Get.offNamed(rHomeScreen, arguments: {'city': 'Tehran'});
+        Get.offNamed(AppRoutes.rHomeScreen, arguments: {'city': 'Tehran'});
         }
       } else {
-        Get.offNamed(rLoginScreen);
+        Get.offNamed(AppRoutes.rLoginScreen);
       }
     }
     if (isInterNetEnabled is DataFailState) {
-      Get.offNamed(rErrorScreen,
+      Get.offNamed(AppRoutes.rErrorScreen,
           arguments: {'error': isInterNetEnabled.error});
     }
   }

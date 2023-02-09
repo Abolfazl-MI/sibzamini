@@ -94,7 +94,7 @@ class FavoriteSalonScreen extends GetView<BookMarkedSalonController> {
       required BuildContext context}) {
     return InkWell(
       onTap: () {
-        Get.toNamed(rSrarchSalons);
+        Get.toNamed(AppRoutes.rSrarchSalons);
       },
       child: Container(
         decoration: const BoxDecoration(
@@ -157,7 +157,7 @@ class FavoriteSalonScreen extends GetView<BookMarkedSalonController> {
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
               child: InkWell(
                 onTap: () {
-                  Get.toNamed(rDetailScreen, arguments: {
+                  Get.toNamed(AppRoutes.rDetailScreen, arguments: {
                     'id': buildercontroller.salons[index].shop
                   });
                 },
@@ -295,7 +295,7 @@ class FavoriteSalonScreen extends GetView<BookMarkedSalonController> {
                                 children: [
                                   IconButton(
                                       onPressed: () {
-                                        Get.toNamed(rDetailScreen, arguments: {
+                                        Get.toNamed(AppRoutes.rDetailScreen, arguments: {
                                           'id': buildercontroller
                                               .salons[index].shop
                                         });

@@ -146,7 +146,7 @@ class RegistrationScreen extends GetView<RegistrationController> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      Get.offNamed(rSignUpScreen);
+                                      Get.offNamed(AppRoutes.rSignUpScreen);
                                     },
                                     child: Text(
                                       'ثبت نام کن',

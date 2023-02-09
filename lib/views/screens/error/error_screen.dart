@@ -31,7 +31,7 @@ class ErrorScreen extends StatelessWidget {
             ),
               InkWell(
                 onTap: (){
-                  Get.offAllNamed(rSplashScreen);
+                  Get.offAllNamed(AppRoutes.rSplashScreen);
                 },
                 child: Container(
                   width: 150,

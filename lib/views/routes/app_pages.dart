@@ -17,49 +17,49 @@ import '../screens/show_all_salon_screen/show_all_salons.dart';
 class AppPages {
   static List<GetPage> pages = [
     GetPage(
-        name: rSplashScreen,
+        name: AppRoutes.rSplashScreen,
         page: () => const SplashScreen(),
         binding: SplashBinding()),
     GetPage(
-        name: rLoginScreen,
+        name: AppRoutes.rLoginScreen,
         page: () => RegistrationScreen(),
         binding: RegistrationBinding()),
     GetPage(
-      name: rSignUpScreen,
+      name: AppRoutes.rSignUpScreen,
       page: () => SignUpScreen(),
     ),
     GetPage(
-        name: rVerifyCodeScreen,
+        name: AppRoutes.rVerifyCodeScreen,
         page: () => VerifyCodeScreen(),
         binding: RegistrationBinding()),
     GetPage(
-        name: rHomeScreen, page: () => HomeScreen(), binding: HomeBinding()),
+        name: AppRoutes.rHomeScreen, page: () => HomeScreen(), binding: HomeBinding()),
     GetPage(
-        name: rDetailScreen,
+        name: AppRoutes.rDetailScreen,
         page: () => DetailScreen(),
         binding: DetailBiding()),
     GetPage(
-        name: rCommentsScreen,
+        name: AppRoutes.rCommentsScreen,
         page: () => CommentScreen(),
         binding: DetailBiding()),
     GetPage(
-      name: rLocationScreen,
+      name: AppRoutes.rLocationScreen,
       page: () => LocationScreen(),
     ),
     GetPage(
-      name: rErrorScreen,
+      name: AppRoutes.rErrorScreen,
       page: () => const ErrorScreen(),
     ),
     GetPage(
-        name: rAllSalonsScreen,
+        name: AppRoutes.rAllSalonsScreen,
         page: () => AllSalonsScreen(),
         binding: AllSalonsBinding()),
     GetPage(
-        name: rSrarchSalons,
+        name: AppRoutes.rSrarchSalons,
         page: () => SearchSalonsScreen(),
         binding: SearchSalonBinding()),
     GetPage(
-        name: rFavSalonsScreen,
+        name: AppRoutes.rFavSalonsScreen,
         page: () => FavoriteSalonScreen(),
         binding: BookMarkedSalonsBinding())
   ];

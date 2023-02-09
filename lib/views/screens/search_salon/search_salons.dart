@@ -106,7 +106,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
                               child: InkWell(
                                 onTap: () {
                                   FocusManager.instance.primaryFocus?.unfocus();
-                                  Get.toNamed(rDetailScreen,
+                                  Get.toNamed(AppRoutes.rDetailScreen,
                                       arguments: {'id': indexedSalon.id});
                                   builderController.clearSrarchResult();
                                 },
@@ -252,7 +252,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () {
-                  Get.offNamed(rSrarchSalons);
+                  Get.offNamed(AppRoutes.rSrarchSalons);
                 },
                 child: SizedBox(
                   // height: 32,
@@ -288,7 +288,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
           IconButton(
             onPressed: () {
               Get.toNamed(
-                rFavSalonsScreen,
+               AppRoutes. rFavSalonsScreen,
               );
             },
             icon: SvgPicture.asset(Assets.icons.heart),

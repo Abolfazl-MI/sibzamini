@@ -28,7 +28,7 @@ class SliderList extends StatelessWidget {
             ratingCount: salons[index].rate!.toDouble(),
             imageUrl: salons[index].imgurl,
             onTap: () {
-              Get.toNamed(rDetailScreen, arguments: {'id': salons[index].id});
+              Get.toNamed(AppRoutes.rDetailScreen, arguments: {'id': salons[index].id});
             },
           );
         },

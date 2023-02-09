@@ -32,7 +32,7 @@ class _BookMarkedSalonsScreenState extends State<BookMarkedSalonsScreen> {
           IconButton(
             icon:Icon(Icons.arrow_back_ios, color: Colors.grey,), 
             onPressed: (){
-              Get.offNamed(rHomeScreen);
+              Get.offNamed(AppRoutes.rHomeScreen);
             },
           )
         ],

@@ -159,7 +159,7 @@ class SignUpScreen extends GetView<RegistrationController> {
                                   ),
                                   TextButton(
                                     onPressed: () {
-                                      Get.offNamed(rLoginScreen);
+                                      Get.offNamed(AppRoutes.rLoginScreen);
                                     },
                                     child: const Text(
                                       'وارد شو',

@@ -122,7 +122,7 @@ class AppDrawer extends GetView<HomeController> {
                           children: [
                             TextButton(
                               onPressed: () {
-                                Get.toNamed(rAllSalonsScreen,arguments: {'salonCategory':controller.salonCategories[index]});
+                                Get.toNamed(AppRoutes.rAllSalonsScreen,arguments: {'salonCategory':controller.salonCategories[index]});
                                 // controller.getSalonByCategories(category: controller.salonCategories[index]);
                                 // controller.getSalonByCategories(category: category)
                                 // controller.getSalonByCategories(category: controller.salonsBasedOnCategory);
