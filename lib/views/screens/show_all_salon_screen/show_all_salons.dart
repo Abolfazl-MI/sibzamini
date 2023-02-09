@@ -27,7 +27,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.arrow_back_ios,
+              Icons.arrow_back,
               color: Colors.grey,
             ),
             onPressed: () {

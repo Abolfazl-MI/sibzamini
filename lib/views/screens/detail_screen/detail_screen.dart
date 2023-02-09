@@ -37,7 +37,7 @@ class DetailScreen extends GetView<DetailController> {
         actions: [
           IconButton(
             icon: Icon(
-              Icons.arrow_back_ios,
+              Icons.arrow_back,
               color: Colors.grey,
             ),
             onPressed: () {

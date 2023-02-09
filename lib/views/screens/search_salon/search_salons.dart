@@ -30,7 +30,7 @@ class SearchSalonsScreen extends GetView<SearchSalonsController> {
         actions: [
           IconButton(
             icon: Icon(
-              Icons.arrow_back_ios,
+              Icons.arrow_back,
               color: Colors.grey,
             ),
             onPressed: () {
