@@ -31,7 +31,7 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                 width: width,
                 // height: height / 1.7,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(0.0),
                   child: Card(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(

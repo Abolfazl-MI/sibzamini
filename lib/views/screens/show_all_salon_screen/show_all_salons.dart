@@ -89,7 +89,6 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
     );
   }
 
-
   _searchBar(
       {required double width,
       required double height,
@@ -99,7 +98,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
         Get.offNamed(AppRoutes.rSrarchSalons);
       },
       child: Container(
-        decoration:const BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           border: Border(
             bottom: BorderSide(
@@ -122,7 +121,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                     decoration: InputDecoration(
                         filled: true,
                         fillColor: SolidColors.borderColor,
-                        hintStyle:const TextStyle(
+                        hintStyle: const TextStyle(
                             fontSize: 12, color: SolidColors.textColor4),
                         hintText: 'دنبال‌چی‌میگردی؟',
                         enabledBorder: genralInputDecoration,
@@ -142,7 +141,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
             IconButton(
               onPressed: () {
                 Get.toNamed(
-                 AppRoutes. rFavSalonsScreen,
+                  AppRoutes.rFavSalonsScreen,
                 );
               },
               icon: SvgPicture.asset(Assets.icons.heart),
@@ -159,11 +158,10 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
   ) {
     return Expanded(child: GetBuilder<AllSalonsController>(
       builder: (builderController) {
-        if(builderController.isLoading){
+        if (builderController.isLoading) {
           return Center(
             child: Transform.scale(
-              scale: 0.7,
-              child: Lottie.asset(Assets.lotties.loading)),
+                scale: 0.7, child: Lottie.asset(Assets.lotties.loading)),
           );
         }
         if (builderController.salons.isEmpty) {
@@ -172,7 +170,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset(Assets.icons.notFind),
-              const  SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Text(
@@ -188,7 +186,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
           );
         }
         return ListView.builder(
-            physics:const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemCount: !builderController.isMoreLoadingEnd
                 ? builderController.salons.length + 1
                 : builderController.salons.length,
@@ -200,7 +198,7 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                   padding: const EdgeInsets.all(10.0),
                   child: Center(
                     child: TextButton(
-                      child:const Text('نمایش بیشتر'),
+                      child: const Text('نمایش بیشتر'),
                       onPressed: () {
                         builderController.loadMoreSalons();
                       },
@@ -209,67 +207,134 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                 );
               }
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                 child: InkWell(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.rDetailScreen, arguments: {
-                        'id': builderController.salons[index].id
-                      });
-                    },
-                    child: SizedBox(
-                        width: width,
-                        child: Card(
-                            child: Padding(
-                          padding:const EdgeInsets.all(8),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                  width: width,
-                                  height: 200,
-                                  child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 14, vertical: 10),
-                                      child: CachedNetworkImage(
-                                        placeholder: ((context, url) =>
-                                            Center(
-                                                child: Transform.scale(
-                                                    scale: 0.5,
-                                                    child: Lottie.asset(Assets
-                                                        .lotties.loading)))),
-                                        imageUrl: builderController
-                                            .salons[index].imgurl,
-                                        imageBuilder: ((context,
-                                                imageProvider) =>
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover,
-                                                ),
+                  onTap: () {
+                    Get.toNamed(AppRoutes.rDetailScreen,
+                        arguments: {'id': builderController.salons[index].id});
+                  },
+                  child: SizedBox(
+                    width: width,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                                width: width,
+                                height: 200,
+                                child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 14, vertical: 10),
+                                    child: CachedNetworkImage(
+                                      placeholder: ((context, url) => Center(
+                                          child: Transform.scale(
+                                              scale: 0.5,
+                                              child: Lottie.asset(
+                                                  Assets.lotties.loading)))),
+                                      imageUrl: builderController
+                                          .salons[index].imgurl,
+                                      imageBuilder: ((context, imageProvider) =>
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
                                               ),
-                                            )),
-                                        errorWidget: ((context, url, error) =>
-                                            Container(
-                                              color: Colors.grey,
-                                              child: const Center(
-                                                child: Icon(
-                                                  Icons
-                                                      .image_not_supported_outlined,
-                                                  color: Colors.white,
-                                                ),
+                                            ),
+                                          )),
+                                      errorWidget: ((context, url, error) =>
+                                          Container(
+                                            color: Colors.grey,
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons
+                                                    .image_not_supported_outlined,
+                                                color: Colors.white,
                                               ),
-                                            )),
-                                      ))),
-                              Padding(
-                                padding:const EdgeInsets.all(8),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                            ),
+                                          )),
+                                    ))),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(6),
+                            //   child: Row(
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceBetween,
+                            //     children: [
+                            //       Row(
+                            //         children: [
+                            //           CircleAvatar(
+                            //             backgroundColor:
+                            //                 SolidColors.backGroundColor,
+                            //             child: Center(
+                            //               child: Transform.scale(
+                            //                   scale: 0.7,
+                            //                   child: SvgPicture.asset(
+                            //                       Assets.icons.logos)),
+                            //             ),
+                            //           ),
+                            //           const SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Column(
+                            //             // mainAxisAlignment: MainAxisAlignment.start,
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.start,
+                            //             children: [
+                            //               Text(
+                            //                 builderController
+                            //                         .salons[index].name ??
+                            //                     'abolfzl',
+                            //                 style: AppTextTheme.caption
+                            //                     .copyWith(),
+                            //               ),
+                            //               const SizedBox(
+                            //                 height: 5,
+                            //               ),
+                            //               // should get from server
+                            //               // RatingStars(
+                            //               //   rating:
+                            //               //       allSalons[index].rateToDouble ?? 0.0,
+                            //               //   editable: false,
+                            //               //   color: SolidColors.yellow,
+                            //               //   iconSize: 15,
+                            //               // )
+                            //             ],
+                            //           )
+                            //         ],
+                            //       ),
+                            //       Row(
+                            //         children: [
+                            //           IconButton(
+                            //               onPressed: () {
+                            //                 Get.toNamed(
+                            //                     AppRoutes.rDetailScreen,
+                            //                     arguments: {
+                            //                       'id': builderController
+                            //                           .salons[index].id
+                            //                     });
+                            //               },
+                            //               icon:
+                            // SvgPicture.asset(
+                            //                   Assets.icons.commentsOutline)),
+                            //
+                            //         ],
+                            //       )
+                            //     ],
+                            //   ),
+                            // )
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
                                   children: [
-                                    Row(
-                                      children: [
                                     CircleAvatar(
                                       backgroundColor:
                                           SolidColors.backGroundColor,
@@ -292,8 +357,8 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                                           builderController
                                                   .salons[index].name ??
                                               'abolfzl',
-                                          style: AppTextTheme.caption
-                                              .copyWith(),
+                                          style:
+                                              AppTextTheme.caption.copyWith(),
                                         ),
                                         const SizedBox(
                                           height: 5,
@@ -308,40 +373,70 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                                         // )
                                       ],
                                     )
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                            onPressed: () {
-                                              Get.toNamed(AppRoutes.rDetailScreen,
-                                                  arguments: {
-                                                    'id': builderController
-                                                        .salons[index].id
-                                                  });
-                                            },
-                                            icon: SvgPicture.asset(Assets
-                                                .icons.commentsOutline)),
-                                        IconButton(
-                                            onPressed: () {
-                                              Get.toNamed(AppRoutes.rDetailScreen,
-                                                  arguments: {
-                                                    'id': builderController
-                                                        .salons[index].id
-                                                  });
-                                            },
-                                            icon: const Icon(
-                                              Icons.favorite,
-                                              color: Colors.red,
-                                            )),
-                                      ],
-                                    )
                                   ],
                                 ),
-                              )
-                            ],
-                          ),
-                        )))),
+                                Row(children: [
+                                  IconButton(
+                                  icon: SvgPicture.asset(
+                                      Assets.icons.commentsOutline),
+                                  onPressed: () {},
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Get.toNamed(AppRoutes.rDetailScreen,
+                                          arguments: {
+                                            'id': builderController
+                                                .salons[index].id
+                                          });
+                                    },
+                                    // onPressed: () {
+
+                                    child: builderController
+                                            .doseSalonBookedMarked(
+                                                builderController
+                                                    .salons[index].id!)
+                                        ? Container(
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    SolidColors.backGroundColor,
+                                                borderRadius: BorderRadius
+                                                    .circular(5)),
+                                            padding: EdgeInsets.all(12),
+                                            child: Center(
+                                                child: Text('دنبال میکنید' '✓',
+                                                    style: AppTextTheme
+                                                        .captionBold
+                                                        .copyWith(
+                                                            color: SolidColors
+                                                                .primaryBlue,
+                                                            fontSize: 14))))
+                                        : Container(
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                                color: SolidColors.primaryBlue,
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            padding: EdgeInsets.all(12),
+                                            child: Center(
+                                              child: Text(
+                                                'دنبال کردن' '+',
+                                                style: AppTextTheme.captionBold
+                                                    .copyWith(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          ))
+                                ],)
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               );
             });
       },

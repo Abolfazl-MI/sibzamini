@@ -129,14 +129,15 @@ class AllSalonsController extends GetxController {
   }
 
   /// checks if salon is book marked
-  doseSalonBookedMarked() {
-    for (int index = 0; index < salons.length; index++) {
-      if (bookMarkedSalons.contains(salons[index])) {
+  bool doseSalonBookedMarked(int salonId) {
+    for (BookMarkedSalon bookMarkedSalon in bookMarkedSalons){
+      if(bookMarkedSalon.shop==salonId){
         return true;
-      } else {
+      }else{
         return false;
       }
     }
+    return false;
   }
 
   /// load more salons base on `best` or `newest`
