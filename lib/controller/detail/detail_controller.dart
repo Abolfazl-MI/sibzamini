@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sibzamini/core/data_staes.dart';
 import 'package:sibzamini/models/bookmarked_salon_model/book_marked_salon_model.dart';
@@ -12,6 +13,7 @@ import 'package:sibzamini/services/remote/api_services.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/services.dart';
 class DetailController extends GetxController {
   // dependcies
   final ApiServices _apiServices = ApiServices();
@@ -65,6 +67,13 @@ class DetailController extends GetxController {
       // handle the error
       salonComments = [];
       update();
+    }
+  }
+
+  Future<void>openDailer(String number)async{
+    final url=Uri.parse('tel:$number');
+    if(!await launchUrl(url)){
+      Clipboard.setData(ClipboardData(text: number.toString()));
     }
   }
 
