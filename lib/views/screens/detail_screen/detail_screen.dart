@@ -326,7 +326,7 @@ class DetailScreen extends GetView<DetailController> {
               SizedBox(
                 // color: Colors.amber,
                 width: width,
-                height: 210,
+                height: 220,
                 child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 14, vertical: 10),
@@ -412,7 +412,7 @@ class DetailScreen extends GetView<DetailController> {
               ),
               Container(
                 width: width,
-                height: 40,
+                height: 60,
                 decoration: BoxDecoration(
                   border: Border(
                     top: BorderSide(
@@ -440,7 +440,10 @@ class DetailScreen extends GetView<DetailController> {
                             },
                             icon:
                                 SvgPicture.asset(Assets.icons.commentsOutline)),
-                        IconButton(
+                        TextButton(
+                            style: ButtonStyle(
+                              overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)
+                            ),
                             onPressed: () {
                               if (builderController.isBookedMarked) {
                                 builderController.deleteSalonBookMark();
@@ -449,9 +452,34 @@ class DetailScreen extends GetView<DetailController> {
                                 builderController.addSalonToBookMarks();
                               }
                             },
-                            icon: builderController.isBookedMarked
-                                ? Icon(Icons.favorite, color: Colors.red)
-                                : Icon(Icons.favorite_border)),
+                            child: builderController.isBookedMarked
+                                ? Container(
+                                  decoration: BoxDecoration(
+                                      color:SolidColors.backGroundColor
+                                      , 
+                                      borderRadius: BorderRadius.circular(12)
+                                  ),
+                                  padding:EdgeInsets.all(12),
+                                  child:Center(
+                                    child:Text('دنبال میکنید' '✓', style:AppTextTheme.captionBold.copyWith(
+                                  color:SolidColors.primaryBlue, fontSize: 14
+                                 ))
+                                  )
+                                 )
+                                :
+                                 Container(
+                                  decoration: BoxDecoration(
+                                      color:SolidColors.primaryBlue, 
+                                      borderRadius: BorderRadius.circular(12)
+                                  ),
+                                  padding:EdgeInsets.all(12),
+                                  child:Center(
+                                    child:Text('دنبال کردن' '+', style:AppTextTheme.captionBold.copyWith(
+                                  color:Colors.white, fontSize: 14
+                                 ))
+                                  )
+                                 ),
+                                 ),
                       ],
                     )
                   ],
@@ -573,8 +601,8 @@ class BottomNavigation extends GetView<DetailController> {
                           ? () {}
                           : () => controller.updateSelectedIndex(1),
                       icon: controller.selectedIndex == 1
-                          ? Icon(Icons.location_on,color: SolidColors.primaryBlue)
-                          : Icon(Icons.location_on_outlined,color: SolidColors.textColor2)
+                          ? Icon(Icons.phone,color: SolidColors.primaryBlue)
+                          : Icon(Icons.phone_outlined,color: SolidColors.textColor2)
                               ),
                   IconButton(
                     onPressed: controller.isLoading
