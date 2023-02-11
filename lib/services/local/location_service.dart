@@ -30,20 +30,21 @@ class LocationServices {
         desiredAccuracy: LocationAccuracy.best,
         forceAndroidLocationManager: true,
       );
-      
+
       DataState<String> persianCityName =
           await _apiServices.getUserCityLocation(
               lat: currentPossition.latitude, lon: currentPossition.longitude);
-      if(persianCityName is DataSuccesState){
+      if (persianCityName is DataSuccesState) {
         // log(persianCityName.data.toString());
         print(persianCityName.data);
         log('[Persian CityLocation]=> ${persianCityName.data}');
         // iranCities.firstWhere((element) => element['title']==userPersianCity.data)['slug'];
-        String finalCityName=iranCities.firstWhere((element) => element['title']==persianCityName.data)['slug'];
+        String finalCityName = iranCities.firstWhere(
+            (element) => element['title'] == persianCityName.data)['slug'];
         log('[USER CITY LOCATION]=> $finalCityName');
         return DataSuccesState(finalCityName);
       }
-      if(persianCityName is DataFailState){
+      if (persianCityName is DataFailState) {
         return DataFailState(persianCityName.error!);
       }
       return DataFailState(SOMETHING_WENT_WRONG);

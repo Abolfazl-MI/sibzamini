@@ -15,6 +15,7 @@ import 'package:sibzamini/services/local/connectivity_service.dart';
 import 'package:sibzamini/services/local/shared_service.dart';
 import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
+import 'package:sibzamini/views/global/constants/iran_cities_names.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
 import 'package:sibzamini/services/local/location_service.dart';
 
@@ -42,6 +43,7 @@ class HomeController extends GetxController {
   // pagenation counter
   final int _pageCount = 1;
   String? currentCity;
+  String? userPersianCityName;
   ConnectivityStatus connectivityStatus = ConnectivityStatus.disconnected;
   List<SalonAddBanner> salonAddBanners = [];
   late final StreamSubscription<ConnectivityStatus> _subscription;
@@ -59,7 +61,7 @@ class HomeController extends GetxController {
       }
     }
     if (result is DataFailState) {
-      bestSalonsList=[];
+      bestSalonsList = [];
       update();
       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', result.error!,
           backgroundColor: Colors.red);
@@ -78,11 +80,11 @@ class HomeController extends GetxController {
     });
   }
 
-  // gets user current cityName from shared
-  getUserCityLocationName() async {
-    var result = await _storageService.getUserCity();
-    currentCity = result;
+  // gets user currunt city name in persian 
+  _getUserCityLocationName(String  cityName) async {
+    userPersianCityName=iranCities.firstWhere((element) => element['slug'].toLowerCase()==cityName.toLowerCase())['title'];
     update();
+    print("$userPersianCityName>>>>");
   }
 
   // get news Salons
@@ -99,7 +101,7 @@ class HomeController extends GetxController {
       }
     }
     if (resualt is DataFailState) {
-      newestSalonList=[];
+      newestSalonList = [];
       update();
       // print(resualt);
       Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', resualt.error!,
@@ -130,7 +132,8 @@ class HomeController extends GetxController {
       if (dataState is DataSuccesState) {
         isLoading = false;
         update();
-        Get.toNamed(AppRoutes.rAllSalonsScreen, arguments: {'salons': dataState.data});
+        Get.toNamed(AppRoutes.rAllSalonsScreen,
+            arguments: {'salons': dataState.data});
       } else {
         scaffoldKey.currentState!.closeDrawer();
         isLoading = false;
@@ -245,6 +248,7 @@ class HomeController extends GetxController {
     await _getBookMarkedSalons();
     await _getCitySalonsAvailable();
     await _getSallonAddsBanner();
+    await _getUserCityLocationName(citylocation);
     isLoading = false;
     update();
   }
@@ -277,7 +281,6 @@ class HomeController extends GetxController {
         .listen((event) => updateInternetConnection(event));
     String? cityName = Get.arguments['city'];
     getHomeFeedSalons(cityName ?? 'Tehran');
-    getUserCityLocationName();
   }
 
   autoSelectLocation() async {

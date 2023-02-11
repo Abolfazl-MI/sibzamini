@@ -350,10 +350,15 @@ class HomeScreen extends GetView<HomeController> {
                   onPressed: null,
                   icon: SvgPicture.asset(Assets.icons.location),
                 ),
-                Text(
-                  'تغییر شهر',
+                GetBuilder<HomeController>(
+                  builder:(builderController){
+                    print(builderController.currentCity);
+                    return Text(
+                 builderController.userPersianCityName ??'تغییر شهر',
                   style: TextStyle(color: SolidColors.textColor4),
-                ),
+                );
+                  }
+                )
               ],
             ),
             IconButton(
