@@ -1,5 +1,5 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
@@ -146,6 +146,22 @@ class DetailScreen extends GetView<DetailController> {
           const SizedBox(
             height: 20,
           ),
+          GetBuilder<DetailController>(
+            builder: (dController) {
+              if (dController.salonServices != null&&dController.salonServices!.isNotEmpty) {
+                return Container(
+                  // color:Colors.white,
+                  width: width,
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    'خدمات ما',
+                    style: AppTextTheme.captionBold,
+                  ),
+                );
+              }
+              return Container();
+            },
+          ),
 
           /// [Services of salon]
           GetBuilder<DetailController>(builder: (dController) {
@@ -154,21 +170,179 @@ class DetailScreen extends GetView<DetailController> {
                 dController.salonServices!.isEmpty) {
               return Container();
             }
-
             if (dController.salonServices != null) {
-              return SizedBox(
-                width: width,
-                height: height * 0.4,
-                // color: Colors.red,
-                child: PageView.builder(
-                  itemCount: dController.salonServices!.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 40),
-                      // width: 150,
-                      // height: 150,
-                      child: Card(
+              print("${dController.salonServices!.length.toString()}<<<");
+              return Container(
+                  width: width,
+                  height: height * 0.34,
+                  // color: Colors.red,
+                  child: CarouselSlider.builder(
+                    options: CarouselOptions(
+                      autoPlay: false,
+                      height: height,
+                      padEnds: true,
+
+                      enableInfiniteScroll: false,
+                    ),
+                    itemCount: dController.salonServices!.length,
+                    itemBuilder: (context, index, realIndex) {
+                      return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: _serviceCard(
+                              builderController, index, width, height));
+                    },
+                  )
+                  // child:ListView.builder(
+                  //   padding: EdgeInsets.zero,
+                  //   scrollDirection: Axis.horizontal,
+                  //   itemCount: dController.salonServices!.length,
+                  //   itemBuilder: (context,index){
+                  //     return Padding(
+                  //       padding: const EdgeInsets.symmetric(
+                  //         horizontal: 0
+                  //       ),
+                  //       child: _serviceCard(builderController, index, width, height),
+                  //     );
+                  //   },
+                  // )
+                  // child: PageView.builder(
+                  //   itemCount: dController.salonServices!.length,
+                  //   itemBuilder: (context,index){
+                  //     return _serviceCard(builderController, index, width, height);
+                  //   },
+                  // ),
+                  );
+            }
+            return Container();
+          }),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 10,
+          ),
+        ],
+      ),
+    ));
+  }
+
+  Card _serviceCard(DetailController builderController, int index, double width,
+      double height) {
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 5,
+              ),
+
+              ///[service picture]
+              child: CachedNetworkImage(
+                imageUrl: builderController.salonServices![index].imgUrl,
+                errorWidget: ((context, url, error) => Container(
+                      width: width,
+                      height: height * 0.23,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.image_not_supported_outlined,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )),
+                placeholder: (context, url) => Container(
+                  width: width,
+                  height: height * 0.23,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  // clipBehavior: ,
+                  child: Center(
+                      child: Transform.scale(
+                    scale: 0.5,
+                    child: Lottie.asset(Assets.lotties.loading),
+                  )),
+                ),
+                imageBuilder: ((context, imageProvider) => Container(
+                      width: width,
+                      height: height * 0.23,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(12),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )),
+              )),
+
+          ///[ services provides by salon should get from server]
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text(
+              builderController.salonServices![index].name!,
+              style: AppTextTheme.captionBold
+                  .copyWith(color: SolidColors.textColor3),
+            ),
+          ),
+          //
+          ///[the price of sercies]
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              children: [
+                // !in case that have off we use this code should maintane when connected to server
+                // Text(
+                //   '450,000'.toPersianDigit(),
+                //   style: AppTextTheme
+                //       .captionBold
+                //       .copyWith(
+                //           color: Colors.red,
+                //           decoration:
+                //               TextDecoration
+                //                   .lineThrough),
+                // ),
+                // const SizedBox(
+                //   width: 5,
+                // ),
+                Text(
+                  '${builderController.salonServices![index].amount!}'
+                      .toPersianDigit(),
+                  style: AppTextTheme.caption,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+
+                const Text(
+                  'تومان',
+                  style: AppTextTheme.baseStyle,
+                )
+              ],
+            ),
+          ),
+
+          /// [fotter of Card]
+          Flexible(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(builderController.salonServices![index].content ?? ''
+                  // 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز ',
+                  ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+/* Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12)),
                         child: Column(
@@ -293,22 +467,7 @@ class DetailScreen extends GetView<DetailController> {
                             )
                           ],
                         ),
-                      ),
-                    );
-                  },
-                ),
-              );
-            }
-            return Container();
-          }),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 10,
-          ),
-        ],
-      ),
-    ));
-  }
-
+                      ) */
   _brandHeader(
       DetailController builderController, double width, double height) {
     return ShimmerLoading(
@@ -441,45 +600,42 @@ class DetailScreen extends GetView<DetailController> {
                             icon:
                                 SvgPicture.asset(Assets.icons.commentsOutline)),
                         TextButton(
-                            style: ButtonStyle(
-                              overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)
-                            ),
-                            onPressed: () {
-                              if (builderController.isBookedMarked) {
-                                builderController.deleteSalonBookMark();
-                              }
-                              if (!builderController.isBookedMarked) {
-                                builderController.addSalonToBookMarks();
-                              }
-                            },
-                            child: builderController.isBookedMarked
-                                ? Container(
+                          style: ButtonStyle(
+                              overlayColor: MaterialStateColor.resolveWith(
+                                  (states) => Colors.transparent)),
+                          onPressed: () {
+                            if (builderController.isBookedMarked) {
+                              builderController.deleteSalonBookMark();
+                            }
+                            if (!builderController.isBookedMarked) {
+                              builderController.addSalonToBookMarks();
+                            }
+                          },
+                          child: builderController.isBookedMarked
+                              ? Container(
                                   decoration: BoxDecoration(
-                                      color:SolidColors.backGroundColor
-                                      , 
-                                      borderRadius: BorderRadius.circular(12)
-                                  ),
-                                  padding:EdgeInsets.all(12),
-                                  child:Center(
-                                    child:Text('دنبال میکنید' '✓', style:AppTextTheme.captionBold.copyWith(
-                                  color:SolidColors.primaryBlue, fontSize: 14
-                                 ))
-                                  )
-                                 )
-                                :
-                                 Container(
+                                      color: SolidColors.backGroundColor,
+                                      borderRadius: BorderRadius.circular(12)),
+                                  padding: EdgeInsets.all(12),
+                                  child: Center(
+                                      child: Text('دنبال میکنید' '✓',
+                                          style: AppTextTheme.captionBold
+                                              .copyWith(
+                                                  color:
+                                                      SolidColors.primaryBlue,
+                                                  fontSize: 14))))
+                              : Container(
                                   decoration: BoxDecoration(
-                                      color:SolidColors.primaryBlue, 
-                                      borderRadius: BorderRadius.circular(12)
-                                  ),
-                                  padding:EdgeInsets.all(12),
-                                  child:Center(
-                                    child:Text('دنبال کردن' '+', style:AppTextTheme.captionBold.copyWith(
-                                  color:Colors.white, fontSize: 14
-                                 ))
-                                  )
-                                 ),
-                                 ),
+                                      color: SolidColors.primaryBlue,
+                                      borderRadius: BorderRadius.circular(12)),
+                                  padding: EdgeInsets.all(12),
+                                  child: Center(
+                                      child: Text('دنبال کردن' '+',
+                                          style: AppTextTheme.captionBold
+                                              .copyWith(
+                                                  color: Colors.white,
+                                                  fontSize: 14)))),
+                        ),
                       ],
                     )
                   ],
@@ -593,24 +749,32 @@ class BottomNavigation extends GetView<DetailController> {
                         ? () {}
                         : () => controller.updateSelectedIndex(0),
                     icon: controller.selectedIndex == 0
-                        ? Icon(Icons.house, color:SolidColors.primaryBlue,)
-                        : Icon(Icons.house_outlined, color: SolidColors.textColor2,),
+                        ? Icon(
+                            Icons.house,
+                            color: SolidColors.primaryBlue,
+                          )
+                        : Icon(
+                            Icons.house_outlined,
+                            color: SolidColors.textColor2,
+                          ),
                   ),
                   IconButton(
                       onPressed: controller.isLoading
                           ? () {}
                           : () => controller.updateSelectedIndex(1),
                       icon: controller.selectedIndex == 1
-                          ? Icon(Icons.phone,color: SolidColors.primaryBlue)
-                          : Icon(Icons.phone_outlined,color: SolidColors.textColor2)
-                              ),
+                          ? Icon(Icons.phone, color: SolidColors.primaryBlue)
+                          : Icon(Icons.phone_outlined,
+                              color: SolidColors.textColor2)),
                   IconButton(
                     onPressed: controller.isLoading
                         ? () {}
                         : () => controller.updateSelectedIndex(2),
                     icon: controller.selectedIndex == 2
-                        ? Icon(Icons.mode_comment,color: SolidColors.primaryBlue)
-                        : Icon(Icons.mode_comment_outlined,color: SolidColors.textColor2),
+                        ? Icon(Icons.mode_comment,
+                            color: SolidColors.primaryBlue)
+                        : Icon(Icons.mode_comment_outlined,
+                            color: SolidColors.textColor2),
                   )
                 ],
               ),
