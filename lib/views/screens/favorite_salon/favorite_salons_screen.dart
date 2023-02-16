@@ -147,223 +147,245 @@ class FavoriteSalonScreen extends GetView<BookMarkedSalonController> {
     double width,
     BuildContext context,
   ) {
-    return Expanded(
-        child: GetBuilder<BookMarkedSalonController>(
-      builder: (buildercontroller) => (ListView.builder(
-          physics: BouncingScrollPhysics(),
-          itemCount: buildercontroller.salons.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-              child: InkWell(
-                onTap: () {
-                  Get.toNamed(AppRoutes.rDetailScreen,
-                      arguments: {'id': buildercontroller.salons[index].shop});
-                },
-                child: SizedBox(
-                  width: width,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                              width: width,
-                              height: 200,
-                              child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 14, vertical: 10),
-                                  child: CachedNetworkImage(
-                                    placeholder: ((context, url) => Center(
+    return Expanded(child: GetBuilder<BookMarkedSalonController>(
+      
+      builder: (buildercontroller) {
+      if(buildercontroller.salons.isEmpty){
+        return Container(
+          child:Center(
+            
+            child:Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(Assets.icons.notFind), 
+                SizedBox(height:20), 
+                Text('سالن ها را دنبال کنید تا اینجا ببینید', style: AppTextTheme.captionBold,)
+              ],
+            )
+          )
+        );
+      }
+        return ListView.builder(
+            physics: BouncingScrollPhysics(),
+            itemCount: buildercontroller.salons.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                child: InkWell(
+                  onTap: () {
+                    Get.toNamed(AppRoutes.rDetailScreen, arguments: {
+                      'id': buildercontroller.salons[index].shop
+                    });
+                  },
+                  child: SizedBox(
+                    width: width,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                                width: width,
+                                height: 200,
+                                child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 14, vertical: 10),
+                                    child: CachedNetworkImage(
+                                      placeholder: ((context, url) => Center(
+                                          child: Transform.scale(
+                                              scale: 0.5,
+                                              child: Lottie.asset(
+                                                  Assets.lotties.loading)))),
+                                      imageUrl: buildercontroller
+                                          .salons[index].imgurl,
+                                      imageBuilder: ((context, imageProvider) =>
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          )),
+                                      errorWidget: ((context, url, error) =>
+                                          Container(
+                                            color: Colors.grey,
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons
+                                                    .image_not_supported_outlined,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          )),
+                                    ))),
+                            // Padding(
+                            //   padding: const EdgeInsets.all(6),
+                            //   child: Row(
+                            //     mainAxisAlignment:
+                            //         MainAxisAlignment.spaceBetween,
+                            //     children: [
+                            //       Row(
+                            //         children: [
+                            //           CircleAvatar(
+                            //             backgroundColor:
+                            //                 SolidColors.backGroundColor,
+                            //             child: Center(
+                            //               child: Transform.scale(
+                            //                   scale: 0.7,
+                            //                   child: SvgPicture.asset(
+                            //                       Assets.icons.logos)),
+                            //             ),
+                            //           ),
+                            //           const SizedBox(
+                            //             width: 5,
+                            //           ),
+                            //           Column(
+                            //             // mainAxisAlignment: MainAxisAlignment.start,
+                            //             crossAxisAlignment:
+                            //                 CrossAxisAlignment.start,
+                            //             children: [
+                            //               Text(
+                            //                 builderController
+                            //                         .salons[index].name ??
+                            //                     'abolfzl',
+                            //                 style: AppTextTheme.caption
+                            //                     .copyWith(),
+                            //               ),
+                            //               const SizedBox(
+                            //                 height: 5,
+                            //               ),
+                            //               // should get from server
+                            //               // RatingStars(
+                            //               //   rating:
+                            //               //       allSalons[index].rateToDouble ?? 0.0,
+                            //               //   editable: false,
+                            //               //   color: SolidColors.yellow,
+                            //               //   iconSize: 15,
+                            //               // )
+                            //             ],
+                            //           )
+                            //         ],
+                            //       ),
+                            //       Row(
+                            //         children: [
+                            //           IconButton(
+                            //               onPressed: () {
+                            //                 Get.toNamed(
+                            //                     AppRoutes.rDetailScreen,
+                            //                     arguments: {
+                            //                       'id': builderController
+                            //                           .salons[index].id
+                            //                     });
+                            //               },
+                            //               icon:
+                            // SvgPicture.asset(
+                            //                   Assets.icons.commentsOutline)),
+                            //
+                            //         ],
+                            //       )
+                            //     ],
+                            //   ),
+                            // )
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor:
+                                          SolidColors.backGroundColor,
+                                      child: Center(
                                         child: Transform.scale(
-                                            scale: 0.5,
-                                            child: Lottie.asset(
-                                                Assets.lotties.loading)))),
-                                    imageUrl:
-                                        buildercontroller.salons[index].imgurl,
-                                    imageBuilder: ((context, imageProvider) =>
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        )),
-                                    errorWidget: ((context, url, error) =>
-                                        Container(
-                                          color: Colors.grey,
-                                          child: const Center(
-                                            child: Icon(
-                                              Icons
-                                                  .image_not_supported_outlined,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        )),
-                                  ))),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(6),
-                          //   child: Row(
-                          //     mainAxisAlignment:
-                          //         MainAxisAlignment.spaceBetween,
-                          //     children: [
-                          //       Row(
-                          //         children: [
-                          //           CircleAvatar(
-                          //             backgroundColor:
-                          //                 SolidColors.backGroundColor,
-                          //             child: Center(
-                          //               child: Transform.scale(
-                          //                   scale: 0.7,
-                          //                   child: SvgPicture.asset(
-                          //                       Assets.icons.logos)),
-                          //             ),
-                          //           ),
-                          //           const SizedBox(
-                          //             width: 5,
-                          //           ),
-                          //           Column(
-                          //             // mainAxisAlignment: MainAxisAlignment.start,
-                          //             crossAxisAlignment:
-                          //                 CrossAxisAlignment.start,
-                          //             children: [
-                          //               Text(
-                          //                 builderController
-                          //                         .salons[index].name ??
-                          //                     'abolfzl',
-                          //                 style: AppTextTheme.caption
-                          //                     .copyWith(),
-                          //               ),
-                          //               const SizedBox(
-                          //                 height: 5,
-                          //               ),
-                          //               // should get from server
-                          //               // RatingStars(
-                          //               //   rating:
-                          //               //       allSalons[index].rateToDouble ?? 0.0,
-                          //               //   editable: false,
-                          //               //   color: SolidColors.yellow,
-                          //               //   iconSize: 15,
-                          //               // )
-                          //             ],
-                          //           )
-                          //         ],
-                          //       ),
-                          //       Row(
-                          //         children: [
-                          //           IconButton(
-                          //               onPressed: () {
-                          //                 Get.toNamed(
-                          //                     AppRoutes.rDetailScreen,
-                          //                     arguments: {
-                          //                       'id': builderController
-                          //                           .salons[index].id
-                          //                     });
-                          //               },
-                          //               icon:
-                          // SvgPicture.asset(
-                          //                   Assets.icons.commentsOutline)),
-                          //
-                          //         ],
-                          //       )
-                          //     ],
-                          //   ),
-                          // )
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor:
-                                        SolidColors.backGroundColor,
-                                    child: Center(
-                                      child: Transform.scale(
-                                          scale: 0.7,
-                                          child: SvgPicture.asset(
-                                              Assets.icons.logos)),
+                                            scale: 0.7,
+                                            child: SvgPicture.asset(
+                                                Assets.icons.logos)),
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Column(
-                                    // mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        buildercontroller.salons[index].name ??
-                                            'abolfzl',
-                                        style: AppTextTheme.caption.copyWith(),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      // should get from server
-                                      // RatingStars(
-                                      //   rating:
-                                      //       allSalons[index].rateToDouble ?? 0.0,
-                                      //   editable: false,
-                                      //   color: SolidColors.yellow,
-                                      //   iconSize: 15,
-                                      // )
-                                    ],
-                                  )
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: SvgPicture.asset(
-                                        Assets.icons.commentsOutline),
-                                    onPressed: () {},
-                                  ),
-                                  TextButton(
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Column(
+                                      // mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          buildercontroller
+                                                  .salons[index].name ??
+                                              'abolfzl',
+                                          style:
+                                              AppTextTheme.caption.copyWith(),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        // should get from server
+                                        // RatingStars(
+                                        //   rating:
+                                        //       allSalons[index].rateToDouble ?? 0.0,
+                                        //   editable: false,
+                                        //   color: SolidColors.yellow,
+                                        //   iconSize: 15,
+                                        // )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: SvgPicture.asset(
+                                          Assets.icons.commentsOutline),
                                       onPressed: () {
                                         Get.toNamed(AppRoutes.rDetailScreen,
-                                            arguments: {
-                                              'id': buildercontroller
-                                                  .salons[index].id
-                                            });
+                                              arguments: {
+                                                'id': buildercontroller
+                                                    .salons[index].shop
+                                              });
                                       },
-                                      // onPressed: () {
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          buildercontroller.deleteSalonFromFavorites(index, buildercontroller.salons[index].shop!);
+                                        },
+                                        // onPressed: () {
 
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                              color:
-                                                  SolidColors.backGroundColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          padding: EdgeInsets.all(12),
-                                          child: Center(
-                                              child: Text('دنبال میکنید' '✓',
-                                                  style: AppTextTheme
-                                                      .captionBold
-                                                      .copyWith(
-                                                          color: SolidColors
-                                                              .primaryBlue,
-                                                          fontSize: 14)))))
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                color:
+                                                    SolidColors.backGroundColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(5)),
+                                            padding: EdgeInsets.all(12),
+                                            child: Center(
+                                                child: Text('دنبال میکنید' '✓',
+                                                    style: AppTextTheme
+                                                        .captionBold
+                                                        .copyWith(
+                                                            color: SolidColors
+                                                                .primaryBlue,
+                                                            fontSize: 14)))))
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            );
-          })),
+              );
+            });
+      },
     ));
   }
 }

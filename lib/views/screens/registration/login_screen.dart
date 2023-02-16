@@ -22,153 +22,265 @@ class RegistrationScreen extends GetView<RegistrationController> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       backgroundColor: SolidColors.backGroundColor,
       body: GetBuilder<RegistrationController>(builder: (controller) {
-        return Stack(
-          children: [
-            Center(
-              child: SizedBox(
-                width: width,
-                // height: height / 1.6,
-                child: Padding(
-                  padding: const EdgeInsets.all(0),
-                  child: Card(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      side: const BorderSide(color: SolidColors.borderColor),
-                    ),
+        return Container(
+          width: width,
+          height: height,
+          color: Colors.white,
+          child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Container(
+              width: width,
+              height: height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: Form(
-                        key: formKey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(Assets.icons.logos),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'ورود با شماره',
-                            ),
-                            const SizedBox(
-                              height: 100,
-                            ),
-                            const Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                'شماره‌موبایل',
-                                style: TextStyle(
-                                    color: SolidColors.textColor4,
-                                    fontSize: 22),
-                              ),
-                            ),
-                            AppInput(
-                                keyboardType: TextInputType.number,
-                                controller: phoneNumberController,
-                                hintText: "*******0912".toPersianDigit(),
-                                onchange: (value) {
-                                  value.toPersianDigit();
-                                },
-                                validator: (value) =>
-                                    controller.validatePhoneNumber(value)),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            const SizedBox(
-                              height: 62,
-                            ),
-                            InkWell(
-                              onTap: () async{
-                                await InternetConnectivityService()
-                                    .isInterNetEnabled()
-                                    .then((DataState dataState) {
-                                      print('ok!');
-                                  if (dataState is DataSuccesState) {
-                                    if (formKey.currentState!.validate()) {
-                                      FocusManager.instance.primaryFocus
-                                          ?.unfocus();
-                                      controller.requestLoginUser(
-                                          phoneNumber: phoneNumberController
-                                              .text
-                                              .toEnglishDigit());
-                                    }
-                                    print(dataState.data);
-                                  }
-                                  if (dataState is DataFailState) {
-                                    AwesomeDialog(
-                                      context: context,
-                                      showCloseIcon: true, 
-                                      dialogType: DialogType.error, 
-                                      borderSide: BorderSide(color:Colors.red), 
-                                      dismissOnBackKeyPress: false, 
-                                      dismissOnTouchOutside: false,
-                                      headerAnimationLoop: false,
-                                      title: 'مشکل پیش اومده', 
-                                      desc: dataState.error, 
-                                      animType: AnimType.leftSlide, 
-
-                                    ).show();
-                                  }
-                                });
-                              },
-                              child: Container(
-                                width: width,
-                                height: 48,
-                                decoration: BoxDecoration(
-                                    color: SolidColors.primaryBlue,
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                        color: SolidColors.borderColor)),
-                                child: const Center(
-                                    child: Text(
-                                  'ارسال‌کد',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'اکانت نداری؟',
+                      padding: EdgeInsets.all(12),
+                      child: Container(
+                          padding: EdgeInsets.all(12),
+                          width: width,
+                          height: height * 0.5,
+                          // color: Colors.red,
+                          child: Form(
+                            key: formKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(Assets.icons.logos),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  'ورود با شماره',
+                                ),
+                                SizedBox(
+                                  height: height * 0.04,
+                                ),
+                                const Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    'شماره‌موبایل',
                                     style: TextStyle(
-                                        fontSize: 15,
-                                        color: SolidColors.textColor4),
+                                        color: SolidColors.textColor4,
+                                        fontSize: 22),
                                   ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Get.offNamed(AppRoutes.rSignUpScreen);
+                                ),
+                                AppInput(
+                                    keyboardType: TextInputType.number,
+                                    controller: phoneNumberController,
+                                    hintText: "*******0912".toPersianDigit(),
+                                    onchange: (value) {
+                                      value.toPersianDigit();
                                     },
-                                    child: Text(
-                                      'ثبت نام کن',
+                                    validator: (value) =>
+                                        controller.validatePhoneNumber(value)),
+                                const SizedBox(
+                                  height: 8,
+                                ),
+                                SizedBox(height: height * 0.05),
+                                InkWell(
+                                  onTap: () async {
+                                    await InternetConnectivityService()
+                                        .isInterNetEnabled()
+                                        .then((DataState dataState) {
+                                      print('ok!');
+                                      if (dataState is DataSuccesState) {
+                                        if (formKey.currentState!.validate()) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                          controller.requestLoginUser(
+                                              phoneNumber: phoneNumberController
+                                                  .text
+                                                  .toEnglishDigit());
+                                        }
+                                        print(dataState.data);
+                                      }
+                                      if (dataState is DataFailState) {
+                                        AwesomeDialog(
+                                          context: context,
+                                          showCloseIcon: true,
+                                          dialogType: DialogType.error,
+                                          borderSide:
+                                              BorderSide(color: Colors.red),
+                                          dismissOnBackKeyPress: false,
+                                          dismissOnTouchOutside: false,
+                                          headerAnimationLoop: false,
+                                          title: 'مشکل پیش اومده',
+                                          desc: dataState.error,
+                                          animType: AnimType.leftSlide,
+                                        ).show();
+                                      }
+                                    });
+                                  },
+                                  child: Container(
+                                    width: width,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                        color: SolidColors.primaryBlue,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                            color: SolidColors.borderColor)),
+                                    child: const Center(
+                                        child: Text(
+                                      'ارسال‌کد',
                                       style: TextStyle(
-                                          color: SolidColors.primaryBlue),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'اکانت نداری؟',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: SolidColors.textColor4),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.offNamed(AppRoutes.rSignUpScreen);
+                                        },
+                                        child: Text(
+                                          'ثبت نام کن',
+                                          style: TextStyle(
+                                              color: SolidColors.primaryBlue),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
-            if (controller.isLoading) const LoadingWidget()
-          ],
+          ),
         );
       }),
     );
   }
 }
+/* SizedBox(
+                width: width,
+                // height: height / 1.6,
+                height: height,
+                child: Card(
+                  color: Colors.white,
+                  // shape: RoundedRectangleBorder(
+                  //   borderRadius: BorderRadius.circular(12),
+                  //   side: const BorderSide(color: SolidColors.borderColor),
+                  // ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(Assets.icons.logos),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'ورود با شماره',
+                          ),
+                          const SizedBox(
+                            height: 100,
+                          ),
+                          const Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              'شماره‌موبایل',
+                              style: TextStyle(
+                                  color: SolidColors.textColor4,
+                                  fontSize: 22),
+                            ),
+                          ),
+                          AppInput(
+                              keyboardType: TextInputType.number,
+                              controller: phoneNumberController,
+                              hintText: "*******0912".toPersianDigit(),
+                              onchange: (value) {
+                                value.toPersianDigit();
+                              },
+                              validator: (value) =>
+                                  controller.validatePhoneNumber(value)),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          const SizedBox(
+                            height: 62,
+                          ),
+                          InkWell(
+                            onTap: () async{
+                              await InternetConnectivityService()
+                                  .isInterNetEnabled()
+                                  .then((DataState dataState) {
+                                    print('ok!');
+                                if (dataState is DataSuccesState) {
+                                  if (formKey.currentState!.validate()) {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                    controller.requestLoginUser(
+                                        phoneNumber: phoneNumberController
+                                            .text
+                                            .toEnglishDigit());
+                                  }
+                                  print(dataState.data);
+                                }
+                                if (dataState is DataFailState) {
+                                  AwesomeDialog(
+                                    context: context,
+                                    showCloseIcon: true, 
+                                    dialogType: DialogType.error, 
+                                    borderSide: BorderSide(color:Colors.red), 
+                                    dismissOnBackKeyPress: false, 
+                                    dismissOnTouchOutside: false,
+                                    headerAnimationLoop: false,
+                                    title: 'مشکل پیش اومده', 
+                                    desc: dataState.error, 
+                                    animType: AnimType.leftSlide, 
+
+                                  ).show();
+                                }
+                              });
+                            },
+                            child: Container(
+                              width: width,
+                              height: 48,
+                              decoration: BoxDecoration(
+                                  color: SolidColors.primaryBlue,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                      color: SolidColors.borderColor)),
+                              child: const Center(
+                                  child: Text(
+                                'ارسال‌کد',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                            ),
+                          ),
+                          
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ); */
