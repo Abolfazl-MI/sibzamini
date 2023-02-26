@@ -34,17 +34,15 @@ class DetailScreen extends GetView<DetailController> {
       backgroundColor: const Color(0xffF5F7FB),
       // key: scaffoldKey,
       appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              Get.back();
-            },
-          )
-        ],
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.grey,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
         automaticallyImplyLeading: false,
         // leading: IconButton(
         //   icon: SvgPicture.asset(Assets.icons.menu),
@@ -148,7 +146,8 @@ class DetailScreen extends GetView<DetailController> {
           ),
           GetBuilder<DetailController>(
             builder: (dController) {
-              if (dController.salonServices != null&&dController.salonServices!.isNotEmpty) {
+              if (dController.salonServices != null &&
+                  dController.salonServices!.isNotEmpty) {
                 return Container(
                   // color:Colors.white,
                   width: width,
@@ -180,14 +179,16 @@ class DetailScreen extends GetView<DetailController> {
                     options: CarouselOptions(
                       autoPlay: false,
                       height: height,
-                      padEnds: true,
-
+                      padEnds: false,
+                      // aspectRatio: 0.,
+                      disableCenter: true,
                       enableInfiniteScroll: false,
                     ),
+                     
                     itemCount: dController.salonServices!.length,
                     itemBuilder: (context, index, realIndex) {
                       return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
                           child: _serviceCard(
                               builderController, index, width, height));
                     },
@@ -571,16 +572,16 @@ class DetailScreen extends GetView<DetailController> {
               ),
               Container(
                 width: width,
-                height: 60,
+                height: 70,
                 decoration: BoxDecoration(
                   border: Border(
                     top: BorderSide(
                       // strokeAlign: StrokeAlign.center,
+                      // color: Colors.red,
                       color: SolidColors.textColor4.withOpacity(0.7),
                     ),
                   ),
                 ),
-                // color: Colors.red,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -591,52 +592,38 @@ class DetailScreen extends GetView<DetailController> {
                         style: AppTextTheme.subCaption.copyWith(fontSize: 15),
                       ),
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              controller.updateSelectedIndex(2);
-                            },
-                            icon:
-                                SvgPicture.asset(Assets.icons.commentsOutline)),
-                        TextButton(
-                          style: ButtonStyle(
-                              overlayColor: MaterialStateColor.resolveWith(
-                                  (states) => Colors.transparent)),
-                          onPressed: () {
-                            if (builderController.isBookedMarked) {
-                              builderController.deleteSalonBookMark();
-                            }
-                            if (!builderController.isBookedMarked) {
-                              builderController.addSalonToBookMarks();
-                            }
-                          },
-                          child: builderController.isBookedMarked
-                              ? Container(
-                                  decoration: BoxDecoration(
-                                      color: SolidColors.backGroundColor,
-                                      borderRadius: BorderRadius.circular(12)),
-                                  padding: EdgeInsets.all(12),
-                                  child: Center(
-                                      child: Text('دنبال میکنید' '✓',
-                                          style: AppTextTheme.captionBold
-                                              .copyWith(
-                                                  color:
-                                                      SolidColors.primaryBlue,
-                                                  fontSize: 14))))
-                              : Container(
-                                  decoration: BoxDecoration(
-                                      color: SolidColors.primaryBlue,
-                                      borderRadius: BorderRadius.circular(12)),
-                                  padding: EdgeInsets.all(12),
-                                  child: Center(
-                                      child: Text('دنبال کردن' '+',
-                                          style: AppTextTheme.captionBold
-                                              .copyWith(
-                                                  color: Colors.white,
-                                                  fontSize: 14)))),
-                        ),
-                      ],
+                    TextButton(
+                      style: ButtonStyle(
+                          overlayColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.transparent)),
+                      onPressed: () {
+                        if (builderController.isBookedMarked) {
+                          builderController.deleteSalonBookMark();
+                        }
+                        if (!builderController.isBookedMarked) {
+                          builderController.addSalonToBookMarks();
+                        }
+                      },
+                      child: builderController.isBookedMarked
+                          ? Container(
+                              decoration: BoxDecoration(
+                                  color: SolidColors.backGroundColor,
+                                  borderRadius: BorderRadius.circular(12)),
+                              padding: EdgeInsets.all(12),
+                              child: Center(
+                                  child: Text('دنبال میکنید' '✓',
+                                      style: AppTextTheme.captionBold.copyWith(
+                                          color: SolidColors.primaryBlue,
+                                          fontSize: 14))))
+                          : Container(
+                              decoration: BoxDecoration(
+                                  color: SolidColors.primaryBlue,
+                                  borderRadius: BorderRadius.circular(12)),
+                              padding: EdgeInsets.all(12),
+                              child: Center(
+                                  child: Text('دنبال کردن' '+',
+                                      style: AppTextTheme.captionBold.copyWith(
+                                          color: Colors.white, fontSize: 14)))),
                     )
                   ],
                 ),

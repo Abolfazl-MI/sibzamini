@@ -111,7 +111,7 @@ class AllSalonsController extends GetxController {
   }
 
   /// callss screen needs function at one place
-  Future<void> _getData(String? type,ServiceCategory?serviceCategory) async {
+  Future<void> _getData(String? type, ServiceCategory? serviceCategory) async {
     salonType = type;
     isLoading = true;
     update();
@@ -130,10 +130,10 @@ class AllSalonsController extends GetxController {
 
   /// checks if salon is book marked
   bool doseSalonBookedMarked(int salonId) {
-    for (BookMarkedSalon bookMarkedSalon in bookMarkedSalons){
-      if(bookMarkedSalon.shop==salonId){
+    for (BookMarkedSalon bookMarkedSalon in bookMarkedSalons) {
+      if (bookMarkedSalon.shop == salonId) {
         return true;
-      }else{
+      } else {
         return false;
       }
     }
@@ -172,9 +172,31 @@ class AllSalonsController extends GetxController {
     });
   }
 
+  // BUG: should add featues 
+  // add salo to favortite part
+  Future<void> addSalonToFav(Salon salon) async {
+    String? token = await _storageService.getuserToken();
+    if (token != null) {
+      await _apiServices
+          .addSalonToBookMarks(token: token, salonId: salon.id!)
+          .then((DataState dataState) {
+        if (dataState is DataSuccesState) {
+          // bookMarkedSalons.add(s)
+        }
+        if (dataState is DataFailState) {}
+      });
+    }
+  }
+  // BUG: should add featues 
+  
+  // remove salon from fav list
+  Future<void>deleteSalonFromFav()async{
+
+  }
+
   @override
   void onInit() {
     super.onInit();
-    _getData(Get.arguments['type'],Get.arguments['salonCategory']);
+    _getData(Get.arguments['type'], Get.arguments['salonCategory']);
   }
 }

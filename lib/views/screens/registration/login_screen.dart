@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:sibzamini/controller/controller.dart';
 import 'package:sibzamini/core/data_staes.dart';
@@ -25,6 +26,20 @@ class RegistrationScreen extends GetView<RegistrationController> {
       // resizeToAvoidBottomInset: false,
       backgroundColor: SolidColors.backGroundColor,
       body: GetBuilder<RegistrationController>(builder: (controller) {
+        if(controller.isLoading){
+          return Container(
+            width: width,
+            height: height,
+            color: Colors.white,
+            child:Center(
+              child:Transform.scale(
+                scale: 0.8,
+                child: Lottie.asset(Assets.lotties.loading),
+              )
+            )
+          ); 
+
+        }
         return Container(
           width: width,
           height: height,
