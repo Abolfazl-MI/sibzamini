@@ -375,60 +375,81 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                                     )
                                   ],
                                 ),
-                                Row(children: [
-                                  IconButton(
-                                  icon: SvgPicture.asset(
-                                      Assets.icons.commentsOutline),
-                                  onPressed: () {},
-                                ),
-                                TextButton(
-                                    onPressed: () {
-                                      Get.toNamed(AppRoutes.rDetailScreen,
-                                          arguments: {
-                                            'id': builderController
-                                                .salons[index].id
-                                          });
-                                    },
-                                    // onPressed: () {
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: SvgPicture.asset(
+                                          Assets.icons.commentsOutline),
+                                      onPressed: () {},
+                                    ),
+                                
 
-                                    child: builderController
-                                            .doseSalonBookedMarked(
-                                                builderController
-                                                    .salons[index].id!)
-                                        ? Container(
-                                            decoration: BoxDecoration(
-                                                color:
-                                                    SolidColors.backGroundColor,
-                                                borderRadius: BorderRadius
-                                                    .circular(5)),
-                                            padding: EdgeInsets.all(12),
-                                            child: Center(
-                                                child: Text('دنبال میکنید' '✓',
-                                                    style: AppTextTheme
-                                                        .captionBold
-                                                        .copyWith(
-                                                            color: SolidColors
-                                                                .primaryBlue,
-                                                            fontSize: 14))))
-                                        : Container(
-                                            width: 100,
-                                            decoration: BoxDecoration(
-                                                color: SolidColors.primaryBlue,
-                                                borderRadius:
-                                                    BorderRadius.circular(5)),
-                                            padding: EdgeInsets.all(12),
-                                            child: Center(
-                                              child: Text(
-                                                'دنبال کردن' '+',
-                                                style: AppTextTheme.captionBold
-                                                    .copyWith(
-                                                  color: Colors.white,
-                                                  fontSize: 14,
+                                    GetBuilder<AllSalonsController>(
+                                      builder: (buttonBuilder) {
+                                        int salonId=buttonBuilder.salons[index].id!;
+                                        if (buttonBuilder.doseSalonBookedMarked(
+                                            buttonBuilder.salons[index].id!)) {
+                                          return TextButton(
+                                            style: ButtonStyle(
+                                              overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)
+                                            ),
+                                            onPressed: () {
+                                              buttonBuilder.deleteSalonFromFav(salonId);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: SolidColors
+                                                      .backGroundColor,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              padding: EdgeInsets.all(12),
+                                              child: Center(
+                                                child: Text(
+                                                  'دنبال میکنید' '✓',
+                                                  style: AppTextTheme
+                                                      .captionBold
+                                                      .copyWith(
+                                                          color: SolidColors
+                                                              .primaryBlue,
+                                                          fontSize: 14),
                                                 ),
                                               ),
                                             ),
-                                          ))
-                                ],)
+                                          );
+                                        } else {
+                                          return TextButton(
+                                            style: ButtonStyle(
+                                              overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent)
+                                            ),
+                                            onPressed: () {
+                                              buttonBuilder.addSalonToFav(salonId);
+                                            },
+                                            child: Container(
+                                              width: 100,
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                      SolidColors.primaryBlue,
+                                                  borderRadius:
+                                                      BorderRadius.circular(5)),
+                                              padding: EdgeInsets.all(12),
+                                              child: Center(
+                                                child: Text(
+                                                  'دنبال کردن' '+',
+                                                  style: AppTextTheme
+                                                      .captionBold
+                                                      .copyWith(
+                                                    color: Colors.white,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    )
+                                  ],
+                                )
                               ],
                             ),
                           ],
@@ -443,3 +464,12 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
     ));
   }
 }
+/* 
+ 
+                                    
+            builderController.doseSalonBookedMarked(
+                                            builderController.salons[index].id!)
+                                        ? 
+                                        :                         
+                                     
+                        */

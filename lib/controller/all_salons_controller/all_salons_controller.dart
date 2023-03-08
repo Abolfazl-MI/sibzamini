@@ -8,6 +8,7 @@ import 'package:sibzamini/services/remote/api_const.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
 import 'package:sibzamini/services/local/shared_service.dart';
 import 'package:sibzamini/services/local/location_service.dart';
+import 'package:sibzamini/views/routes/app_route_names.dart';
 
 class AllSalonsController extends GetxController {
   //depndencies
@@ -130,14 +131,11 @@ class AllSalonsController extends GetxController {
 
   /// checks if salon is book marked
   bool doseSalonBookedMarked(int salonId) {
-    for (BookMarkedSalon bookMarkedSalon in bookMarkedSalons) {
-      if (bookMarkedSalon.shop == salonId) {
-        return true;
-      } else {
-        return false;
-      }
+    bool isFollowed=false;
+    for(BookMarkedSalon iteam in bookMarkedSalons){
+      if(iteam.shop==salonId) isFollowed=true;
     }
-    return false;
+      return isFollowed;
   }
 
   /// load more salons base on `best` or `newest`
@@ -172,26 +170,61 @@ class AllSalonsController extends GetxController {
     });
   }
 
-  // BUG: should add featues 
+  // BUG: should add featues
   // add salo to favortite part
-  Future<void> addSalonToFav(Salon salon) async {
+  Future<void> addSalonToFav(int id) async {
     String? token = await _storageService.getuserToken();
     if (token != null) {
       await _apiServices
-          .addSalonToBookMarks(token: token, salonId: salon.id!)
-          .then((DataState dataState) {
+          .addSalonToBookMarks(token: token, salonId: id)
+          .then((DataState<Salon> dataState) {
         if (dataState is DataSuccesState) {
           // bookMarkedSalons.add(s)
+          BookMarkedSalon bookMarkSalon = BookMarkedSalon(
+            shop: dataState.data!.id,
+            address: dataState.data!.address,
+            name: dataState.data!.name,
+            pic: dataState.data!.pic,
+          );
+          bookMarkedSalons.add(bookMarkSalon);
+          update();
         }
-        if (dataState is DataFailState) {}
+        if (dataState is DataFailState) {
+          Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', dataState.error!,
+              backgroundColor: Colors.red);
+        }
       });
+    } else {
+      Get.offNamed(AppRoutes.rLocationScreen);
     }
   }
-  // BUG: should add featues 
-  
-  // remove salon from fav list
-  Future<void>deleteSalonFromFav()async{
+  // BUG: should add featues
 
+  // remove salon from fav list
+  Future<void> deleteSalonFromFav(int id) async {
+    String? token = await _storageService.getuserToken();
+    if (token != null) {
+      await _apiServices
+          .deleteSalonFromBookMarkList(userToken: token, salonId: id)
+          .then((DataState<Salon> dataState) {
+        if (dataState is DataSuccesState) {
+          BookMarkedSalon bookMarkedSalon = BookMarkedSalon(
+              shop: dataState.data!.id,
+              address: dataState.data!.address,
+              name: dataState.data!.name,
+              pic: dataState.data!.pic);
+          bookMarkedSalons
+              .removeWhere((element) => element.shop == bookMarkedSalon.shop);
+          update();
+        }
+        if (dataState is DataFailState) {
+          Get.snackbar('\u{1F610}' 'مشکلی پیش آمده', dataState.error!,
+              backgroundColor: Colors.red);
+        }
+      });
+    } else {
+      Get.offNamed(AppRoutes.rLocationScreen);
+    }
   }
 
   @override

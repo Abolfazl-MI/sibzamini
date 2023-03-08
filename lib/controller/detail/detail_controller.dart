@@ -184,10 +184,10 @@ class DetailController extends GetxController {
   Future<void> addSalonToBookMarks() async {
     String? token = await _storageService.getuserToken();
     if (token != null) {
-      DataState<bool> reslult = await _apiServices.addSalonToBookMarks(
+      DataState<Salon> reslult = await _apiServices.addSalonToBookMarks(
           token: token, salonId: salonDetail!.id!);
       if (reslult is DataSuccesState) {
-        isBookedMarked = reslult.data!;
+        isBookedMarked = true;
         update();
       } else {
         isBookedMarked = false;
@@ -204,7 +204,7 @@ class DetailController extends GetxController {
   Future<void> deleteSalonBookMark() async {
     String? token = await _storageService.getuserToken();
     if (token != null) {
-      DataState<bool> result = await _apiServices.deleteSalonFromBookMarkList(
+      DataState<Salon> result = await _apiServices.deleteSalonFromBookMarkList(
           userToken: token, salonId: salonDetail!.id!);
       if(result is DataSuccesState){
           isBookedMarked=false;

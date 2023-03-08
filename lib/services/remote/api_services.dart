@@ -260,7 +260,7 @@ class ApiServices {
   }
 
   /// added coresponding salon to user bookmark list
-  Future<DataState<bool>> addSalonToBookMarks(
+  Future<DataState<Salon>> addSalonToBookMarks(
       {required String token, required int salonId}) async {
     try {
       FormData data = FormData.fromMap({
@@ -269,7 +269,8 @@ class ApiServices {
       });
       Response response = await _dio.post(ApiUrls.bookMarkSalon, data: data);
       if (response.statusCode == 200) {
-        return DataSuccesState(true);
+        Salon salon =Salon.fromJson(response.data['data']);
+        return DataSuccesState(salon);
       }
       return DataFailState(SOMETHING_WENT_WRONG);
     } on DioError catch (e) {
@@ -301,18 +302,19 @@ class ApiServices {
   }
 
   /// deletes salon from user bookmarked salons base on the id of salon
-  Future<DataState<bool>> deleteSalonFromBookMarkList(
+  Future<DataState<Salon>> deleteSalonFromBookMarkList(
       {required String userToken, required int salonId}) async {
     try {
       FormData data = FormData.fromMap({'user': userToken, 'salon': salonId});
       Response response =
           await _dio.post(ApiUrls.deleteSalonBookMark, data: data);
       if (response.statusCode == 200) {
-        return DataSuccesState(true);
+        Salon salon=Salon.fromJson(response.data['data']);
+        return DataSuccesState(salon);
       }
-      return DataSuccesState(false);
+      return DataFailState(SOMETHING_WENT_WRONG);
     } catch (e) {
-      return DataSuccesState(false);
+      return DataFailState(SOMETHING_WENT_WRONG);
     }
   }
 
