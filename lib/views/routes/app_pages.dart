@@ -8,6 +8,7 @@ import 'package:sibzamini/controller/searchSalon/search_salon_binding.dart';
 import 'package:sibzamini/controller/splash/splash_binding.dart';
 import 'package:sibzamini/views/screens/favorite_salon/favorite_salons_screen.dart';
 import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
+import 'package:sibzamini/views/screens/registration/edit_phone_number.dart';
 import 'package:sibzamini/views/screens/registration/signup_screen.dart';
 import 'package:sibzamini/views/screens/search_salon/search_salons.dart';
 import 'package:sibzamini/views/views.dart';
@@ -33,7 +34,9 @@ class AppPages {
         page: () => VerifyCodeScreen(),
         binding: RegistrationBinding()),
     GetPage(
-        name: AppRoutes.rHomeScreen, page: () => HomeScreen(), binding: HomeBinding()),
+        name: AppRoutes.rHomeScreen,
+        page: () => HomeScreen(),
+        binding: HomeBinding()),
     GetPage(
         name: AppRoutes.rDetailScreen,
         page: () => DetailScreen(),
@@ -61,6 +64,9 @@ class AppPages {
     GetPage(
         name: AppRoutes.rFavSalonsScreen,
         page: () => FavoriteSalonScreen(),
-        binding: BookMarkedSalonsBinding())
+        binding: BookMarkedSalonsBinding()),
+    GetPage(
+        name: AppRoutes.rEditPhoneNumberScreen,
+        page: () => EditPhoneNumberScreen(), binding: RegistrationBinding())
   ];
 }

@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 
 import 'package:sibzamini/controller/regestration/regestration_controller.dart';
 import 'package:sibzamini/gen/assets.gen.dart';
+import 'package:sibzamini/views/global/constants/app_text_themes.dart';
 import 'package:sibzamini/views/global/widgets/loading_widget.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
 import 'package:sibzamini/views/screens/registration/regestration_inputs_widget.dart';
@@ -15,10 +16,12 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
   VerifyCodeScreen({Key? key}) : super(key: key);
   final TextEditingController otpController = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  @override
+@override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    String phoneNumber=Get.arguments['mobile'];
+    String opreation=Get.arguments['opreation'];
     return Scaffold(
       backgroundColor: SolidColors.backGroundColor,
       body: GetBuilder<RegistrationController>(
@@ -90,7 +93,7 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                                   controller.confirmOtpCode(
                                       otpCode:
                                           otpController.text.toEnglishDigit(),
-                                      phoneNumber: Get.arguments['mobile']);
+                                      phoneNumber: phoneNumber);
                                   otpController.clear();
                                 }
                               },
@@ -98,7 +101,10 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                                   controller.validatePhoneNumber(value)
                               // key: formKey,
                               ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 15),
+                          Text('شماره شما : ${phoneNumber.toPersianDigit()}',style: AppTextTheme.subCaption,),
+                          // const SizedBox(height: 20),
+                          
                           GetBuilder<RegistrationController>(
                               builder: (controller) => controller.timeLaps > 0
                                   ? Row(
@@ -130,7 +136,7 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                                       ),
                                     )),
                           const SizedBox(
-                            height: 34,
+                            height: 10,
                           ),
                           GetBuilder<RegistrationController>(
                             builder: (controller) => InkWell(
@@ -141,7 +147,7 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                                   controller.confirmOtpCode(
                                       otpCode:
                                           otpController.text.toEnglishDigit(),
-                                      phoneNumber: Get.arguments['mobile']);
+                                      phoneNumber: phoneNumber);
                                 }
                               },
                               child: Container(
@@ -178,7 +184,15 @@ class VerifyCodeScreen extends GetView<RegistrationController> {
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    Get.offNamed(AppRoutes.rSignUpScreen);
+                                    if(opreation=='login'){
+                                    Get.offNamed(AppRoutes.rEditPhoneNumberScreen, arguments: {'mobile':phoneNumber,'opreation':opreation});
+                                    }
+                                    if(opreation=='create-account'){
+                                    Get.offNamed(
+                                      AppRoutes.rEditPhoneNumberScreen,
+                                       arguments: {'mobile':phoneNumber,'opreation':opreation,'user-name':Get.arguments['user-name']});
+                                      
+                                    }
                                   },
                                   child: Text(
                                     'اصلاح شماره',

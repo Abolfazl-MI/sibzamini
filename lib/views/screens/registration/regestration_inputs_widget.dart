@@ -8,7 +8,7 @@ import 'package:sibzamini/views/global/constants/genral_input_decoration.dart';
 import 'package:sibzamini/views/global/constants/persian_number_extension.dart';
 
 import '../../global/colors/colors.dart';
-
+@immutable
 class AppInput extends StatelessWidget {
   final TextEditingController controller;
   final Function(String)? onchange;
@@ -18,9 +18,10 @@ class AppInput extends StatelessWidget {
   final Color? borderColor;
   final TextStyle? hintTextstyle;
   final TextInputType ? keyboardType;
-  String? Function(String?)? validator;
+  final String ? initalValue;
+  final String? Function(String?)? validator;
 
-  AppInput(
+  const AppInput(
       {Key? key,
 
        this.keyboardType,
@@ -31,12 +32,13 @@ class AppInput extends StatelessWidget {
       this.icon,
       this.fillColor,
       this.borderColor,
-      this.hintTextstyle})
+      this.hintTextstyle, this.initalValue})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initalValue,
       textAlign:TextAlign.center,
       keyboardType: keyboardType,
       validator: validator,

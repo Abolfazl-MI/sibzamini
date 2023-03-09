@@ -12,5 +12,5 @@ static const String rErrorScreen = '/errorScreen';
 static const String rAllSalonsScreen='/allSalonsScreen';
 static const String rSrarchSalons='/searchSalons';
 static const String rFavSalonsScreen='/favSalonsScren';
-
+static const String rEditPhoneNumberScreen='/editPhoneNumber';
 }

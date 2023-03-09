@@ -104,7 +104,7 @@ class RegistrationController extends GetxController {
           '\u{1F642}' 'موفقیت آمیز بود', 'کد احراز هویت برای شما ارسال شد',
           backgroundColor: Colors.green);
       await _sharedStorageService.saveUserToken(result.data!.token!);
-      Get.offNamed(AppRoutes.rVerifyCodeScreen, arguments: {'mobile': phoneNumber});
+      Get.offNamed(AppRoutes.rVerifyCodeScreen, arguments: {'mobile': phoneNumber,'opreation':'create-account', 'user-name':name});
     }
     if (result is DataFailState) {
       isLoading = false;
@@ -128,7 +128,7 @@ class RegistrationController extends GetxController {
           '\u{1F642}' 'موفقیت آمیز بود', 'کد احراز هویت برای شما ارسال شد',
           backgroundColor: Colors.green);
       await Future.delayed(const Duration(seconds: 3));
-      Get.offNamed(AppRoutes.rVerifyCodeScreen, arguments: {'mobile': phoneNumber});
+      Get.offNamed(AppRoutes.rVerifyCodeScreen, arguments: {'mobile': phoneNumber,'opreation':'login'});
     }
     if (result is DataFailState) {
       isLoading = false;
