@@ -10,6 +10,7 @@ import 'package:sibzamini/models/user_model/user_modle.dart';
 import 'package:sibzamini/services/local/location_service.dart';
 import 'package:sibzamini/services/local/shared_service.dart';
 import 'package:sibzamini/services/remote/api_services.dart';
+import 'package:sibzamini/views/global/widgets/location_error_dialog.dart';
 import 'package:sibzamini/views/views.dart';
 
 class RegistrationController extends GetxController {
@@ -158,9 +159,10 @@ class RegistrationController extends GetxController {
         await _sharedStorageService.saveUserCity(cityState.data!);
         Get.offNamed(AppRoutes.rHomeScreen, arguments: {'city': cityState.data});
       } else {
-        Get.snackbar('مشکلی پیش آمده',
-            'مشکلی در تشخیص مکان شما پیش امده لطفا دستی خودتان انتخاب کنید ');
-        Get.offNamed(AppRoutes.rHomeScreen, arguments: {'city': 'Tehran'});
+        // Get.snackbar('مشکلی پیش آمده',
+        //     'مشکلی در تشخیص مکان شما پیش امده لطفا دستی خودتان انتخاب کنید ');
+        // Get.offNamed(AppRoutes.rHomeScreen, arguments: {'city': 'Tehran'});
+        showLocationErrorDialog(cityState.error!);
       }
     }
     if (resualt is DataFailState) {

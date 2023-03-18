@@ -116,7 +116,7 @@ class AllSalonsController extends GetxController {
     salonType = type;
     isLoading = true;
     update();
-    await _getUserLocation();
+    userCurrentCity=Get.arguments['city'];
     await _getBookMarkedSaloons();
     await _getSalonsData(type);
     await _getSalonByCategory(serviceCategory);

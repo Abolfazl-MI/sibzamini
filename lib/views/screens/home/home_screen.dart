@@ -108,7 +108,7 @@ class HomeScreen extends GetView<HomeController> {
                         leftText: 'نمایش‌ همه',
                         onTap: () {
                           Get.toNamed(AppRoutes.rAllSalonsScreen,
-                              arguments: {'type': 'best'});
+                              arguments: {'type': 'best', 'city':builderController.currentCity});
                         }):Container(),
                   ),
                   SizedBox(
@@ -139,7 +139,7 @@ class HomeScreen extends GetView<HomeController> {
                         leftText: 'نمایش‌ همه',
                         onTap: () {
                           Get.toNamed(AppRoutes.rAllSalonsScreen,
-                              arguments: {'type': 'newest'});
+                              arguments: {'type': 'newest', 'city':builderController.currentCity});
                         }):Container()
                     ,
                   ),

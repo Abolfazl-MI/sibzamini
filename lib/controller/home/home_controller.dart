@@ -301,4 +301,7 @@ class HomeController extends GetxController {
     await _subscription.cancel();
     super.onClose();
   }
+  Future<void>updateUserSelectedCity(String city)async{
+    
+  }
 }

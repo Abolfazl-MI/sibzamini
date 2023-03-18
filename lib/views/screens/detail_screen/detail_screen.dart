@@ -115,7 +115,7 @@ class DetailScreen extends GetView<DetailController> {
           body: GetBuilder<DetailController>(
             builder: (builderController) => Column(
               children: [
-                SearchBarWidget(),
+                // SearchBarWidget(),
                 // SelectLocationWidget(),
                 _body(width, height, builderController, context)
               ],
@@ -184,7 +184,6 @@ class DetailScreen extends GetView<DetailController> {
                       disableCenter: true,
                       enableInfiniteScroll: false,
                     ),
-                     
                     itemCount: dController.salonServices!.length,
                     itemBuilder: (context, index, realIndex) {
                       return Padding(
@@ -472,167 +471,214 @@ class DetailScreen extends GetView<DetailController> {
   _brandHeader(
       DetailController builderController, double width, double height) {
     return ShimmerLoading(
-      isLoading: builderController.isLoading,
-      child: SizedBox(
-        // color: Colors.green,
-        // padding: EdgeInsets.all(10),
-        width: width,
-        height: height * 0.45,
-        child: Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              // image heder
-              SizedBox(
-                // color: Colors.amber,
+        isLoading: builderController.isLoading,
+        child:
+            // SizedBox(
+            //   // color: Colors.green,
+            //   // padding: EdgeInsets.all(10),
+            //   width: width,
+            //   height: height * 0.45,
+            //   child: Card(
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //       children: [
+            //         // image heder
+
+            //         const SizedBox(
+            //           height: 5,
+            //         ),
+
+            //         /// [salon name and rating ]
+
+            //         /// [fotter of card]
+            //         const SizedBox(
+            //           height: 3,
+            //         ),
+            //         ,
+            //           child: Row(
+            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //             children: [
+            //               
+            //             ],
+            //           ),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            SizedBox(
                 width: width,
-                height: 220,
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 14, vertical: 10),
-                    child: CachedNetworkImage(
-                      imageUrl: builderController.salonDetail?.imgurl ??
-                          'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shana.ir%2Fnews%2F462102%2F%25D8%25B1%25D9%2588%25D8%25A7%25D8%25A8%25D8%25B7-%25D8%25A7%25DB%258C%25D8%25B1%25D8%25A7%25D9%2586-%25D9%2588-%25DA%2586%25DB%258C%25D9%2586-%25D8%25B1%25D8%25A7%25D9%2587%25D8%25A8%25D8%25B1%25D8%25AF%25DB%258C-%25D8%25A7%25D8%25B3%25D8%25AA&psig=AOvVaw2NvlbKFHu40kX6ieFbwuEp&ust=1670824676692000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMCqtJDx8PsCFQAAAAAdAAAAABAZ',
-                      placeholder: ((context, url) => Container(
-                            child: Center(
-                                child: Transform.scale(
-                                    scale: 0.5,
-                                    child:
-                                        Lottie.asset(Assets.lotties.loading))),
-                          )),
-                      imageBuilder: ((context, imageProvider) => Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          )),
-                      errorWidget: ((context, url, error) => Container(
-                            color: Colors.grey,
-                            child: const Center(
-                              child: Icon(
-                                Icons.image_not_supported_outlined,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )),
-                    )),
-              ),
-
-              const SizedBox(
-                height: 5,
-              ),
-
-              /// [salon name and rating ]
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14),
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: SolidColors.backGroundColor,
-                      child: Center(
-                        child: Transform.scale(
-                            scale: 0.7,
-                            child: SvgPicture.asset(Assets.icons.logos)),
+                child: Card(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      // images
+                      SizedBox(
+                        width: width,
+                        height: 200,
+                        child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 10),
+                            child: CachedNetworkImage(
+                              imageUrl: builderController.salonDetail?.imgurl ??
+                                  'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shana.ir%2Fnews%2F462102%2F%25D8%25B1%25D9%2588%25D8%25A7%25D8%25A8%25D8%25B7-%25D8%25A7%25DB%258C%25D8%25B1%25D8%25A7%25D9%2586-%25D9%2588-%25DA%2586%25DB%258C%25D9%2586-%25D8%25B1%25D8%25A7%25D9%2587%25D8%25A8%25D8%25B1%25D8%25AF%25DB%258C-%25D8%25A7%25D8%25B3%25D8%25AA&psig=AOvVaw2NvlbKFHu40kX6ieFbwuEp&ust=1670824676692000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCMCqtJDx8PsCFQAAAAAdAAAAABAZ',
+                              placeholder: ((context, url) => Container(
+                                    child: Center(
+                                        child: Transform.scale(
+                                            scale: 0.5,
+                                            child: Lottie.asset(
+                                                Assets.lotties.loading))),
+                                  )),
+                              imageBuilder: ((context, imageProvider) =>
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  )),
+                              errorWidget: ((context, url, error) => Container(
+                                    color: Colors.grey,
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.image_not_supported_outlined,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  )),
+                            )),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Column(
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          builderController.salonDetail?.name ?? 'abolfzl',
-                          style: AppTextTheme.caption.copyWith(),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        // should get from server
-                        RatingStars(
-                          rating: builderController.salonDetail?.rateToDouble ??
-                              0.0,
-                          editable: false,
-                          color: SolidColors.yellow,
-                          iconSize: 15,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-
-              /// [fotter of card]
-              const SizedBox(
-                height: 3,
-              ),
-              Container(
-                width: width,
-                height: 70,
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      // strokeAlign: StrokeAlign.center,
-                      // color: Colors.red,
-                      color: SolidColors.textColor4.withOpacity(0.7),
-                    ),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
-                      child: Text(
-                        '${builderController.salonServices?.length.toString().toPersianDigit() ?? 0}خدمت فعال',
-                        style: AppTextTheme.subCaption.copyWith(fontSize: 15),
-                      ),
-                    ),
-                    TextButton(
-                      style: ButtonStyle(
-                          overlayColor: MaterialStateColor.resolveWith(
-                              (states) => Colors.transparent)),
-                      onPressed: () {
-                        if (builderController.isBookedMarked) {
-                          builderController.deleteSalonBookMark();
-                        }
-                        if (!builderController.isBookedMarked) {
-                          builderController.addSalonToBookMarks();
-                        }
-                      },
-                      child: builderController.isBookedMarked
-                          ? Container(
-                              decoration: BoxDecoration(
-                                  color: SolidColors.backGroundColor,
-                                  borderRadius: BorderRadius.circular(12)),
-                              padding: EdgeInsets.all(12),
-                              child: Center(
-                                  child: Text('دنبال میکنید' '✓',
-                                      style: AppTextTheme.captionBold.copyWith(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        child: Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor:
+                                        SolidColors.backGroundColor,
+                                    child: Center(
+                                      child: Transform.scale(
+                                          scale: 0.7,
+                                          child: SvgPicture.asset(
+                                              Assets.icons.logos)),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Column(
+                                    // mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        builderController.salonDetail?.name ??
+                                            'abolfzl',
+                                        style: AppTextTheme.caption.copyWith(),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      // should get from server
+                                      RatingStars(
+                                        rating: builderController
+                                                .salonDetail?.rateToDouble ??
+                                            0.0,
+                                        editable: false,
+                                        color: SolidColors.yellow,
+                                        iconSize: 15,
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                              
+                            ),
+                            TextButton(
+                              style: ButtonStyle(
+                                  overlayColor: MaterialStateColor.resolveWith(
+                                      (states) => Colors.transparent)),
+                              onPressed: () {
+                                if (builderController.isBookedMarked) {
+                                  builderController.deleteSalonBookMark();
+                                }
+                                if (!builderController.isBookedMarked) {
+                                  builderController.addSalonToBookMarks();
+                                }
+                              },
+                              child: builderController.isBookedMarked
+                                  ? Container(
+                                    width: 100,
+                                    height: 50,
+                                      decoration: BoxDecoration(
+                                          color: SolidColors.backGroundColor,
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      padding: EdgeInsets.all(12),
+                                      child: Center(
+                                          child: Text('دنبال میکنید' '✓',
+                                              style: AppTextTheme.captionBold
+                                                  .copyWith(
+                                                      color: SolidColors
+                                                          .primaryBlue,
+                                                      fontSize: 14))))
+                                  : Container(
+                                    width: 100,
+                                    height: 50,
+                                      decoration: BoxDecoration(
                                           color: SolidColors.primaryBlue,
-                                          fontSize: 14))))
-                          : Container(
-                              decoration: BoxDecoration(
-                                  color: SolidColors.primaryBlue,
-                                  borderRadius: BorderRadius.circular(12)),
-                              padding: EdgeInsets.all(12),
-                              child: Center(
-                                  child: Text('دنبال کردن' '+',
-                                      style: AppTextTheme.captionBold.copyWith(
-                                          color: Colors.white, fontSize: 14)))),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                                          borderRadius:
+                                              BorderRadius.circular(12)),
+                                      padding: EdgeInsets.all(12),
+                                      child: Center(
+                                          child: Text('دنبال کردن' '+',
+                                              style: AppTextTheme.captionBold
+                                                  .copyWith(
+                                                      color: Colors.white,
+                                                      fontSize: 14)))),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Container(
+                      // width: width,
+                      // height: 70,
+                      // decoration: BoxDecoration(
+                      //   border: Border(
+                      //     top: BorderSide(
+                      //       // strokeAlign: StrokeAlign.center,
+                      //       // color: Colors.red,
+                      //       color: SolidColors.textColor4.withOpacity(0.7),
+                      //     ),
+                      //   ),
+                      // ))
+                      const SizedBox(height: 8,),
+
+                      Padding(padding: EdgeInsets.symmetric(horizontal: 14),child:Divider(
+                        color: SolidColors.textColor4.withOpacity(0.7),
+                        thickness:1.5,
+                      )), 
+                      const SizedBox(height: 8,),
+                      Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                                                          child: Text(
+                                '${builderController.salonServices?.length.toString().toPersianDigit() ?? 0}خدمت فعال',
+                                style: AppTextTheme.subCaption.copyWith(fontSize: 15),
+                              ),
+                            ),
+                          ),
+                      const SizedBox(height: 8,),
+
+                    ],
+                  ),
+                )));
   }
 
   ShimmerLoading _aboutUs(DetailController builderController, double width) {

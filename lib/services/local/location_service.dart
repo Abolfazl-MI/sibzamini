@@ -8,28 +8,31 @@ import 'package:sibzamini/views/global/constants/iran_cities_names.dart';
 
 class LocationServices {
   final ApiServices _apiServices = ApiServices();
+  bool isFirstTimeRequst = true;
+
   Future<DataState<String>> getUserCityLocation() async {
     log('********Getting user location********');
     bool? isServcesEnabled;
     Position? currentPossition;
     LocationPermission locationPermission;
     try {
-      isServcesEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!isServcesEnabled) {
-        return DataFailState(DISSABLED_LOCATION_SERVICE);
-      }
       locationPermission = await Geolocator.checkPermission();
-
       if (locationPermission == LocationPermission.denied) {
-        locationPermission = await Geolocator.requestPermission();
-      }
-      if (locationPermission == LocationPermission.deniedForever) {
-        return DataFailState(LOCATION_ACCESS_DENIDD);
+        if (isFirstTimeRequst) {
+          locationPermission = await Geolocator.requestPermission();
+          isFirstTimeRequst = false;
+          locationPermission=await Geolocator.checkPermission();
+        }
+        if(locationPermission==LocationPermission.denied) return DataFailState(LOCATION_ACCESS_DENIDD);
       }
       currentPossition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.best,
         forceAndroidLocationManager: true,
       );
+      isServcesEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!isServcesEnabled) {
+        return DataFailState(DISSABLED_LOCATION_SERVICE);
+      }
 
       DataState<String> persianCityName =
           await _apiServices.getUserCityLocation(
@@ -51,6 +54,19 @@ class LocationServices {
     } catch (e) {
       print(e);
       return DataFailState(SOMETHING_WENT_WRONG);
+    }
+  }
+
+  Future<bool> requestPermisionAgain() async {
+    try {
+      bool isGranted=false;
+      LocationPermission permission=await Geolocator.requestPermission();
+      if(permission == LocationPermission.always||permission == LocationPermission.whileInUse){
+        isGranted=true;
+      }
+      return isGranted;
+    } catch (e) {
+      return false;
     }
   }
 }
