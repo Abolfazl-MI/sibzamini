@@ -380,7 +380,15 @@ class AllSalonsScreen extends GetView<AllSalonsController> {
                                     IconButton(
                                       icon: SvgPicture.asset(
                                           Assets.icons.commentsOutline),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Get.toNamed(
+                                          AppRoutes.rDetailScreen, 
+                                          arguments: {
+                                            'id':builderController.salons[index].id,
+                                            'navigate-to':'comments'
+                                          }
+                                        );
+                                      },
                                     ),
                                 
 

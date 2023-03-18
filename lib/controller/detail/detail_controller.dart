@@ -227,11 +227,17 @@ class DetailController extends GetxController {
           backgroundColor: Colors.red);
     }
   }
-
+  gotoRoutes({String?route}){
+    if(route!=null&&route=='comments'){
+      selectedIndex=2;
+      update();
+    }
+  }
   @override
   void onInit() {
     super.onInit();
     salonId=Get.arguments['id'];
     getSalonDetail(id: Get.arguments['id']);
+    gotoRoutes(route:Get.arguments['navigate-to']);
   }
 }
