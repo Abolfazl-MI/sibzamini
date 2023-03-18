@@ -345,11 +345,13 @@ class FavoriteSalonScreen extends GetView<BookMarkedSalonController> {
                                       icon: SvgPicture.asset(
                                           Assets.icons.commentsOutline),
                                       onPressed: () {
-                                        Get.toNamed(AppRoutes.rDetailScreen,
-                                              arguments: {
-                                                'id': buildercontroller
-                                                    .salons[index].shop
-                                              });
+                                        Get.toNamed(
+                                          AppRoutes.rDetailScreen, 
+                                          arguments: {
+                                            'id':buildercontroller.salons[index].shop,
+                                            'navigate-to':'comments'
+                                          }
+                                        );
                                       },
                                     ),
                                     TextButton(

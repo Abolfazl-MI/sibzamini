@@ -19,7 +19,7 @@ class LocationScreen extends GetView<DetailController> {
         backgroundColor: SolidColors.backGroundColor,
         body: Column(
           children: [
-            SearchBarWidget(),
+            // SearchBarWidget(),
             // SelectLocationWidget(),
             Expanded(
               child: SingleChildScrollView(
