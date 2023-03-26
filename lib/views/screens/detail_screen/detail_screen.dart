@@ -17,6 +17,7 @@ import 'package:sibzamini/views/global/widgets/custome_shimmerh_loading.dart';
 import 'package:sibzamini/views/global/widgets/search_bar_widget.dart';
 import 'package:sibzamini/views/screens/comment_screen/comment_screen.dart';
 import 'package:sibzamini/views/screens/location_screen/location_screen.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../global/constants/constants.dart';
 import 'package:sibzamini/services/local/connectivity_service.dart';
 
@@ -44,7 +45,7 @@ class DetailScreen extends GetView<DetailController> {
             Get.back();
           },
         ),
-        
+
         automaticallyImplyLeading: false,
         // leading: IconButton(
         //   icon: SvgPicture.asset(Assets.icons.menu),
@@ -172,7 +173,6 @@ class DetailScreen extends GetView<DetailController> {
               return Container();
             }
             if (dController.salonServices != null) {
-              print("${dController.salonServices!.length.toString()}<<<");
               return Container(
                   width: width,
                   height: height * 0.34,
@@ -193,27 +193,7 @@ class DetailScreen extends GetView<DetailController> {
                           child: _serviceCard(
                               builderController, index, width, height));
                     },
-                  )
-                  // child:ListView.builder(
-                  //   padding: EdgeInsets.zero,
-                  //   scrollDirection: Axis.horizontal,
-                  //   itemCount: dController.salonServices!.length,
-                  //   itemBuilder: (context,index){
-                  //     return Padding(
-                  //       padding: const EdgeInsets.symmetric(
-                  //         horizontal: 0
-                  //       ),
-                  //       child: _serviceCard(builderController, index, width, height),
-                  //     );
-                  //   },
-                  // )
-                  // child: PageView.builder(
-                  //   itemCount: dController.salonServices!.length,
-                  //   itemBuilder: (context,index){
-                  //     return _serviceCard(builderController, index, width, height);
-                  //   },
-                  // ),
-                  );
+                  ));
             }
             return Container();
           }),
@@ -240,49 +220,27 @@ class DetailScreen extends GetView<DetailController> {
               ),
 
               ///[service picture]
-              child: CachedNetworkImage(
-                imageUrl: builderController.salonServices![index].imgUrl,
-                errorWidget: ((context, url, error) => Container(
-                      width: width,
-                      height: height * 0.23,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.image_not_supported_outlined,
-                          color: Colors.white,
-                        ),
-                      ),
-                    )),
-                placeholder: (context, url) => Container(
-                  width: width,
-                  height: height * 0.23,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  // clipBehavior: ,
-                  child: Center(
-                      child: Transform.scale(
-                    scale: 0.5,
-                    child: Lottie.asset(Assets.lotties.loading),
-                  )),
-                ),
-                imageBuilder: ((context, imageProvider) => Container(
-                      width: width,
-                      height: height * 0.23,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(12),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )),
-              )),
+              child: _serviceImage(
+                  builderController.salonServices?[index].photo,
+                  width,
+                  height, builderController.smoothController)),
+          if (builderController.salonServices?[index].photo != null &&
+              builderController.salonServices![index].photo!.length > 1) ...[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0,vertical: 5),
+              child: Align(
+                alignment: Alignment.center,
+                child:Transform.scale(
+                  scale:0.5,
+                                  child: AnimatedSmoothIndicator(
+                    
+                    activeIndex: builderController.currentServicePicture, 
+                    
+                    count: builderController.salonServices![index].photo!.length),
+                )
+              ),
+            )
+          ],
 
           ///[ services provides by salon should get from server]
           Padding(
@@ -299,29 +257,37 @@ class DetailScreen extends GetView<DetailController> {
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Row(
               children: [
-                // !in case that have off we use this code should maintane when connected to server
-                // Text(
-                //   '450,000'.toPersianDigit(),
-                //   style: AppTextTheme
-                //       .captionBold
-                //       .copyWith(
-                //           color: Colors.red,
-                //           decoration:
-                //               TextDecoration
-                //                   .lineThrough),
-                // ),
-                // const SizedBox(
-                //   width: 5,
-                // ),
-                Text(
-                  '${builderController.salonServices![index].amount!}'
-                      .toPersianDigit(),
-                  style: AppTextTheme.caption,
-                ),
+                builderController.salonServices![index].samount != null
+                    ? RichText(
+                        text: TextSpan(children: [
+                          TextSpan(
+                            text:
+                                '${builderController.salonServices![index].samount!}'
+                                    .toPersianDigit(),
+                            style: AppTextTheme.caption,
+                          ),
+                          WidgetSpan(
+                            child: SizedBox(width: 10),
+                          ),
+                          TextSpan(
+                            text:
+                                '${builderController.salonServices![index].amount!}'
+                                    .toPersianDigit(),
+                            style: AppTextTheme.caption.copyWith(
+                              decoration: TextDecoration.lineThrough,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ]),
+                      )
+                    : Text(
+                        '${builderController.salonServices![index].amount!}'
+                            .toPersianDigit(),
+                        style: AppTextTheme.caption,
+                      ),
                 const SizedBox(
                   width: 5,
                 ),
-
                 const Text(
                   'تومان',
                   style: AppTextTheme.baseStyle,
@@ -344,132 +310,6 @@ class DetailScreen extends GetView<DetailController> {
     );
   }
 
-/* Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 5,
-                                ),
-
-                                ///[service picture]
-                                child: CachedNetworkImage(
-                                  imageUrl: builderController
-                                      .salonServices![index].imgUrl,
-                                  errorWidget: ((context, url, error) =>
-                                      Container(
-                                        width: width,
-                                        height: height * 0.23,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        child: Center(
-                                          child: Icon(
-                                            Icons.image_not_supported_outlined,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      )),
-                                  placeholder: (context, url) => Container(
-                                    width: width,
-                                    height: height * 0.23,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    // clipBehavior: ,
-                                    child: Center(
-                                        child: Transform.scale(
-                                      scale: 0.5,
-                                      child:
-                                          Lottie.asset(Assets.lotties.loading),
-                                    )),
-                                  ),
-                                  imageBuilder: ((context, imageProvider) =>
-                                      Container(
-                                        width: width,
-                                        height: height * 0.23,
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      )),
-                                )),
-
-                            ///[ services provides by salon should get from server]
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Text(
-                                builderController.salonServices![index].name!,
-                                style: AppTextTheme.captionBold
-                                    .copyWith(color: SolidColors.textColor3),
-                              ),
-                            ),
-                            //
-                            ///[the price of sercies]
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: Row(
-                                children: [
-                                  // !in case that have off we use this code should maintane when connected to server
-                                  // Text(
-                                  //   '450,000'.toPersianDigit(),
-                                  //   style: AppTextTheme
-                                  //       .captionBold
-                                  //       .copyWith(
-                                  //           color: Colors.red,
-                                  //           decoration:
-                                  //               TextDecoration
-                                  //                   .lineThrough),
-                                  // ),
-                                  // const SizedBox(
-                                  //   width: 5,
-                                  // ),
-                                  Text(
-                                    '${builderController.salonServices![index].amount!}'
-                                        .toPersianDigit(),
-                                    style: AppTextTheme.caption,
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-
-                                  const Text(
-                                    'تومان',
-                                    style: AppTextTheme.baseStyle,
-                                  )
-                                ],
-                              ),
-                            ),
-
-                            /// [fotter of Card]
-                            Flexible(
-                              child: Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Text(builderController
-                                            .salonServices![index].content ??
-                                        ''
-                                    // 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز ',
-                                    ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ) */
   _brandHeader(
       DetailController builderController, double width, double height) {
     return ShimmerLoading(
@@ -500,7 +340,7 @@ class DetailScreen extends GetView<DetailController> {
             //           child: Row(
             //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             //             children: [
-            //               
+            //
             //             ],
             //           ),
             //         )
@@ -555,7 +395,7 @@ class DetailScreen extends GetView<DetailController> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 14),
                         child: Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
                               child: Row(
@@ -599,7 +439,6 @@ class DetailScreen extends GetView<DetailController> {
                                   )
                                 ],
                               ),
-                              
                             ),
                             TextButton(
                               style: ButtonStyle(
@@ -615,8 +454,8 @@ class DetailScreen extends GetView<DetailController> {
                               },
                               child: builderController.isBookedMarked
                                   ? Container(
-                                    width: 100,
-                                    height: 50,
+                                      width: 100,
+                                      height: 50,
                                       decoration: BoxDecoration(
                                           color: SolidColors.backGroundColor,
                                           borderRadius:
@@ -630,8 +469,8 @@ class DetailScreen extends GetView<DetailController> {
                                                           .primaryBlue,
                                                       fontSize: 14))))
                                   : Container(
-                                    width: 100,
-                                    height: 50,
+                                      width: 100,
+                                      height: 50,
                                       decoration: BoxDecoration(
                                           color: SolidColors.primaryBlue,
                                           borderRadius:
@@ -659,25 +498,33 @@ class DetailScreen extends GetView<DetailController> {
                       //     ),
                       //   ),
                       // ))
-                      const SizedBox(height: 8,),
+                      const SizedBox(
+                        height: 8,
+                      ),
 
-                      Padding(padding: EdgeInsets.symmetric(horizontal: 14),child:Divider(
-                        color: SolidColors.textColor4.withOpacity(0.7),
-                        thickness:1.5,
-                      )), 
-                      const SizedBox(height: 8,),
                       Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 14),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                                                          child: Text(
-                                '${builderController.salonServices?.length.toString().toPersianDigit() ?? 0}خدمت فعال',
-                                style: AppTextTheme.subCaption.copyWith(fontSize: 15),
-                              ),
-                            ),
+                          padding: EdgeInsets.symmetric(horizontal: 14),
+                          child: Divider(
+                            color: SolidColors.textColor4.withOpacity(0.7),
+                            thickness: 1.5,
+                          )),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14),
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            '${builderController.salonServices?.length.toString().toPersianDigit() ?? 0}خدمت فعال',
+                            style:
+                                AppTextTheme.subCaption.copyWith(fontSize: 15),
                           ),
-                      const SizedBox(height: 8,),
-
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
                     ],
                   ),
                 )));
@@ -742,6 +589,131 @@ class DetailScreen extends GetView<DetailController> {
         ),
       ),
     );
+  }
+
+  _serviceImage(List<String>? photo, double width, double height,PageController pageController) {
+    if (photo == null) {
+      return Container(
+        width: width,
+        height: height * 0.23,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(
+          child: Icon(
+            Icons.image_not_supported_outlined,
+            color: Colors.white,
+          ),
+        ),
+      );
+    } else if (photo.length > 1) {
+      return CarouselSlider.builder(
+        
+        itemCount: photo.length,
+        itemBuilder: (_, index, ___) {
+          return Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: CachedNetworkImage(
+              imageUrl: 'https://sunict.ir${photo[index].replaceAll("\\", "")}',
+              errorWidget: ((context, url, error) => Container(
+                    width: width,
+                    height: height * 0.23,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.image_not_supported_outlined,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )),
+              placeholder: (context, url) => Container(
+                width: width,
+                height: height * 0.23,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                // clipBehavior: ,
+                child: Center(
+                    child: Transform.scale(
+                  scale: 0.5,
+                  child: Lottie.asset(Assets.lotties.loading),
+                )),
+              ),
+              imageBuilder: ((context, imageProvider) => Container(
+                    width: width,
+                    height: height * 0.23,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(12),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )),
+            ),
+          );
+        },
+        options: CarouselOptions(
+          enableInfiniteScroll: false,
+          onPageChanged: (index, reason) {
+            Get.find<DetailController>().updateCurrentServicePictur(index);
+          },
+          // padEnds: true,
+        ),
+      );
+    } else if (photo.length == 1) {
+      return CachedNetworkImage(
+        imageUrl: 'https://sunict.ir${photo[0].replaceAll("\\", "")}',
+        errorWidget: ((context, url, error) => Container(
+              width: width,
+              height: height * 0.23,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.image_not_supported_outlined,
+                  color: Colors.white,
+                ),
+              ),
+            )),
+        placeholder: (context, url) => Container(
+          width: width,
+          height: height * 0.23,
+          decoration: BoxDecoration(
+            color: Colors.grey,
+            borderRadius: BorderRadius.circular(12),
+          ),
+          // clipBehavior: ,
+          child: Center(
+              child: Transform.scale(
+            scale: 0.5,
+            child: Lottie.asset(Assets.lotties.loading),
+          )),
+        ),
+        imageBuilder: ((context, imageProvider) => Container(
+              width: width,
+              height: height * 0.23,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )),
+      );
+    } else {
+      return Container();
+    }
   }
 }
 

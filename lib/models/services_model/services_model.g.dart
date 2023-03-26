@@ -7,12 +7,14 @@ part of 'services_model.dart';
 // **************************************************************************
 
 SalonService _$SalonServiceFromJson(Map<String, dynamic> json) => SalonService(
-      id: json['id'] as int?,
-      name: json['name'] as String?,
-      amount: (json['amount'] as num?)?.toDouble(),
-      photo: json['photo'] as String?,
+      photo:
+          (json['photo'] as List<dynamic>?)?.map((e) => e as String).toList(),
       content: json['content'] as String?,
       cat: json['cat'] as int?,
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      amount: json['amount'] as num?,
+      samount: json['samount'] as num?,
     );
 
 Map<String, dynamic> _$SalonServiceToJson(SalonService instance) =>
@@ -20,6 +22,7 @@ Map<String, dynamic> _$SalonServiceToJson(SalonService instance) =>
       'id': instance.id,
       'name': instance.name,
       'amount': instance.amount,
+      'samount': instance.samount,
       'photo': instance.photo,
       'content': instance.content,
       'cat': instance.cat,

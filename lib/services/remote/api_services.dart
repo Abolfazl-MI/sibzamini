@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import "package:dio/dio.dart";
@@ -241,6 +242,7 @@ class ApiServices {
       Response response = await _dio.get('${ApiUrls.salonServices}/$salonId');
       if (response.statusCode == 200) {
         List<dynamic> rawData = response.data;
+        print(rawData);
         List<SalonService> salonServices =
             rawData.map((e) => SalonService.fromJson(e)).toList();
         return DataSuccesState(salonServices);

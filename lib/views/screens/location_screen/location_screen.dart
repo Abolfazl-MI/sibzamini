@@ -49,7 +49,9 @@ class LocationScreen extends GetView<DetailController> {
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.4,
                         // color: Colors.amber,
-                        child: MapirMap(
+                        child: detailController.salonDetail?.lat!=null&&
+                        detailController.salonDetail?.lng!=null?
+                        MapirMap(
                           apiKey: map_token,
                           options: MapOptions(
                             center: LatLng(detailController.salonDetail!.lat!,
@@ -59,7 +61,7 @@ class LocationScreen extends GetView<DetailController> {
                             MarkerLayerOptions(markers: [
                               Marker(
                                   point: LatLng(
-                                      detailController.salonDetail!.lat!,
+                                      detailController.salonDetail!.lat! ,
                                       detailController.salonDetail!.lng!),
                                   builder: (ctx) => Icon(
                                         Icons.location_on_outlined,
@@ -68,7 +70,7 @@ class LocationScreen extends GetView<DetailController> {
                                       ))
                             ])
                           ],
-                        ),
+                        ):Container(),
                       );
                     }),
                     SizedBox(

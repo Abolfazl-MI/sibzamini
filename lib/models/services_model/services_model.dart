@@ -7,18 +7,21 @@ part 'services_model.g.dart';
 class SalonService extends Equatable {
   final int? id;
   final String? name;
-  final double? amount;
-  final String? photo;
+  final num? amount;
+  final num?samount;
+  final List<String>? photo;
   final String? content;
   final int? cat;
 
-  const SalonService({
+  const SalonService(
+    {
+    this.photo, 
+    this.content, 
+    this.cat, 
     this.id,
     this.name,
     this.amount,
-    this.photo,
-    this.content,
-    this.cat,
+    this.samount, 
   });
   String get imgUrl => 'https://sunict.ir$photo';
 
@@ -26,6 +29,8 @@ class SalonService extends Equatable {
       _$SalonServiceFromJson(json);
 
   Map<String, dynamic> toJson() => _$SalonServiceToJson(this);
+
+
   @override
   List<Object?> get props => [id, name, amount, photo, content, cat];
 }

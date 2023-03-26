@@ -13,7 +13,6 @@ import 'package:sibzamini/services/remote/api_services.dart';
 import 'package:sibzamini/views/routes/app_route_names.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/services.dart';
 class DetailController extends GetxController {
   // dependcies
   final ApiServices _apiServices = ApiServices();
@@ -30,6 +29,8 @@ class DetailController extends GetxController {
   List<Comment>? salonComments;
   List<SalonService>? salonServices;
   TextEditingController commentController = TextEditingController();
+  late PageController smoothController;
+  int currentServicePicture=0;
 
   // methods
   // bottom navigation
@@ -44,6 +45,10 @@ class DetailController extends GetxController {
     update();
   }
 
+  void updateCurrentServicePictur(int index){
+    currentServicePicture=index;
+    update();
+  }
   Future<void> _getSalonDeatail({required int id}) async {
     DataState<Salon> salonDetailResult =
         await _apiServices.getSalonDetail(id: id);
@@ -81,6 +86,7 @@ class DetailController extends GetxController {
     DataState<List<SalonService>> result =
         await _apiServices.getSingleSalonServices(salonId: id);
     if (result is DataSuccesState) {
+      
       salonServices = result.data;
       update();
     }
@@ -163,7 +169,7 @@ class DetailController extends GetxController {
   }
   Future<void> isBookedMarkedSalon() async {
     String? token = await _storageService.getuserToken();
-    print(token);
+    // print(token);
     if (token != null) {
       DataState<List<BookMarkedSalon>> bookmarkedSalon =
           await _apiServices.getBookMarkedSalons(userToken: token);
@@ -239,5 +245,6 @@ class DetailController extends GetxController {
     salonId=Get.arguments['id'];
     getSalonDetail(id: Get.arguments['id']);
     gotoRoutes(route:Get.arguments['navigate-to']);
+    smoothController=PageController();
   }
 }
